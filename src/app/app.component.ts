@@ -6,5 +6,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'AdventureWorksApp';
+  title = 'Angular AdventureWorks';
+  viewLinks = [
+    {name: 'Home', url: 'home'},
+    {name: 'Authenticate', url: 'authenticate'}
+  ]
 }

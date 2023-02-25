@@ -1,1 +1,104 @@
 /* You can add global styles to this file, and also import other style files */
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: 'Lato', sans-serif;
+}
+
+.fill-remaining-space {
+    flex: 1 1 auto;
+}
+
+/*Sidenav and toolbar*/
+.mat-drawer-container {
+    height: 100vh !important;
+
+}
+
+.mat-drawer-inner-container {
+    width: 300px !important;
+    background-color: #54a0ff;
+}
+
+.mat-icon,
+.mat-drawer h1,
+.mat-drawer span,
+.mat-toolbar h1 {
+    cursor: pointer !important;
+    color: #fff !important;
+}
+
+.right-side-navbar {
+    padding: 15px !important;
+    background-color: #54a0ff;
+    display: flex !important;
+
+    &>h1 {
+        text-align: center !important;
+        padding: 0 !important;
+        margin: auto;
+    }
+}
+
+.mat-list-base {
+    padding-top: 30px !important;
+}
+
+.mat-drawer {
+    a {
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .mat-mdc-list-item {
+        cursor: pointer !important;
+
+        &:hover {
+            background-color: #74b9ff;
+        }
+    }
+}
+
+/*Main container*/
+div.right-side-main-container {
+    padding: 10px 0px;
+    margin: 0px 20px;
+    max-height: calc(100vh - 100px);
+}
+
+.horizontal-line {
+    margin-bottom: 10px !important;
+}
+
+/*Forms*/
+.form-field-group {
+    margin-bottom: 15px;
+}
+
+.form-field {
+    margin-right: 10px;
+}
+
+.form-field-short {
+    width: 160px;
+}
+.form-field-medium {
+    width: inherit; /*212px*/
+}
+.form-field-long {
+    width: 260px;
+}
+.form-field-address {
+    width: 320px;
+}
+.form-field-textarea {
+    width: 600px;
+}
+
+.label-checkable {
+    margin-right: 6px;
+}
