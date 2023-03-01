@@ -1,1 +1,45 @@
-<div class="mat-h1">Authentication</div>
+<div class="alert" *ngIf="this.mainAlert.type" [ngClass]="this.mainAlert.type ? 'alert-' + this.mainAlert.type : ''">
+    <span>{{ this.mainAlert.message }}</span>
+    <span class="fill-remaining-space"></span>
+    <button mat-raised-button (click)="this.mainAlertDismiss()">&times;</button>
+</div>
+
+
+<form class="form-authentication" [formGroup]="this.form" (ngSubmit)="this.login()">
+    <mat-card>
+        <mat-card-header>Sign in</mat-card-header>
+        <mat-divider class="horizontal-line"></mat-divider>
+
+        <mat-card-content>
+            <div class="form-field-group">
+                <mat-form-field appearance="fill" class="form-field form-field-whole">
+                    <mat-label>Username</mat-label>
+                    <input matInput formControlName="username" required>
+                    <mat-hint>Enter your username.</mat-hint>
+                    <mat-error *ngIf="username?.errors?.required">Username is required.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-field-group">
+                <mat-form-field appearance="fill" class="form-field form-field-whole">
+                    <mat-label>Password</mat-label>
+                    <input matInput formControlName="password" type="password" required>
+                    <mat-hint>Enter your password.</mat-hint>
+                    <mat-error *ngIf="password?.errors?.required">Password is required.</mat-error>
+                </mat-form-field>
+            </div>
+        </mat-card-content>
+
+        <mat-divider></mat-divider>
+        <mat-card-actions>
+            <button mat-raised-button [disabled]="!this.form.valid" type="submit" class="form-field">Sign in</button>
+        </mat-card-actions>
+    </mat-card>
+</form>
+
+
+<div class="alert" *ngIf="this.authenticationAlert.type"
+    [ngClass]="this.authenticationAlert.type ? 'alert-' + this.authenticationAlert.type : ''">
+    <span>{{ this.authenticationAlert.message }}</span>
+    <span class="fill-remaining-space"></span>
+    <button mat-raised-button (click)="this.authenticationAlertDismiss()">&times;</button>
+</div>

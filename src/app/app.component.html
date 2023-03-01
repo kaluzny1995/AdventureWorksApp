@@ -11,9 +11,8 @@
       <mat-icon aria-hidden="false" aria-label="Example home icon" (click)="drawer.toggle()">reorder</mat-icon>
       <h1 style="margin-left: 10px;">{{ this.title }}</h1>
       <span class="fill-remaining-space"></span>
-      <button mat-icon-button aria-label="Authentication status">
-        <mat-icon>person</mat-icon>
-      </button>
+      <!--menu-component-->
+      <app-nav-menu></app-nav-menu>
     </mat-toolbar>
     <ng-scrollbar #scrollable track="vertical" [autoHeightDisabled]="false">
       <div class="right-side-main-container">

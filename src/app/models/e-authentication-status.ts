@@ -1,0 +1,5 @@
+export enum EAuthenticationStatus {
+    AUTHENTICATED = "AUTHENTICATED",
+    UNAUTHENTICATED = "UNAUTHENTICATED",
+    EXPIRED = "EXPIRED"
+}

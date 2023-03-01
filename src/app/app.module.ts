@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -11,6 +11,9 @@ import { HomeComponent } from './components/home/home.component';
 import { AuthenticationComponent } from './components/authentication/authentication.component';
 import { Error404Component } from './components/errors/error404/error404.component';
 import { Error401Component } from './components/errors/error401/error401.component';
+import { RequestInterceptionService } from './services/request-interception.service';
+import { NavMenuComponent } from './nav-menu/nav-menu.component';
+import { ProfileComponent } from './profile/profile.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +21,9 @@ import { Error401Component } from './components/errors/error401/error401.compone
     HomeComponent,
     AuthenticationComponent,
     Error404Component,
-    Error401Component
+    Error401Component,
+    NavMenuComponent,
+    ProfileComponent
   ],
   imports: [
     BrowserModule,
@@ -28,7 +33,9 @@ import { Error401Component } from './components/errors/error401/error401.compone
     HttpClientModule,
     MaterialModule
   ],
-  providers: [],
+  providers: [
+    {provide: HTTP_INTERCEPTORS, useClass: RequestInterceptionService, multi: true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

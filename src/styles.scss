@@ -1,4 +1,4 @@
-/* You can add global styles to this file, and also import other style files */
+/* Basic */
 html,
 body {
     height: 100%;
@@ -13,6 +13,87 @@ body {
     flex: 1 1 auto;
 }
 
+$theme-color: #54a0ff;
+$hover-opacity: rgba(0,0,0,.04);
+
+/*Bootstrap colors & classes*/
+$bootstrap-primary: #0275d8;
+$bootstrap-success: #5cb85c;
+$bootstrap-info: #5bc0de;
+$bootstrap-warning: #f0ad4e;
+$bootstrap-danger: #d9534f;
+
+.bg-primary {
+    background-color: $bootstrap-primary;
+}
+.bg-success {
+    background-color: $bootstrap-success;
+}
+.bg-info {
+    background-color: $bootstrap-info;
+}
+.bg-warning {
+    background-color: $bootstrap-warning;
+}
+.bg-danger {
+    background-color: $bootstrap-danger;
+}
+
+.text-primary {
+    color: $bootstrap-primary;
+}
+.text-success {
+    color: $bootstrap-success;
+}
+.text-info {
+    color: $bootstrap-info;
+}
+.text-warning {
+    color: $bootstrap-warning;
+}
+.text-danger {
+    color: $bootstrap-danger;
+}
+
+.alert{
+    padding: 20px;
+    margin-bottom: 15px;
+    text-align: center;
+    border-radius: 5px;
+    display: flex;
+
+    span:first-child {
+        margin: auto;
+        font-size: 18px;
+    }
+
+    button {
+        background-color: transparent !important;
+        font-size: 30px;
+    }
+}
+
+.alert-primary {
+    background-color: $bootstrap-primary;
+    color: white;
+}
+.alert-success {
+    background-color: $bootstrap-success;
+    color: black;
+}
+.alert-info {
+    background-color: $bootstrap-info;
+    color: black;
+}
+.alert-warning {
+    background-color: $bootstrap-warning;
+    color: black;
+}
+.alert-danger {
+    background-color: $bootstrap-danger;
+    color: black;
+}
+
 /*Sidenav and toolbar*/
 .mat-drawer-container {
     height: 100vh !important;
@@ -21,7 +102,7 @@ body {
 
 .mat-drawer-inner-container {
     width: 300px !important;
-    background-color: #54a0ff;
+    background-color: $theme-color;
 }
 
 .mat-icon,
@@ -29,12 +110,12 @@ body {
 .mat-drawer span,
 .mat-toolbar h1 {
     cursor: pointer !important;
-    color: #fff !important;
+    color: white !important;
 }
 
 .right-side-navbar {
     padding: 15px !important;
-    background-color: #54a0ff;
+    background-color: $theme-color;
     display: flex !important;
 
     &>h1 {
@@ -58,9 +139,25 @@ body {
         cursor: pointer !important;
 
         &:hover {
-            background-color: #74b9ff;
+            background: $hover-opacity;
         }
     }
+}
+
+.button-nav-menu {
+    background-color: transparent !important;
+    color: white !important;
+
+    .mat-icon {
+        position: relative;
+        right: 5px;
+        top: 5px;
+    }
+}
+
+.nav-menu {
+    background-color: $theme-color;
+    color: white;
 }
 
 /*Main container*/
@@ -75,8 +172,33 @@ div.right-side-main-container {
 }
 
 /*Forms*/
+.form-authentication {
+    margin-top: 30px;
+    margin-bottom: 30px;
+
+    mat-card {
+        max-width: 30%;
+        margin: auto;
+
+        mat-card-header {
+            margin: 0 auto 15px auto;
+            font-size: 30px;
+        }
+
+        mat-card-actions {
+            padding: 0 16px;
+            display: flex;
+            justify-content: flex-end;
+
+            button {
+                margin-right: 0;
+            }
+        }
+    }
+}
+
 .form-field-group {
-    margin-bottom: 15px;
+    margin-bottom: 15px !important;
 }
 
 .form-field {
@@ -97,6 +219,9 @@ div.right-side-main-container {
 }
 .form-field-textarea {
     width: 600px;
+}
+.form-field-whole {
+    width: 100%;
 }
 
 .label-checkable {
