@@ -1,4 +1,4 @@
-<div class="mat-h1">Home page</div>
+<div class="mat-h1">Adventure Works Data Warehouse Management App (AWDWMA)</div>
 <mat-divider class="horizontal-line"></mat-divider>
 
 <div class="alert" *ngIf="this.mainAlert.type" [ngClass]="this.mainAlert.type ? 'alert-' + this.mainAlert.type : ''">
@@ -7,19 +7,164 @@
     <button mat-raised-button (click)="this.mainAlertDismiss()">&times;</button>
 </div>
 
-<div class="mat-h2">Authenticated test</div>
-<mat-card>
+<mat-card class="card">
     <mat-card-header>
-        <mat-card-title>Actions</mat-card-title>
-        <mat-card-subtitle>Only while authenticated</mat-card-subtitle>
+        <mat-card-title>What is that and what for?</mat-card-title>
+        <mat-card-subtitle>Description and goals of application development</mat-card-subtitle>
     </mat-card-header>
+    <mat-divider class="horizontal-line"></mat-divider>
     <mat-card-content>
-        <span [ngClass]="{'text-success': this.resultState === 'success', 'text-danger': this.resultState === 'error'}">
-            {{ this.resultMessage }}
-        </span>
+        <p>
+            The AWDWMA application is a solution for managing AdventureWorks2017 data warehouse.
+            It provides basic CRUD (create, read, update, delete) operations for each of data warehouse main entities.
+            This is done via so called admin pannels.
+            Due to the well planned admin pannel tables with such components like: row coloring, header sorting,
+            pagination, etc. the data are well visible.
+        </p>
+        <p>
+            The users of AWDWMA could sign up (register) via the included form. Every time after the user signs in he
+            could change his personal data or credentials.
+            The users may have full or readonly access. Users with readonly access mya only view the data and cannot
+            create, update or delete any entries.
+            Users can also permanently remove their accounts.
+        </p>
+        <b>ENJOY</b>
     </mat-card-content>
+    <mat-divider class="horizontal-line"></mat-divider>
     <mat-card-actions>
-        <button mat-button (click)="this.testAuthentication()">TEST</button>
-        <button mat-button (click)="this.getCurrentUser()">CURRENT USER</button>
+        <a routerLink="/author"><button mat-button><mat-icon>info</mat-icon> ABOUT ME</button></a>
+        <a href="{{ this.mailString }}"><button mat-button><mat-icon>email</mat-icon> TEXT ME</button></a>
     </mat-card-actions>
 </mat-card>
+
+<mat-accordion class="accordion">
+    <mat-expansion-panel [expanded]="this.instructionNumber === 0" (opened)="this.setInstruction(0)" hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <mat-icon>info</mat-icon> Simplified dataflow diagrams
+            </mat-panel-title>
+            <mat-panel-description>
+                Simplified user-system-database dataflow.
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <mat-tab-group>
+            <mat-tab label="Frontend dataflow">
+                <img src="/assets/images/awdwma_frontend_logo.png">
+
+                <mat-list>
+                    <mat-list-item>
+                        <span matListItemTitle>1. Form/admin pannel view</span>
+                        <span matListItemLine>User opens form, admin pannel or other view.</span>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <span matListItemTitle>2. Actions/submissions</span>
+                        <span matListItemLine>User peforms actions in view and/or submits certain form.</span>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <span matListItemTitle>3. Service</span>
+                        <span matListItemLine>Actions (with JSONified data) passed into service.</span>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <span matListItemTitle>4. Endpoint request</span>
+                        <span matListItemLine>Service sends request to certain backend endpoint.</span>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item class="muted">
+                        <span matListItemTitle>... &raquo; ... Backend steps ... &raquo; ...</span>
+                    </mat-list-item>
+                    <mat-divider></mat-divider>
+                    <mat-list-item>
+                        <span matListItemTitle>5. Endpoint response</span>
+                        <span matListItemLine>Service receives the response from backend endpoint and sends it to the
+                            view.</span>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <span matListItemTitle>6. Process &amp; display</span>
+                        <span matListItemLine>Data processed and appropriately displayed in view.</span>
+                    </mat-list-item>
+                </mat-list>
+            </mat-tab>
+
+            <mat-tab label="Backend dataflow">
+                <img src="/assets/images/awdwma_backend_logo.png">
+
+                <mat-list>
+                    <mat-list-item>
+                        <span matListItemTitle>1. HTTP request</span>
+                        <span matListItemLine>API receives HTTP request to endpoint.</span>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <span matListItemTitle>2. Service</span>
+                        <span matListItemLine>Endpoint call service methods for required data. May also directly call
+                            provider.</span>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <span matListItemTitle>3. Provider</span>
+                        <span matListItemLine>Service call provider for data from the database.</span>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <span matListItemTitle>4. Databases</span>
+                        <span matListItemLine>Database servers perform expected transactions. Users &minus; 
+                            MongoDB &amp; AdventureWorks2017 &minus; PostgresDB.</span>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <span matListItemTitle>5. Objects</span>
+                        <span matListItemLine>Provider transforms database-structured data to Python objects and sends
+                            them to service.</span>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <span matListItemTitle>6. Objects processing</span>
+                        <span matListItemLine>Service processes received objects to the expected form.</span>
+                    </mat-list-item>
+                    <mat-list-item>
+                        <span matListItemTitle>7. HTTP response</span>
+                        <span matListItemLine>API endpoint receives processed data and sends them via HTTP
+                            response</span>
+                    </mat-list-item>
+                </mat-list>
+            </mat-tab>
+        </mat-tab-group>
+
+        <mat-action-row>
+            <button mat-button color="primary" (click)="this.nextInstruction()">Next</button>
+        </mat-action-row>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel [expanded]="this.instructionNumber === 1" (opened)="this.setInstruction(1)" hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <mat-icon>help</mat-icon> First steps
+            </mat-panel-title>
+            <mat-panel-description>
+                Registration, personal data/credentials changing, etc.
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <p>Temporary text ... ... ... ... first steps instructions. Screenshots of forms.</p>
+
+        <mat-action-row>
+            <button mat-button color="warn" (click)="this.previousInstruction()">Previous</button>
+            <button mat-button color="primary" (click)="this.nextInstruction()">Next</button>
+        </mat-action-row>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel [expanded]="this.instructionNumber === 2" (opened)="this.setInstruction(2)" hideToggle>
+        <mat-expansion-panel-header>
+            <mat-panel-title>
+                <mat-icon>build</mat-icon> Admin pannels
+            </mat-panel-title>
+            <mat-panel-description>
+                Viewing, filtering, sorting and paginating pannels. New, updating and removing entries.
+            </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <p>Temporary text ... ... ... ... admin pannels management instructions. Screenshots of admin pannel and form.
+        </p>
+
+        <mat-action-row>
+            <button mat-button color="warn" (click)="this.previousInstruction()">Previous</button>
+            <button mat-button color="primary" (click)="this.nextInstruction()">End</button>
+        </mat-action-row>
+    </mat-expansion-panel>
+</mat-accordion>

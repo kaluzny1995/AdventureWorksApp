@@ -11,7 +11,8 @@ export class AppComponent implements OnInit {
 
   title = 'Angular AdventureWorks';
   viewLinks = [
-    {name: 'Home', url: 'home'}
+    {name: 'Home', url: 'home'},
+    {name: 'About me', url: 'author'}
   ];
 
   constructor(private _auth: AuthenticationService, private _router: Router) {}

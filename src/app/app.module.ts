@@ -12,8 +12,9 @@ import { AuthenticationComponent } from './components/authentication/authenticat
 import { Error404Component } from './components/errors/error404/error404.component';
 import { Error401Component } from './components/errors/error401/error401.component';
 import { RequestInterceptionService } from './services/request-interception.service';
-import { NavMenuComponent } from './nav-menu/nav-menu.component';
-import { ProfileComponent } from './profile/profile.component';
+import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
+import { ProfileComponent } from './components/profile/profile.component';
+import { AboutAuthorComponent } from './components/about-author/about-author.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { ProfileComponent } from './profile/profile.component';
     Error404Component,
     Error401Component,
     NavMenuComponent,
-    ProfileComponent
+    ProfileComponent,
+    AboutAuthorComponent
   ],
   imports: [
     BrowserModule,

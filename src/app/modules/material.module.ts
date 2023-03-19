@@ -17,6 +17,8 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTabsModule } from '@angular/material/tabs';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
@@ -45,6 +47,8 @@ const MaterialComponents = [
   MatDatepickerModule,
   MatCheckboxModule,
   MatRadioModule,
+  MatExpansionModule,
+  MatTabsModule,
 
   MatSnackBarModule,
 

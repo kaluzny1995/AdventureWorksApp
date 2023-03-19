@@ -1,0 +1,35 @@
+<div class="mat-h1">About me</div>
+<mat-divider class="horizontal-line"></mat-divider>
+
+<mat-card class="card">
+    <mat-card-header>
+        <mat-card-title-group>
+            <div mat-card-avatar class="example-header-image"
+                style="background-image: url('/assets/images/profile.png'); background-size: cover;"></div>
+            <mat-card-title>Jakub Kaluzny</mat-card-title>
+            <mat-card-subtitle>Python Developer &amp; Data Engineer</mat-card-subtitle>
+        </mat-card-title-group>
+    </mat-card-header>
+    <mat-divider class="horizontal-line"></mat-divider>
+    <mat-card-content>
+        <p>The various aspects of computer science were in my fields of interests since pre-school childhood. I
+            participated in many IT-related events during school and then university studying. In January 2019 I got a BSc
+            degree in computer science defending the thesis of web application for supporting the vehicle service
+            station. The solution combined the SQL Server database with ASP.NET MVC C# application.</p>
+        <p>During MSc degree studies I established solution for <a href="{{ this.projectUrls.MFD }}" class="link">masked
+            faces detection</a>, which not only detects faces on static images, but also tells which part of face
+            (in &percnt;) is masked. Finnaly it says what/which thing/item covers the detected face.</p>
+        <p>In July 2021 in graduated the Data Science specialization on the <a href="{{ this.universityUrl }}" class="link">Wroclaw 
+            University of Science and Technology</a> defending the MSc thesis of <a href="{{ this.projectUrls.HSD }}" class="link">
+            "Hate Speech in social media detection"</a>. The solution first detects sentences containing hate speech and 
+            second tells which type of hate speech (racism, homophobia, xenophobia, etc.) that is.</p>
+        <p>You can find this and many other projects on my GitHub profile.</p>
+    </mat-card-content>
+    <mat-divider class="horizontal-line"></mat-divider>
+    <mat-card-actions>
+        <a href="{{ this.githubUrl }}"><button mat-button><mat-icon>view_list</mat-icon> GITHUB PROJECTS</button></a>
+        <a href="{{ this.linkedinUrl }}"><button mat-button><mat-icon>work</mat-icon> VIEW LINKEDIN PROFILE</button></a>
+        <a href="{{ this.facebookUrl }}"><button mat-button><mat-icon>thumb_up</mat-icon> FIND ME ON FACEBOOK</button></a>
+        <a href="{{ this.mailString }}"><button mat-button><mat-icon>email</mat-icon> TEXT ME</button></a>
+    </mat-card-actions>
+</mat-card>

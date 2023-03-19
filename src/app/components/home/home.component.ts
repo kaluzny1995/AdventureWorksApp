@@ -13,8 +13,8 @@ export class HomeComponent implements OnInit {
     this.mainAlert = {message: null, type: null};
   }
 
-  resultMessage: string = 'Run the actions...';
-  resultState: string | null = null;
+  mailString: string;
+  instructionNumber: number;
 
   constructor(private _route: ActivatedRoute, private _auth: AuthenticationService) { }
 
@@ -25,43 +25,22 @@ export class HomeComponent implements OnInit {
 
       this.mainAlert = {message: message, type: type};
     }
+
+    this.mailString = "mailto:dzh.awaria@gmail.com?subject=Hello&body=Message for you...";
+    this.instructionNumber = 0;
   }
 
-  testAuthentication() {
-    console.log('Testing authentication.');
-
-    this._auth.testAuthentication().subscribe({
-      next: (result) => {
-        console.log('Authentication test succeeded.', result);
-
-        this.resultMessage = JSON.stringify(result);
-        this.resultState = 'success';
-      },
-      error: (error) => {
-        console.error('Authentication test failed.', error);
-
-        this.resultMessage = `Status: ${error.status}, ${error.message}, ${JSON.stringify(error.error)}`;
-        this.resultState = 'error';
-      }
-    });
+  setInstruction(index: number) {
+    this.instructionNumber = index;
   }
 
-  getCurrentUser() {
-    console.log('Testing current user.');
-
-    this._auth.getCurrentUser().subscribe({
-      next: (result) => {
-        console.log('Current user test succeeded.', result);
-
-        this.resultMessage = JSON.stringify(result);
-        this.resultState = 'success';
-      },
-      error: (error) => {
-        console.error('Current user test failed.', error);
-
-        this.resultMessage = `Status: ${error.status}, ${error.message}, ${JSON.stringify(error.error)}`;
-        this.resultState = 'error';
-      }
-    });
+  nextInstruction() {
+    this.instructionNumber++;
   }
+
+  previousInstruction() {
+    this.instructionNumber--;
+  }
+
+
 }
