@@ -1,4 +1,4 @@
-<div class="alert" *ngIf="this.mainAlert.type" [ngClass]="this.mainAlert.type ? 'alert-' + this.mainAlert.type : ''">
+<div class="alert" *ngIf="this.mainAlert" [ngClass]="this.mainAlert.type ? 'alert-' + this.mainAlert.type : ''">
     <span>{{ this.mainAlert.message }}</span>
     <span class="fill-remaining-space"></span>
     <button mat-raised-button (click)="this.mainAlertDismiss()">&times;</button>
@@ -37,7 +37,7 @@
 </form>
 
 
-<div class="alert" *ngIf="this.authenticationAlert.type"
+<div class="alert" *ngIf="this.authenticationAlert"
     [ngClass]="this.authenticationAlert.type ? 'alert-' + this.authenticationAlert.type : ''">
     <span>{{ this.authenticationAlert.message }}</span>
     <span class="fill-remaining-space"></span>

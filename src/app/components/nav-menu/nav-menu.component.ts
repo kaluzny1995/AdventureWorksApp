@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AlertMessage } from 'src/app/models/alert-message';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
 @Component({
@@ -10,6 +11,8 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class NavMenuComponent implements OnInit {
   isAuthenticated: boolean
   username: string
+  isReadonly: boolean
+  readonlyWarning: string
 
   constructor(private _router: Router, private _auth: AuthenticationService) { }
 
@@ -20,12 +23,15 @@ export class NavMenuComponent implements OnInit {
       this._auth.getCurrentUser().subscribe({
         next: (result: any) => {
           this.username = result.username;
+          this.isReadonly = Boolean(result.is_readonly);
         },
         error: (error) => {
           console.error('Failed to retrieve username.', error);
         }
       });
     }
+
+    this.readonlyWarning = "User has readonly access.";
   }
 
   signIn() {
@@ -42,7 +48,7 @@ export class NavMenuComponent implements OnInit {
 
   signOut() {
     this._auth.removeToken();
-    this._router.navigate(['home', {message: 'Signed out.', type: 'info'}]).then(() => {
+    this._router.navigate(['home', {status: AlertMessage.SIGNED_OUT}]).then(() => {
       window.location.reload();
     });
   }

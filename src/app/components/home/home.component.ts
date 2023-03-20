@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AlertMessage } from 'src/app/models/alert-message';
+import { AppConfigService } from 'src/app/services/app-config.service';
 
 @Component({
   selector: 'app-home',
@@ -8,25 +9,44 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  mainAlert: any = {message: null, type: null};
+  mainAlert: AlertMessage | null = null;
   mainAlertDismiss() {
-    this.mainAlert = {message: null, type: null};
+    this.mainAlert = null;
   }
 
-  mailString: string;
+  title: string;
+  shortTitle: string;
+  emailUrl: string;
   instructionNumber: number;
 
-  constructor(private _route: ActivatedRoute, private _auth: AuthenticationService) { }
+  constructor(private _appConfig: AppConfigService, private _route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    if (this._route.snapshot.paramMap.has('message')) {
-      let message = this._route.snapshot.paramMap.get('message');
-      let type = this._route.snapshot.paramMap.get('type');
-
-      this.mainAlert = {message: message, type: type};
+    if (this._route.snapshot.paramMap.has('status')) {
+      let status = this._route.snapshot.paramMap.get('status');
+      switch (status) {
+        case 'signed_in': {
+          this.mainAlert = AlertMessage.SIGNED_IN;
+          break;
+        }
+        case 'already_auth': {
+          this.mainAlert = AlertMessage.ALREADY_AUTH;
+          break;
+        }
+        case 'signed_out': {
+          this.mainAlert = AlertMessage.SIGNED_OUT;
+          break;
+        }
+        default: {
+          this.mainAlert = AlertMessage.UNKNOWN_STATUS;
+          break;
+        }
+      }
     }
 
-    this.mailString = "mailto:dzh.awaria@gmail.com?subject=Hello&body=Message for you...";
+    this.title = this._appConfig.title;
+    this.shortTitle = this._appConfig.shortTitle;
+    this.emailUrl = this._appConfig.emailUrl;
     this.instructionNumber = 0;
   }
 

@@ -1,16 +1,16 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { FAST_API_SERVER } from '../app.constants';
+import { AppConfigService } from './app-config.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  constructor(private _http: HttpClient) { }
+  constructor(private _appConfig: AppConfigService, private _http: HttpClient) { }
 
   authenticate(credentials: FormData) {
-    return this._http.post<any>(FAST_API_SERVER + 'token', credentials);
+    return this._http.post<any>(this._appConfig.apiUrl + 'token', credentials);
   }
 
   setToken(token: string) {
@@ -26,11 +26,11 @@ export class AuthenticationService {
   }
 
   testAuthentication() {
-    return this._http.get<any>(FAST_API_SERVER + 'test');
+    return this._http.get<any>(this._appConfig.apiUrl + 'test');
   }
 
   getCurrentUser() {
-    return this._http.get<any>(FAST_API_SERVER + 'current_user');
+    return this._http.get<any>(this._appConfig.apiUrl + 'current_user');
   }
 
   removeToken() {

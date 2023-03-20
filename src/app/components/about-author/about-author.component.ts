@@ -1,20 +1,19 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { AppConfigService } from 'src/app/services/app-config.service';
 
 @Component({
   selector: 'app-about-author',
   templateUrl: './about-author.component.html',
   styleUrls: ['./about-author.component.scss']
 })
-export class AboutAuthorComponent {
-  githubUrl: string = "https://github.com/kaluzny1995";
-  linkedinUrl: string = "https://www.linkedin.com/in/jakub-ka%C5%82u%C5%BCny-291096133/";
-  facebookUrl: string = "https://www.facebook.com/dzh.awaria";
-  mailString: string = "mailto:dzh.awaria@gmail.com?subject=Hello&body=Message for you...";
+export class AboutAuthorComponent implements OnInit {
+  author: any;
+  emailUrl: string;
 
-  universityUrl: string = "https://pwr.edu.pl/";
+  constructor(private _appConfig: AppConfigService) {}
 
-  projectUrls = {
-    MFD: "https://github.com/kaluzny1995/MaskedFaceDetector",
-    HSD: "https://github.com/kaluzny1995/HSD2.0"
-  };
+  ngOnInit(): void {
+    this.author = this._appConfig.author;
+    this.emailUrl = this._appConfig.emailUrl;
+  }
 }

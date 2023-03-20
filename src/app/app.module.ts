@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -15,6 +15,7 @@ import { RequestInterceptionService } from './services/request-interception.serv
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { ProfileComponent } from './components/profile/profile.component';
 import { AboutAuthorComponent } from './components/about-author/about-author.component';
+import { AppConfigService } from './services/app-config.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,13 @@ import { AboutAuthorComponent } from './components/about-author/about-author.com
     MaterialModule
   ],
   providers: [
-    {provide: HTTP_INTERCEPTORS, useClass: RequestInterceptionService, multi: true}
+    {provide: HTTP_INTERCEPTORS, useClass: RequestInterceptionService, multi: true},
+    {provide: APP_INITIALIZER, multi: true, deps: [AppConfigService],
+      useFactory: (appConfigService: AppConfigService) => {
+        return () => {
+          return appConfigService.loadAppConfig();
+        };
+      }}
   ],
   bootstrap: [AppComponent]
 })

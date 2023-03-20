@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { AppConfigService } from './services/app-config.service';
 import { AuthenticationService } from './services/authentication.service';
 
 @Component({
@@ -9,15 +10,17 @@ import { AuthenticationService } from './services/authentication.service';
 })
 export class AppComponent implements OnInit {
 
-  title = 'Angular AdventureWorks';
-  viewLinks = [
+  title: string;
+  shortTitle: string;
+  viewLinks: any[] = [
     {name: 'Home', url: 'home'},
-    {name: 'About me', url: 'author'}
+    {name: 'About author', url: 'author'}
   ];
 
-  constructor(private _auth: AuthenticationService, private _router: Router) {}
+  constructor(private _appConfig: AppConfigService) {}
 
   ngOnInit(): void {
-    
+    this.title = this._appConfig.title;
+    this.shortTitle = this._appConfig.shortTitle;
   }
 }

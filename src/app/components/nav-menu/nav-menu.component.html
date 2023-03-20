@@ -1,4 +1,7 @@
-<button class="button-nav-menu" mat-raised-button [matMenuTriggerFor]="personMenu">
+<button class="button-nav-menu" mat-raised-button [matMenuTriggerFor]="personMenu" 
+    #personTooltip="matTooltip" matTooltip="{{ this.readonlyWarning }}" matTooltipPosition="left" matTooltipHideDelay="100000" 
+    [matTooltipDisabled]="!this.isAuthenticated || !this.isReadonly" 
+    [color]="this.isAuthenticated && this.isReadonly ? 'warn' : null">
     <span *ngIf="!this.isAuthenticated"><mat-icon>lock</mat-icon> Not signed in</span>
     <span *ngIf="this.isAuthenticated"><mat-icon>lock_open</mat-icon> Signed in as <b>{{ this.username }}</b></span>
 </button>

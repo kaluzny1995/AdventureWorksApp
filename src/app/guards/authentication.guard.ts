@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
+import { AlertMessage } from '../models/alert-message';
 import { EAuthenticationStatus } from '../models/e-authentication-status';
 import { AuthenticationService } from '../services/authentication.service';
 
@@ -24,7 +25,7 @@ export class AuthenticationGuard implements CanActivate {
           }
           case EAuthenticationStatus.UNAUTHENTICATED: {
             this._auth.removeToken();
-            this._router.navigate(['authenticate', {message: 'You must sign in before continuing.', type: 'warning', returnUrl: state.url}]).then(() => {
+            this._router.navigate(['authenticate', {status: AlertMessage.AUTH_REQUIRED, returnUrl: state.url}]).then(() => {
               window.location.reload();
             });
             isActivated = false;
@@ -32,7 +33,7 @@ export class AuthenticationGuard implements CanActivate {
           }
           case EAuthenticationStatus.EXPIRED: {
             this._auth.removeToken();
-            this._router.navigate(['authenticate', {message: 'JWT token expired. Sign in again.', type: 'warning', returnUrl: state.url}]).then(() => {
+            this._router.navigate(['authenticate', {status: AlertMessage.JWT_TOKEN_EXPIRED, returnUrl: state.url}]).then(() => {
               window.location.reload();
             });
             isActivated = false;
@@ -40,7 +41,7 @@ export class AuthenticationGuard implements CanActivate {
           }
           default: {
             this._auth.removeToken();
-            this._router.navigate(['authenticate', {message: 'Unknown authentication status.', type: 'warning', returnUrl: state.url}]).then(() => {
+            this._router.navigate(['authenticate', {status: AlertMessage.UNKNOWN_AUTH_STATUS, returnUrl: state.url}]).then(() => {
               window.location.reload();
             });
             isActivated = true;
@@ -50,7 +51,7 @@ export class AuthenticationGuard implements CanActivate {
       },
       error: (error) => {
         console.error('Error while checking authentication status.', error);
-        this._router.navigate(['home', {message: 'Unknown error occurred.', type: 'danger'}]);
+        this._router.navigate(['home', {status: AlertMessage.UNKNOWN_ERROR}]);
         isActivated = true;
       }
     });

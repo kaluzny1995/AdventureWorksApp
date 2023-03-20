@@ -1,0 +1,34 @@
+{
+    "app": {
+        "title": "Adventure Works Data Warehouse Management App",
+        "shortTitle": "AWDWMA",
+        "description": "An application for AdventureWork2017 data warehouse management.",
+        "author": {
+            "name": "Dzhejkob Awaria",
+            "position": "Python Developer & Data Engineer",
+            "urls": {
+                "github": "https://github.com/kaluzny1995",
+                "linkedin": "https://www.linkedin.com/in/jakub-ka%C5%82u%C5%BCny-291096133/",
+                "facebook": "https://www.facebook.com/dzh.awaria",
+                "projects": {
+                    "MFD": "https://github.com/kaluzny1995/MaskedFaceDetector",
+                    "HSD": "https://github.com/kaluzny1995/HSD2.0"
+                }
+            },
+            "email": {
+                "address": "dzh.awaria@gmail.com",
+                "to": {
+                    "subject": "Hello",
+                    "body": "Message for you..."
+                }
+            }
+        }
+    },
+    "api": {
+        "host": "localhost",
+        "port": 8080,
+        "authRequiredEndpoints": [
+            "test", "jwt_auth_test", "current_user"
+        ]
+    }
+}

@@ -1,7 +1,7 @@
-<div class="mat-h1">Adventure Works Data Warehouse Management App (AWDWMA)</div>
+<div class="mat-h1">{{ this.title }} ({{ this.shortTitle }})</div>
 <mat-divider class="horizontal-line"></mat-divider>
 
-<div class="alert" *ngIf="this.mainAlert.type" [ngClass]="this.mainAlert.type ? 'alert-' + this.mainAlert.type : ''">
+<div class="alert" *ngIf="this.mainAlert" [ngClass]="this.mainAlert.type ? 'alert-' + this.mainAlert.type : ''">
     <span>{{ this.mainAlert.message }}</span>
     <span class="fill-remaining-space"></span>
     <button mat-raised-button (click)="this.mainAlertDismiss()">&times;</button>
@@ -32,8 +32,8 @@
     </mat-card-content>
     <mat-divider class="horizontal-line"></mat-divider>
     <mat-card-actions>
-        <a routerLink="/author"><button mat-button><mat-icon>info</mat-icon> ABOUT ME</button></a>
-        <a href="{{ this.mailString }}"><button mat-button><mat-icon>email</mat-icon> TEXT ME</button></a>
+        <a routerLink="/author"><button mat-button><mat-icon>info</mat-icon> ABOUT AUTHOR</button></a>
+        <a href="{{ this.emailUrl }}"><button mat-button><mat-icon>email</mat-icon> TEXT ME</button></a>
     </mat-card-actions>
 </mat-card>
 

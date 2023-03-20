@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { AlertMessage } from 'src/app/models/alert-message';
 import { EAuthenticationStatus } from 'src/app/models/e-authentication-status';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 
@@ -10,18 +11,18 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
   styleUrls: ['./authentication.component.scss']
 })
 export class AuthenticationComponent implements OnInit {
-  mainAlert: any = {message: null, type: null};
+  mainAlert: AlertMessage | null = null;
   mainAlertDismiss() {
-    this.mainAlert = {message: null, type: null};
+    this.mainAlert = null;
   }
 
   form: FormGroup;
   username: FormControl;
   password: FormControl;
 
-  authenticationAlert: any = {message: null, type: null};
+  authenticationAlert: AlertMessage | null = null;
   authenticationAlertDismiss() {
-    this.authenticationAlert = {message: null, type: null};
+    this.authenticationAlert = null;
   }
   
   constructor(
@@ -34,20 +35,35 @@ export class AuthenticationComponent implements OnInit {
       next: (response: any) => {
         if (response.message === EAuthenticationStatus.AUTHENTICATED) {
           console.log('Already authenticated. Redirecting home.');
-          this._router.navigate(['home', {message: 'Already authenticated.', type: 'info'}]);
+          this._router.navigate(['home', {status: AlertMessage.ALREADY_AUTH}]);
         }
       },
       error: (error) => {
         console.error('Error while checking authentication status.', error);
-        this._router.navigate(['home', {message: 'Unknown error occurred.', type: 'danger'}]);
+        this._router.navigate(['home', {status: AlertMessage.UNKNOWN_ERROR}]);
       }
     });
 
-    if (this._route.snapshot.paramMap.has('message')) {
-      let message = this._route.snapshot.paramMap.get('message');
-      let type = this._route.snapshot.paramMap.get('type');
-
-      this.mainAlert = {message: message, type: type};
+    if (this._route.snapshot.paramMap.has('status')) {
+      let status = this._route.snapshot.paramMap.get('status');
+      switch (status) {
+        case 'auth_required': {
+          this.mainAlert = AlertMessage.AUTH_REQUIRED;
+          break;
+        }
+        case 'jwt_token_expired': {
+          this.mainAlert = AlertMessage.JWT_TOKEN_EXPIRED;
+          break;
+        }
+        case 'unknown_auth_status': {
+          this.mainAlert = AlertMessage.UNKNOWN_AUTH_STATUS;
+          break;
+        }
+        default: {
+          this.mainAlert = AlertMessage.UNKNOWN_STATUS;
+          break;
+        }
+      }
     }
 
     this.username = new FormControl('', Validators.required);
@@ -72,18 +88,18 @@ export class AuthenticationComponent implements OnInit {
         this._auth.setToken(result.access_token);
         
         if (!this._route.snapshot.paramMap.has('returnUrl')) {
-          this._router.navigate(['home', {message: 'Signed in.', type: 'info'}]).then(() => {
+          this._router.navigate(['home', {status: AlertMessage.SIGNED_IN}]).then(() => {
             window.location.reload();
           });
         } else {
-          this._router.navigate([this._route.snapshot.paramMap.get('returnUrl')]).then(() => {
+          this._router.navigate([this._route.snapshot.paramMap.get('returnUrl'), {status: AlertMessage.SIGNED_IN}]).then(() => {
             window.location.reload();
           });
         }
       },
       error: (error) => {
         console.error('Error while logging:', error);
-        this.authenticationAlert = {message: 'Wrong username or password.', type: 'danger'};
+        this.authenticationAlert = AlertMessage.AUTH_ERROR;
       }
     });
   }
