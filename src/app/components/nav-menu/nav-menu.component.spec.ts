@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { NavMenuComponent } from './nav-menu.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('NavMenuComponent', () => {
   let component: NavMenuComponent;
@@ -8,7 +10,9 @@ describe('NavMenuComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ NavMenuComponent ]
+      imports: [HttpClientTestingModule],
+      declarations: [NavMenuComponent],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
 

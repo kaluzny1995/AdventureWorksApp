@@ -1,15 +1,24 @@
 import { TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { AppConfigService } from './services/app-config.service';
 
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       imports: [
-        RouterTestingModule
+        RouterTestingModule, HttpClientTestingModule
       ],
       declarations: [
         AppComponent
+      ],
+      providers: [
+        AppConfigService
+      ],
+      schemas: [
+        CUSTOM_ELEMENTS_SCHEMA
       ],
     }).compileComponents();
   });
@@ -20,16 +29,12 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'AdventureWorksApp'`, () => {
+  it('should have parameters just as in config.json', () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('AdventureWorksApp');
-  });
 
-  it('should render title', () => {
-    const fixture = TestBed.createComponent(AppComponent);
-    fixture.detectChanges();
-    const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('AdventureWorksApp app is running!');
+    const configService = TestBed.inject(AppConfigService);
+
+    expect(app.title).toEqual(configService.title);
   });
 });

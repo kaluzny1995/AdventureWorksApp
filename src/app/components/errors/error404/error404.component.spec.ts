@@ -1,6 +1,8 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { Error404Component } from './error404.component';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('Error404Component', () => {
   let component: Error404Component;
@@ -8,7 +10,9 @@ describe('Error404Component', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ Error404Component ]
+      imports: [HttpClientTestingModule],
+      declarations: [Error404Component],
+      schemas: [CUSTOM_ELEMENTS_SCHEMA]
     })
     .compileComponents();
 
