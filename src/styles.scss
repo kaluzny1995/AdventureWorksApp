@@ -212,6 +212,37 @@ div.right-side-main-container {
     }
 }
 
+.card-profile-view {
+    max-width: 80%;
+    margin: 40px auto 40px auto;
+
+    .cell-label div {
+        justify-content: right;
+        right: 10px;
+        font-weight: bold;
+    }
+
+    .cell-value div {
+        justify-content: left;
+        left: 10px;
+    }
+
+    mat-card-actions button:not(:first-child):not(:last-child) {
+        margin-left: 10px;
+    }
+
+    button[color='warn'] mat-icon {
+        color: white !important;
+    }
+
+    mat-icon {
+        font-size: 24px !important;
+        position: relative !important;
+        width: unset !important;
+        height: unset !important;
+    }
+}
+
 /*Pannels*/
 .accordion {
     margin-bottom: 40px;
@@ -250,7 +281,7 @@ mat-list {
 }
 
 /*Forms*/
-.form-authentication {
+.form {
     margin-top: 30px;
     margin-bottom: 30px;
 
@@ -272,6 +303,19 @@ mat-list {
                 margin-right: 0;
             }
         }
+
+        mat-icon {
+            font-size: 24px !important;
+            position: relative !important;
+            width: unset !important;
+            height: unset !important;
+        }
+    }
+}
+
+.form-authentication {
+    .mat-small {
+        text-align: right;
     }
 }
 

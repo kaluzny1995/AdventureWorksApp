@@ -4,6 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertMessage } from 'src/app/models/alert-message';
 import { EAuthenticationStatus } from 'src/app/models/e-authentication-status';
 import { AuthenticationService } from 'src/app/services/authentication.service';
+import { UtilsService } from 'src/app/services/utils.service';
 
 @Component({
   selector: 'app-authentication',
@@ -27,7 +28,8 @@ export class AuthenticationComponent implements OnInit {
   
   constructor(
     private _fb: FormBuilder, private _route: ActivatedRoute,
-    private _router: Router, private _auth: AuthenticationService
+    private _router: Router, private _auth: AuthenticationService,
+    private _util: UtilsService
   ) { }
 
   ngOnInit(): void {
@@ -92,7 +94,12 @@ export class AuthenticationComponent implements OnInit {
             window.location.reload();
           });
         } else {
-          this._router.navigate([this._route.snapshot.paramMap.get('returnUrl'), {status: AlertMessage.SIGNED_IN}]).then(() => {
+          let returnUrlAddress = this._route.snapshot.paramMap.get('returnUrl') || '';
+          let urlBase = this._util.getUrlBase(returnUrlAddress);
+          let urlOptionalParams = this._util.getUrlOptionalParams(returnUrlAddress);
+          urlOptionalParams['status'] = AlertMessage.SIGNED_IN;
+
+          this._router.navigate([urlBase, urlOptionalParams]).then(() => {
             window.location.reload();
           });
         }

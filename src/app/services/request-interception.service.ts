@@ -20,7 +20,7 @@ export class RequestInterceptionService implements HttpInterceptor {
     if (this._appConfig.authRequiredEndpoints.some((e: any) => e === address)) {*/
 
     const address = req.url.replace(FAST_API_SERVER, '');
-    if (AUTH_REQUIRED_ADDRESSES.some((e: any) => e === address)) {
+    if (AUTH_REQUIRED_ADDRESSES.some((e: any) => address.includes(e))) {
       console.log('Authentication required for:', req.url);
 
       req = req.clone({headers: req.headers.set('Accept', 'application/json')}).clone({

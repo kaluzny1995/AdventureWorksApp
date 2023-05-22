@@ -5,7 +5,7 @@
 </div>
 
 
-<form class="form-authentication" [formGroup]="this.form" (ngSubmit)="this.login()">
+<form class="form form-authentication" [formGroup]="this.form" (ngSubmit)="this.login()">
     <mat-card>
         <mat-card-header>Sign in</mat-card-header>
         <mat-divider class="horizontal-line"></mat-divider>
@@ -27,11 +27,14 @@
                     <mat-error *ngIf="password?.errors?.required">Password is required.</mat-error>
                 </mat-form-field>
             </div>
+
+            <div class="mat-small">Don't have an account? <a href="#">Sign up</a></div>
         </mat-card-content>
 
         <mat-divider></mat-divider>
         <mat-card-actions>
-            <button mat-raised-button [disabled]="!this.form.valid" type="submit" class="form-field">Sign in</button>
+            <div class="fill-remaining-space"></div>
+            <button mat-raised-button [disabled]="!this.form.valid" type="submit" class="form-field"><mat-icon>keyboard_tab</mat-icon> Sign in</button>
         </mat-card-actions>
     </mat-card>
 </form>

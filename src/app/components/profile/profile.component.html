@@ -1,2 +1,41 @@
-<div class="mat-h1">Your profile</div>
-<mat-divider class="horizontal-line"></mat-divider>
+<div class="alert" *ngIf="this.mainAlert" [ngClass]="this.mainAlert.type ? 'alert-' + this.mainAlert.type : ''">
+    <span>{{ this.mainAlert.message }}</span>
+    <span class="fill-remaining-space"></span>
+    <button mat-raised-button (click)="this.mainAlertDismiss()">&times;</button>
+</div>
+
+
+<mat-card class="card card-profile-view">
+    <mat-card-header>
+        <mat-card-title>Your profile</mat-card-title>
+        <mat-card-subtitle>Personal data</mat-card-subtitle>
+    </mat-card-header>
+    <mat-divider class="horizontal-line"></mat-divider>
+
+    <mat-card-content>
+        <mat-grid-list *ngIf="this.viewedUser" cols="2" rowHeight="8:1">
+            <mat-grid-tile class="cell-label">Username:</mat-grid-tile>
+            <mat-grid-tile class="cell-value">{{ this.viewedUser.username }}</mat-grid-tile>
+            <mat-grid-tile class="cell-label">Full name:</mat-grid-tile>
+            <mat-grid-tile class="cell-value">{{ this.viewedUser.fullName }}</mat-grid-tile>
+            <mat-grid-tile class="cell-label">E-mail:</mat-grid-tile>
+            <mat-grid-tile class="cell-value">{{ this.viewedUser.email }}</mat-grid-tile>
+            <mat-grid-tile class="cell-label">Readonly access:</mat-grid-tile>
+            <mat-grid-tile class="cell-value">{{ this.viewedUser.isReadonly? 'yes' : 'no' }}</mat-grid-tile>
+            <mat-grid-tile class="cell-label">Registration date:</mat-grid-tile>
+            <mat-grid-tile class="cell-value">{{ this.viewedUser.dateCreated | date:'yyyy-MM-dd hh:mm:ss' }}</mat-grid-tile>
+            <mat-grid-tile class="cell-label">Last modification:</mat-grid-tile>
+            <mat-grid-tile class="cell-value">{{ this.viewedUser.dateModified | date:'yyyy-MM-dd hh:mm:ss' }}</mat-grid-tile>
+        </mat-grid-list>
+    </mat-card-content>
+
+    <mat-divider></mat-divider>
+    <mat-card-actions>
+        <button mat-raised-button type="button"><mat-icon>account_box</mat-icon> Change personal data</button>
+        <button mat-raised-button type="button"><mat-icon>laptop</mat-icon> Change credentials</button>
+        <div class="fill-remaining-space"></div>
+        <button mat-raised-button
+        #profileDeletionTooltip="matTooltip" matTooltip="{{ this.profileDeletionWarning }}" matTooltipPosition="above" matTooltipHideDelay="100000"
+        type="button" color="warn"><mat-icon>delete_forever</mat-icon> Remove account</button>
+    </mat-card-actions>
+</mat-card>

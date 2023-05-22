@@ -9,5 +9,8 @@
     <button mat-menu-item *ngIf="!this.isAuthenticated" (click)="this.signIn()"><mat-icon>person</mat-icon> Sign in</button>
     <button mat-menu-item *ngIf="!this.isAuthenticated" (click)="this.signUp()"><mat-icon>person_add</mat-icon> Sign up</button>
     <button mat-menu-item *ngIf="this.isAuthenticated" (click)="this.viewProfile()"><mat-icon>info</mat-icon> View profile</button>
+    <button mat-menu-item *ngIf="this.isAuthenticated" ><mat-icon>edit</mat-icon> Change informations</button>
+    <button mat-menu-item *ngIf="this.isAuthenticated" ><mat-icon>laptop</mat-icon> Change credentials</button>
+    <mat-divider *ngIf="this.isAuthenticated"></mat-divider>
     <button mat-menu-item *ngIf="this.isAuthenticated" (click)="this.signOut()"><mat-icon>exit_to_app</mat-icon> Sign out</button>
 </mat-menu>
