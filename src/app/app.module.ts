@@ -13,9 +13,10 @@ import { Error404Component } from './components/errors/error404/error404.compone
 import { Error401Component } from './components/errors/error401/error401.component';
 import { RequestInterceptionService } from './services/request-interception.service';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
-import { ProfileComponent } from './components/profile/profile.component';
+import { ProfileComponent } from './components/awfapi-user/profile/profile.component';
 import { AboutAuthorComponent } from './components/about-author/about-author.component';
 import { AppConfigService } from './services/app-config.service';
+import { RegisterComponent } from './components/awfapi-user/register/register.component';
 
 @NgModule({
   declarations: [
@@ -26,7 +27,8 @@ import { AppConfigService } from './services/app-config.service';
     Error401Component,
     NavMenuComponent,
     ProfileComponent,
-    AboutAuthorComponent
+    AboutAuthorComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,

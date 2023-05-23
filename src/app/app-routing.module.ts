@@ -4,8 +4,9 @@ import { AuthenticationComponent } from './components/authentication/authenticat
 import { Error404Component } from './components/errors/error404/error404.component';
 import { HomeComponent } from './components/home/home.component';
 import { AuthenticationGuard } from './guards/authentication.guard';
-import { ProfileComponent } from './components/profile/profile.component';
+import { ProfileComponent } from './components/awfapi-user/profile/profile.component';
 import { AboutAuthorComponent } from './components/about-author/about-author.component';
+import { RegisterComponent } from './components/awfapi-user/register/register.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -13,6 +14,7 @@ const routes: Routes = [
   {path: 'author', component: AboutAuthorComponent},
   {path: 'authenticate', component: AuthenticationComponent},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthenticationGuard]},
+  {path: 'register', component: RegisterComponent},
   {path: '**', component: Error404Component}
 ];
 

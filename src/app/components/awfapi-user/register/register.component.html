@@ -1,0 +1,67 @@
+<form class="form form-registration" [formGroup]="this.form" (ngSubmit)="this.register()">
+    <mat-card>
+        <mat-card-header>Sign up</mat-card-header>
+        <mat-divider class="horizontal-line"></mat-divider>
+
+        <mat-card-content>
+            <div class="form-field-group">
+                 <!--Username-->
+                <mat-form-field appearance="fill" class="form-field form-field-whole">
+                    <mat-label>Username</mat-label>
+                    <input matInput formControlName="username" required (input)="this.clearUniqueError('username')">
+                    <mat-error *ngIf="this.username?.errors?.required">Username is required.</mat-error>
+                    <mat-error *ngIf="this.username?.errors?.forbidden">This username is forbidden.</mat-error>
+                    <mat-error *ngIf="this.username?.errors?.unique">This username already exists. Provide other.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-field-group">
+                 <!--Password-->
+                <mat-form-field appearance="fill" class="form-field form-field-whole">
+                    <mat-label>Password</mat-label>
+                    <input matInput formControlName="password" type="password" required>
+                    <mat-error *ngIf="this.password?.errors?.required">Password is required.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-field-group">
+                 <!--Repeated password-->
+                <mat-form-field appearance="fill" class="form-field form-field-whole">
+                    <mat-label>Repeat password</mat-label>
+                    <input matInput formControlName="repeatedPassword" type="password" required>
+                    <mat-error *ngIf="this.repeatedPassword?.errors?.required">Repeated password is required.</mat-error>
+                    <mat-error *ngIf="this.form?.errors?.match">Passwords do not match.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-field-group">
+                 <!--Full name-->
+                <mat-form-field appearance="fill" class="form-field form-field-whole">
+                    <mat-label>Full name</mat-label>
+                    <input matInput formControlName="fullName" required>
+                    <mat-error *ngIf="this.fullName?.errors?.required">Full name is required.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-field-group">
+                <!--E-mail-->
+                <mat-form-field appearance="fill" class="form-field form-field-whole">
+                    <mat-label>E-mail</mat-label>
+                    <input matInput formControlName="email" required (input)="this.clearUniqueError('email')">
+                    <mat-error *ngIf="this.email?.errors?.required">E-mail is required.</mat-error>
+                    <mat-error *ngIf="this.email?.errors?.email">Wrong e-mail address.</mat-error>
+                    <mat-error *ngIf="this.email?.errors?.unique">This e-mail already exists. Provide other.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-field-group">
+                <!--Is readonly-->
+                <mat-checkbox formControlName="isReadonly" class="label-checkable">Registration with readonly access</mat-checkbox>
+            </div>
+
+            <div class="mat-small">Already have an account? <a routerLink="/authenticate">Sign in</a></div>
+        </mat-card-content>
+
+        <mat-divider></mat-divider>
+        <mat-card-actions>
+            <div class="fill-remaining-space"></div>
+            <button mat-raised-button [disabled]="!this.form.valid" type="submit"
+                class="form-field" color="primary"><mat-icon>keyboard_tab</mat-icon> Sign up</button>
+        </mat-card-actions>
+    </mat-card>
+</form>

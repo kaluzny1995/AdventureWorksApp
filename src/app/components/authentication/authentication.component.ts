@@ -57,6 +57,10 @@ export class AuthenticationComponent implements OnInit {
           this.mainAlert = AlertMessage.JWT_TOKEN_EXPIRED;
           break;
         }
+        case 'signup_success': {
+          this.mainAlert = AlertMessage.SIGNUP_SUCCESS;
+          break;
+        }
         case 'unknown_auth_status': {
           this.mainAlert = AlertMessage.UNKNOWN_AUTH_STATUS;
           break;

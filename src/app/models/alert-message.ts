@@ -11,7 +11,10 @@ export class AlertMessage {
     static readonly AUTH_ERROR = new AlertMessage(EAlertType.DANGER, 'auth_error', 'Wrong username or password.');
     static readonly SIGNED_IN = new AlertMessage(EAlertType.INFO, 'signed_in', 'Signed in.');
     static readonly ALREADY_AUTH = new AlertMessage(EAlertType.INFO, 'already_auth', 'Already authenticated.');
+    static readonly SIGNOUT_REQUIRED = new AlertMessage(EAlertType.WARNING, 'signout_required', 'You must sign out first.');
     static readonly SIGNED_OUT = new AlertMessage(EAlertType.INFO, 'signed_out', 'Signed out.');
+
+    static readonly SIGNUP_SUCCESS = new AlertMessage(EAlertType.SUCCESS, 'signup_success', 'Registration successful. Sign in.');
     
 
     constructor(public readonly type: EAlertType, private readonly status: string, public readonly message: string) {}

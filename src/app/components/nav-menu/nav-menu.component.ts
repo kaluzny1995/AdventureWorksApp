@@ -39,7 +39,7 @@ export class NavMenuComponent implements OnInit {
   }
 
   signUp() {
-    // under construction, after mongodb setup
+    this._router.navigate(['register']);
   }
 
   viewProfile() {

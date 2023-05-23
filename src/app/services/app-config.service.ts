@@ -52,4 +52,8 @@ export class AppConfigService {
   get authRequiredEndpoints(): string[] {
     return this._appConfig.api.authRequiredEndpoints;
   }
+
+  get forbiddenUsernames(): string[] {
+    return this._appConfig.api.forbiddenUsernames;
+  }
 }

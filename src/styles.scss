@@ -207,6 +207,10 @@ div.right-side-main-container {
         margin-bottom: 10px;
     }
 
+    button[color='warn'] mat-icon {
+        color: white !important;
+    }
+
     mat-icon {
         color: black !important;
     }
@@ -229,10 +233,6 @@ div.right-side-main-container {
 
     mat-card-actions button:not(:first-child):not(:last-child) {
         margin-left: 10px;
-    }
-
-    button[color='warn'] mat-icon {
-        color: white !important;
     }
 
     mat-icon {
@@ -286,7 +286,7 @@ mat-list {
     margin-bottom: 30px;
 
     mat-card {
-        max-width: 30%;
+        max-width: 60%;
         margin: auto;
 
         mat-card-header {
@@ -301,6 +301,23 @@ mat-list {
 
             button {
                 margin-right: 0;
+
+                &:not([color]) {
+                    color: black !important;
+                    mat-icon {
+                        color: black !important;
+                    }
+
+                    &:disabled {
+                        color: rgba(0, 0, 0, 0.38) !important;
+                    }
+                }
+                &:disabled mat-icon {
+                    color: rgba(0, 0, 0, 0.38) !important;
+                }
+                &[color='warn'] mat-icon {
+                    color: white !important;
+                }
             }
         }
 
@@ -314,8 +331,20 @@ mat-list {
 }
 
 .form-authentication {
-    .mat-small {
-        text-align: right;
+    mat-card {
+        max-width: 30%;
+
+        .mat-small {
+            text-align: right;
+        }
+    }
+}
+
+.form-registration {
+    mat-card {
+        .mat-small {
+            text-align: right;
+        }
     }
 }
 

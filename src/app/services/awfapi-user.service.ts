@@ -11,8 +11,8 @@ export class AwfapiUserService {
 
   constructor(private _appConfig: AppConfigService, private _auth: AuthenticationService, private _http: HttpClient) { }
 
-  register() {
-
+  register(registeredUser: any) {
+    return this._http.post<any>(this._appConfig.apiUrl + 'register_awfapi_user', registeredUser);
   }
 
   view(username: string) {
