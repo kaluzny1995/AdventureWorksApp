@@ -15,6 +15,7 @@ export class AlertMessage {
     static readonly SIGNED_OUT = new AlertMessage(EAlertType.INFO, 'signed_out', 'Signed out.');
 
     static readonly SIGNUP_SUCCESS = new AlertMessage(EAlertType.SUCCESS, 'signup_success', 'Registration successful. Sign in.');
+    static readonly ACCOUNT_REMOVED = new AlertMessage(EAlertType.INFO, 'account_removed', 'Your account has been sucessfully removed.');
     
 
     constructor(public readonly type: EAlertType, private readonly status: string, public readonly message: string) {}

@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { MatNativeDateModule} from '@angular/material/core';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatDialogModule } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { MatButtonToggleModule } from '@angular/material/button-toggle';
 import { MatDividerModule } from '@angular/material/divider';
@@ -33,6 +34,7 @@ import { NgScrollbarModule } from 'ngx-scrollbar'
 const MaterialComponents = [
   MatNativeDateModule,
   MatGridListModule,
+  MatDialogModule,
   MatButtonModule,
   MatButtonToggleModule,
   MatDividerModule,

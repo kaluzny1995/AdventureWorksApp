@@ -41,6 +41,10 @@ export class HomeComponent implements OnInit {
           this.mainAlert = AlertMessage.SIGNED_OUT;
           break;
         }
+        case 'account_removed': {
+          this.mainAlert = AlertMessage.ACCOUNT_REMOVED;
+          break;
+        }
         default: {
           this.mainAlert = AlertMessage.UNKNOWN_STATUS;
           break;

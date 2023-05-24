@@ -29,6 +29,10 @@ export class AuthenticationService {
     return this._http.get<any>(this._appConfig.apiUrl + 'test');
   }
 
+  verifyPassword(password: string) {
+    return this._http.get<any>(this._appConfig.apiUrl + `verify/${password}`);
+  }
+
   getCurrentUser() {
     return this._http.get<any>(this._appConfig.apiUrl + 'current_user');
   }

@@ -36,6 +36,6 @@
         <div class="fill-remaining-space"></div>
         <button mat-raised-button
         #profileDeletionTooltip="matTooltip" matTooltip="{{ this.profileDeletionWarning }}" matTooltipPosition="above" matTooltipHideDelay="100000"
-        type="button" color="warn"><mat-icon>delete_forever</mat-icon> Remove account</button>
+        type="button" color="warn" (click)="this.showAccountDeletionDialog()"><mat-icon>delete_forever</mat-icon> Remove account</button>
     </mat-card-actions>
 </mat-card>

@@ -27,7 +27,7 @@ export class AwfapiUserService {
 
   }
 
-  removeAccount() {
-
+  removeAccount(username: string) {
+    return this._http.delete<any>(this._appConfig.apiUrl + `remove_awfapi_user_account/${username}`);
   }
 }
