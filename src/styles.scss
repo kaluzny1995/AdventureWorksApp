@@ -231,7 +231,7 @@ div.right-side-main-container {
         left: 10px;
     }
 
-    mat-card-actions button:not(:first-child):not(:last-child) {
+    mat-card-actions .link:not(:first-child):not(:last-child) {
         margin-left: 10px;
     }
 

@@ -31,10 +31,10 @@
 
     <mat-divider></mat-divider>
     <mat-card-actions>
-        <button mat-raised-button type="button"><mat-icon>account_box</mat-icon> Change personal data</button>
-        <button mat-raised-button type="button"><mat-icon>laptop</mat-icon> Change credentials</button>
+        <a class="link" routerLink="/change-data"><button mat-raised-button type="button"><mat-icon>account_box</mat-icon> Change personal data</button></a>
+        <a class="link" routerLink="/change-credentials"><button mat-raised-button type="button"><mat-icon>laptop</mat-icon> Change credentials</button></a>
         <div class="fill-remaining-space"></div>
-        <button mat-raised-button
+        <button class="link" mat-raised-button
         #profileDeletionTooltip="matTooltip" matTooltip="{{ this.profileDeletionWarning }}" matTooltipPosition="above" matTooltipHideDelay="100000"
         type="button" color="warn" (click)="this.showAccountDeletionDialog()"><mat-icon>delete_forever</mat-icon> Remove account</button>
     </mat-card-actions>

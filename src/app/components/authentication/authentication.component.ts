@@ -80,7 +80,7 @@ export class AuthenticationComponent implements OnInit {
     });
   }
 
-  login() {
+  login(): void {
     const credentials = this.form.value;
     console.log('Credentials:', credentials);
 
@@ -114,5 +114,4 @@ export class AuthenticationComponent implements OnInit {
       }
     });
   }
-
 }

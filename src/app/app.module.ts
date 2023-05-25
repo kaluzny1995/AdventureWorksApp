@@ -17,6 +17,7 @@ import { ProfileComponent } from './components/awfapi-user/profile/profile.compo
 import { AboutAuthorComponent } from './components/about-author/about-author.component';
 import { AppConfigService } from './services/app-config.service';
 import { RegisterComponent } from './components/awfapi-user/register/register.component';
+import { ChangeDataComponent } from './components/awfapi-user/change-data/change-data.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import { RegisterComponent } from './components/awfapi-user/register/register.co
     NavMenuComponent,
     ProfileComponent,
     AboutAuthorComponent,
-    RegisterComponent
+    RegisterComponent,
+    ChangeDataComponent
   ],
   imports: [
     BrowserModule,

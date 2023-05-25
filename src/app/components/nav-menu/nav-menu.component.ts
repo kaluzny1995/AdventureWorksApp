@@ -26,7 +26,7 @@ export class NavMenuComponent implements OnInit {
           this.isReadonly = Boolean(result.is_readonly);
         },
         error: (error) => {
-          console.error('Failed to retrieve username.', error);
+          console.error('Error while loading current user data.', error);
         }
       });
     }
@@ -34,19 +34,27 @@ export class NavMenuComponent implements OnInit {
     this.readonlyWarning = "User has readonly access.";
   }
 
-  signIn() {
+  signIn(): void {
     this._router.navigate(['authenticate']);
   }
 
-  signUp() {
+  signUp(): void {
     this._router.navigate(['register']);
   }
 
-  viewProfile() {
+  viewProfile(): void {
     this._router.navigate(['profile']);
   }
 
-  signOut() {
+  changeData(): void {
+    this._router.navigate(['change-data']);
+  }
+
+  changeCredentials(): void {
+    this._router.navigate(['change-credentials']);
+  }
+
+  signOut(): void {
     this._auth.removeToken();
     this._router.navigate(['home', {status: AlertMessage.SIGNED_OUT}]).then(() => {
       window.location.reload();

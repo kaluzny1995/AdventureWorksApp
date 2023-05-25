@@ -1,0 +1,44 @@
+<div class="alert" *ngIf="this.mainAlert" [ngClass]="this.mainAlert.type ? 'alert-' + this.mainAlert.type : ''">
+    <span>{{ this.mainAlert.message }}</span>
+    <span class="fill-remaining-space"></span>
+    <button mat-raised-button (click)="this.mainAlertDismiss()">&times;</button>
+</div>
+
+<form class="form form-registration" [formGroup]="this.form" (ngSubmit)="this.changeData()">
+    <mat-card>
+        <mat-card-header>Change personal data</mat-card-header>
+        <mat-divider class="horizontal-line"></mat-divider>
+
+        <mat-card-content>
+            <div class="form-field-group">
+                 <!--Full name-->
+                <mat-form-field appearance="fill" class="form-field form-field-whole">
+                    <mat-label>Full name</mat-label>
+                    <input matInput formControlName="fullName" required>
+                    <mat-error *ngIf="this.fullName?.errors?.required">Full name is required.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-field-group">
+                <!--E-mail-->
+                <mat-form-field appearance="fill" class="form-field form-field-whole">
+                    <mat-label>E-mail</mat-label>
+                    <input matInput formControlName="email" required (input)="this.clearUniqueError('email')">
+                    <mat-error *ngIf="this.email?.errors?.required">E-mail is required.</mat-error>
+                    <mat-error *ngIf="this.email?.errors?.email">Wrong e-mail address.</mat-error>
+                    <mat-error *ngIf="this.email?.errors?.unique">This e-mail already exists. Provide other.</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="form-field-group">
+                <!--Is readonly-->
+                <mat-checkbox formControlName="isReadonly" class="label-checkable">Registration with readonly access</mat-checkbox>
+            </div>
+        </mat-card-content>
+
+        <mat-divider></mat-divider>
+        <mat-card-actions>
+            <div class="fill-remaining-space"></div>
+            <button mat-raised-button [disabled]="!this.form.valid || !this.isChanged" type="submit"
+                class="form-field" color="primary"><mat-icon>keyboard_tab</mat-icon> Change data</button>
+        </mat-card-actions>
+    </mat-card>
+</form>

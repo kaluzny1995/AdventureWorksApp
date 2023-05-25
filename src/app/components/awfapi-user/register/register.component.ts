@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
     this._auth.testAuthentication().subscribe({
       next: (response: any) => {
         if (response.message === EAuthenticationStatus.AUTHENTICATED) {
-          console.log('Signed in. Sign out before continuing. Redirecting home.');
+          console.log('Signed up. Sign out before continuing. Redirecting home.');
           this._router.navigate(['home', {status: AlertMessage.SIGNOUT_REQUIRED}]);
         }
       },
@@ -59,7 +59,7 @@ export class RegisterComponent implements OnInit {
     }, {validator: this._fv.PasswordsMatchingValidator('password', 'repeatedPassword')});
   }
 
-  clearUniqueError(fieldName: string) {
+  clearUniqueError(fieldName: string): void {
     switch (fieldName) {
       case 'username': {
         if (this.username.hasError('unique')) {
@@ -79,7 +79,7 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  register() {
+  register(): void {
     const registeredUser: RegisteredUser = this.form.value as RegisteredUser;
     console.log('Registered user:', registeredUser);
 

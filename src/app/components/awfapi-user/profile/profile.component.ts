@@ -50,7 +50,7 @@ export class ProfileComponent implements OnInit {
 
     this._auth.getCurrentUser().subscribe({
       next: (result: any) => {
-        this._userService.view(result.username).pipe(map(data => ({
+        this._userService.view(result.username).pipe(map( (data: any) => ({
           username: data.username,
           fullName: data.full_name,
           email: data.email,
@@ -68,7 +68,7 @@ export class ProfileComponent implements OnInit {
         });
       },
       error: (error) => {
-        console.error('Failed to retrieve username.', error);
+        console.error('Error while loading current user data.', error);
       }
     });
   }
@@ -80,7 +80,6 @@ export class ProfileComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        console.log('Account deleted.');
         this._auth.getCurrentUser().subscribe({
           next: (result: any) => {
             this._userService.removeAccount(result.username).subscribe({
@@ -97,7 +96,7 @@ export class ProfileComponent implements OnInit {
             });
           },
           error: (error) => {
-            console.error('Failed to retrieve username.', error);
+            console.error('Error while loading current user data.', error);
           }
         });
       }
