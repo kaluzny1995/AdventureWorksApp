@@ -21,7 +21,7 @@ export class FormValidationService {
       const control = formGroup.controls[controlName];
       const matchingControl = formGroup.controls[matchingControlName];
       if (matchingControl.errors && !matchingControl.errors.match) {
-        matchingControl.setErrors(null);
+        delete matchingControl.errors.match;
         return null;
       }
       let result = control.value !== matchingControl.value? {match: true} : null;

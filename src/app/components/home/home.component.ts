@@ -37,10 +37,6 @@ export class HomeComponent implements OnInit {
           this.mainAlert = AlertMessage.SIGNOUT_REQUIRED;
           break;
         }
-        case 'user_cred_ch_signout': {
-          this.mainAlert = AlertMessage.USER_CRED_CH_SIGNOUT;
-          break;
-        }
         case 'signed_out': {
           this.mainAlert = AlertMessage.SIGNED_OUT;
           break;
