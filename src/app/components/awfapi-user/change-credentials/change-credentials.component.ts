@@ -116,17 +116,15 @@ export class ChangeCredentialsComponent implements OnInit {
   }
 
   changeCredentials(): void {
-    const changedUserCredentials: ChangedUserCredentials = new ChangedUserCredentials(this.form.value);
+    const changedUserCredentials: ChangedUserCredentials = ChangedUserCredentials.fromFormStructure(this.form.value);
     console.log('Changed user credentials:', changedUserCredentials);
 
     this._auth.getCurrentUser().subscribe({
       next: (result: any) => {
-        this._userService.changeCredentials(result.username, {
-          new_username: changedUserCredentials.newUsername,
-          current_password: changedUserCredentials.currentPassword,
-          new_password: changedUserCredentials.newPassword,
-          repeated_password: changedUserCredentials.repeatedPassword
-        }).subscribe({
+        this._userService.changeCredentials(
+            result.username,
+            changedUserCredentials.toAPIStructure()
+          ).subscribe({
           next: (result: any) => {
             console.log('User credentials changed successfully.', result);
             if (this.changeType.value === 'password') {

@@ -61,16 +61,12 @@ export class ChangeDataComponent implements OnInit {
 
     this._auth.getCurrentUser().subscribe({
       next: (result: any) => {
-        this.originalData = new ChangedUserData({
-          fullName: result.full_name,
-          email: result.email,
-          isReadonly: Boolean(result.is_readonly),
-        });
+        this.originalData = ChangedUserData.fromAPIStructure(result);
         this.form.setValue(this.originalData);
         console.log('User data successfully loaded into form.');
 
         this.form.valueChanges.subscribe(data => {
-          this.isChanged = !this.originalData.equals(new ChangedUserData(data));
+          this.isChanged = !this.originalData.equals(ChangedUserData.fromFormStructure(data));
         });
       },
       error: (error) => {
@@ -94,16 +90,15 @@ export class ChangeDataComponent implements OnInit {
   }
 
   changeData(): void {
-    const changedUserData: ChangedUserData = this.form.value as ChangedUserData;
+    const changedUserData: ChangedUserData = ChangedUserData.fromFormStructure(this.form.value);
     console.log('Changed user data:', changedUserData);
 
     this._auth.getCurrentUser().subscribe({
       next: (result: any) => {
-        this._userService.changeData(result.username, {
-          full_name: changedUserData.fullName,
-          email: changedUserData.email,
-          is_readonly: changedUserData.isReadonly,
-        }).subscribe({
+        this._userService.changeData(
+            result.username,
+            changedUserData.toAPIStructure()
+          ).subscribe({
           next: (result: any) => {
             console.log('User data changed successfully.', result);
             this._router.navigate(['change-data', {status: AlertMessage.USER_DATA_CHANGED}]).then(() => {
@@ -112,6 +107,10 @@ export class ChangeDataComponent implements OnInit {
           },
           error: (error) => {
             console.error('Error while changing user data.', error);
+            let errorMessage = error.error.detail.info;
+            if (errorMessage.includes('email')) {
+              this.email.setErrors({unique: true});
+            }
           }
         });
       },
