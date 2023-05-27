@@ -47,20 +47,14 @@ export class ProfileComponent implements OnInit {
       }
     }
 
-    this._auth.getCurrentUser().subscribe({
+    const awfapiUsername: string = this._auth.getUsernameFromToken();
+    this._userService.view(awfapiUsername).subscribe({
       next: (result: any) => {
-        this._userService.view(result.username).subscribe({
-          next: (result: any) => {
-            console.log('User data loaded for profile view.', result);
-            this.viewedUser = ViewedUser.fromAPIStructure(result);
-          },
-          error: (error) => {
-            console.error('Error while loading user data for profile view.', error);
-          }
-        });
+        console.log('User data loaded for profile view.', result);
+        this.viewedUser = ViewedUser.fromAPIStructure(result);
       },
       error: (error) => {
-        console.error('Error while loading current user data.', error);
+        console.error('Error while loading user data for profile view.', error);
       }
     });
   }
@@ -70,25 +64,19 @@ export class ProfileComponent implements OnInit {
       width: '600px'
     });
 
-    dialogRef.afterClosed().subscribe(result => {
-      if (result) {
-        this._auth.getCurrentUser().subscribe({
+    dialogRef.afterClosed().subscribe(isConfirmed => {
+      if (isConfirmed) {
+        const awfapiUsername: string = this._auth.getUsernameFromToken();
+        this._userService.removeAccount(awfapiUsername).subscribe({
           next: (result: any) => {
-            this._userService.removeAccount(result.username).subscribe({
-              next: (result: any) => {
-                console.log('Account removed successfully. Logging out.', result);
-                this._auth.removeToken();
-                this._router.navigate(['home', {status: AlertMessage.ACCOUNT_REMOVED}]).then(() => {
-                  window.location.reload();
-                });
-              },
-              error: (error) => {
-                console.error('Error while removing account.', error);
-              }
+            console.log('Account removed successfully. Logging out.', result);
+            this._auth.removeToken();
+            this._router.navigate(['home', {status: AlertMessage.ACCOUNT_REMOVED}]).then(() => {
+              window.location.reload();
             });
           },
           error: (error) => {
-            console.error('Error while loading current user data.', error);
+            console.error('Error while removing account.', error);
           }
         });
       }

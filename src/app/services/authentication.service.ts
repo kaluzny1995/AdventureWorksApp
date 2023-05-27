@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AppConfigService } from './app-config.service';
 import { Observable } from 'rxjs';
+import jwtDecode from 'jwt-decode';
 
 @Injectable({
   providedIn: 'root'
@@ -18,8 +19,18 @@ export class AuthenticationService {
     localStorage.setItem('token', token);
   }
 
-  getToken(): string | null {
-    return localStorage.getItem('token');
+  getToken(): string {
+    return localStorage.getItem('token') || '';
+  }
+
+  getUsernameFromToken(): string {
+    const tokenData: any = jwtDecode(this.getToken());
+    return tokenData.sub;
+  }
+
+  getExpirationMilisFromToken(): number {
+    const tokenData: any = jwtDecode(this.getToken());
+    return parseInt(tokenData.exp) * 1000;
   }
 
   isAuthenticated(): boolean {

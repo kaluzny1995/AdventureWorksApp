@@ -119,40 +119,34 @@ export class ChangeCredentialsComponent implements OnInit {
     const changedUserCredentials: ChangedUserCredentials = ChangedUserCredentials.fromFormStructure(this.form.value);
     console.log('Changed user credentials:', changedUserCredentials);
 
-    this._auth.getCurrentUser().subscribe({
-      next: (result: any) => {
-        this._userService.changeCredentials(
-            result.username,
-            changedUserCredentials.toAPIStructure()
-          ).subscribe({
-          next: (result: any) => {
-            console.log('User credentials changed successfully.', result);
-            if (this.changeType.value === 'password') {
-              this._router.navigate(['change-credentials', {status: AlertMessage.USER_CRED_CHANGED}]).then(() => {
-                window.location.reload();
-              });
-            } else {
-              this._auth.removeToken();
-              this._router.navigate(['authenticate', {status: AlertMessage.USER_CRED_CH_SIGNOUT}]).then(() => {
-                window.location.reload();
-              });
-            }
-          },
-          error: (error) => {
-            console.error('Error while changing user credentials.', error);
-            let errorMessage = error.error.detail.info;
-            if (errorMessage.includes('username')) {
-              this.newUsername.setErrors({unique: true});
-            }
-            if (errorMessage.includes('password')) {
-              this.currentPassword.setErrors({password: true});
-            }
-          }
+    const awfapiUsername: string = this._auth.getUsernameFromToken();
+    this._userService.changeCredentials(
+      awfapiUsername,
+      changedUserCredentials.toAPIStructure()
+    ).subscribe({
+    next: (result: any) => {
+      console.log('User credentials changed successfully.', result);
+      if (this.changeType.value === 'password') {
+        this._router.navigate(['change-credentials', {status: AlertMessage.USER_CRED_CHANGED}]).then(() => {
+          window.location.reload();
         });
-      },
-      error: (error) => {
-        console.error('Error while loading current user data.', error);
+      } else {
+        this._auth.removeToken();
+        this._router.navigate(['authenticate', {status: AlertMessage.USER_CRED_CH_SIGNOUT}]).then(() => {
+          window.location.reload();
+        });
       }
-    });
+    },
+    error: (error) => {
+      console.error('Error while changing user credentials.', error);
+      let errorMessage = error.error.detail.info;
+      if (errorMessage.includes('username')) {
+        this.newUsername.setErrors({unique: true});
+      }
+      if (errorMessage.includes('password')) {
+        this.currentPassword.setErrors({password: true});
+      }
+    }
+  });
   }
 }

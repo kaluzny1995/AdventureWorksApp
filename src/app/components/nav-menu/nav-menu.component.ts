@@ -11,6 +11,7 @@ import { AuthenticationService } from 'src/app/services/authentication.service';
 export class NavMenuComponent implements OnInit {
   isAuthenticated: boolean
   username: string
+  fullName: string
   isReadonly: boolean
   readonlyWarning: string
 
@@ -23,6 +24,7 @@ export class NavMenuComponent implements OnInit {
       this._auth.getCurrentUser().subscribe({
         next: (result: any) => {
           this.username = result.username;
+          this.fullName = result.full_name;
           this.isReadonly = Boolean(result.is_readonly);
         },
         error: (error) => {

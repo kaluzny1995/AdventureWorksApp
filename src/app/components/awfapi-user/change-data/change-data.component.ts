@@ -58,7 +58,7 @@ export class ChangeDataComponent implements OnInit {
       email: this.email,
       isReadonly: this.isReadonly
     });
-
+    
     this._auth.getCurrentUser().subscribe({
       next: (result: any) => {
         this.originalData = ChangedUserData.fromAPIStructure(result);
@@ -93,30 +93,24 @@ export class ChangeDataComponent implements OnInit {
     const changedUserData: ChangedUserData = ChangedUserData.fromFormStructure(this.form.value);
     console.log('Changed user data:', changedUserData);
 
-    this._auth.getCurrentUser().subscribe({
-      next: (result: any) => {
-        this._userService.changeData(
-            result.username,
-            changedUserData.toAPIStructure()
-          ).subscribe({
-          next: (result: any) => {
-            console.log('User data changed successfully.', result);
-            this._router.navigate(['change-data', {status: AlertMessage.USER_DATA_CHANGED}]).then(() => {
-              window.location.reload();
-            });
-          },
-          error: (error) => {
-            console.error('Error while changing user data.', error);
-            let errorMessage = error.error.detail.info;
-            if (errorMessage.includes('email')) {
-              this.email.setErrors({unique: true});
-            }
-          }
-        });
-      },
-      error: (error) => {
-        console.error('Error while loading current user data.', error);
+    const awfapiUsername: string = this._auth.getUsernameFromToken();
+    this._userService.changeData(
+      awfapiUsername,
+      changedUserData.toAPIStructure()
+    ).subscribe({
+    next: (result: any) => {
+      console.log('User data changed successfully.', result);
+      this._router.navigate(['change-data', {status: AlertMessage.USER_DATA_CHANGED}]).then(() => {
+        window.location.reload();
+      });
+    },
+    error: (error) => {
+      console.error('Error while changing user data.', error);
+      let errorMessage = error.error.detail.info;
+      if (errorMessage.includes('email')) {
+        this.email.setErrors({unique: true});
       }
-    });
+    }
+  });
   }
 }
