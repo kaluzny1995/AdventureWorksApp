@@ -6,7 +6,6 @@ import { MatDialog, MatDialogModule, MatDialogRef } from '@angular/material/dial
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router } from '@angular/router';
-import { map } from 'rxjs';
 import { AlertMessage } from 'src/app/models/alert-message';
 import { ViewedUser } from 'src/app/models/awfapi-user/viewed-user';
 import { AuthenticationService } from 'src/app/services/authentication.service';
@@ -19,7 +18,7 @@ import { AwfapiUserService } from 'src/app/services/awfapi-user.service';
 })
 export class ProfileComponent implements OnInit {
   mainAlert: AlertMessage | null = null;
-  mainAlertDismiss() {
+  mainAlertDismiss(): void {
     this.mainAlert = null;
   }
 

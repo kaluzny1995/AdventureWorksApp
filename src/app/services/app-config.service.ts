@@ -10,7 +10,7 @@ export class AppConfigService {
 
   constructor(private _http: HttpClient) { }
 
-  loadAppConfig() {
+  loadAppConfig(): Promise<any> {
     return this._http.get('/assets/config.json')
       .toPromise().then(data => {
         console.log('Config file loaded', data);
@@ -35,16 +35,16 @@ export class AppConfigService {
   }
 
   get emailUrl(): string {
-    let email: string = this._appConfig.app.author.email.address;
-    let subject: string = this._appConfig.app.author.email.to.subject;
-    let body: string = this._appConfig.app.author.email.to.body;
+    const email: string = this._appConfig.app.author.email.address;
+    const subject: string = this._appConfig.app.author.email.to.subject;
+    const body: string = this._appConfig.app.author.email.to.body;
 
     return `mailto:${email}?subject=${subject}&body=${body}`;
   }
 
   get apiUrl(): string {
-    let host: string = this._appConfig.api.host;
-    let port: number = this._appConfig.api.port;
+    const host: string = this._appConfig.api.host;
+    const port: number = this._appConfig.api.port;
 
     return `http://${host}:${port}/`;
   }

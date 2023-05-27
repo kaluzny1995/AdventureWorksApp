@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AppConfigService } from './app-config.service';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -9,35 +10,35 @@ export class AuthenticationService {
 
   constructor(private _appConfig: AppConfigService, private _http: HttpClient) { }
 
-  authenticate(credentials: FormData) {
+  authenticate(credentials: FormData): Observable<any> {
     return this._http.post<any>(this._appConfig.apiUrl + 'token', credentials);
   }
 
-  setToken(token: string) {
+  setToken(token: string): void {
     localStorage.setItem('token', token);
   }
 
-  getToken() {
+  getToken(): string | null {
     return localStorage.getItem('token');
   }
 
-  isAuthenticated() {
+  isAuthenticated(): boolean {
     return !!this.getToken();
   }
 
-  testAuthentication() {
+  testAuthentication(): Observable<any> {
     return this._http.get<any>(this._appConfig.apiUrl + 'test');
   }
 
-  verifyPassword(password: string) {
+  verifyPassword(password: string): Observable<any> {
     return this._http.get<any>(this._appConfig.apiUrl + `verify/${password}`);
   }
 
-  getCurrentUser() {
+  getCurrentUser(): Observable<any> {
     return this._http.get<any>(this._appConfig.apiUrl + 'current_user');
   }
 
-  removeToken() {
+  removeToken(): void {
     localStorage.removeItem('token');
   }
 }

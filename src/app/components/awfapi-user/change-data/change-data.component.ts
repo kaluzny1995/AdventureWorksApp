@@ -13,7 +13,7 @@ import { AwfapiUserService } from 'src/app/services/awfapi-user.service';
 })
 export class ChangeDataComponent implements OnInit {
   mainAlert: AlertMessage | null = null;
-  mainAlertDismiss() {
+  mainAlertDismiss(): void {
     this.mainAlert = null;
   }
 

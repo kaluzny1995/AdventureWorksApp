@@ -13,7 +13,7 @@ import { UtilsService } from 'src/app/services/utils.service';
 })
 export class AuthenticationComponent implements OnInit {
   mainAlert: AlertMessage | null = null;
-  mainAlertDismiss() {
+  mainAlertDismiss(): void {
     this.mainAlert = null;
   }
 
@@ -22,7 +22,7 @@ export class AuthenticationComponent implements OnInit {
   password: FormControl;
 
   authenticationAlert: AlertMessage | null = null;
-  authenticationAlertDismiss() {
+  authenticationAlertDismiss(): void {
     this.authenticationAlert = null;
   }
   

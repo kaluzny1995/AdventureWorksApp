@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AuthenticationService } from './authentication.service';
 import { AppConfigService } from './app-config.service';
 import { Observable } from 'rxjs';
 
@@ -9,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class AwfapiUserService {
 
-  constructor(private _appConfig: AppConfigService, private _auth: AuthenticationService, private _http: HttpClient) { }
+  constructor(private _appConfig: AppConfigService, private _http: HttpClient) { }
 
   register(registeredUser: any): Observable<any> {
     return this._http.post<any>(this._appConfig.apiUrl + 'register_awfapi_user', registeredUser);

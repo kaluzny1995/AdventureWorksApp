@@ -10,7 +10,7 @@ import { AppConfigService } from 'src/app/services/app-config.service';
 })
 export class HomeComponent implements OnInit {
   mainAlert: AlertMessage | null = null;
-  mainAlertDismiss() {
+  mainAlertDismiss(): void {
     this.mainAlert = null;
   }
 

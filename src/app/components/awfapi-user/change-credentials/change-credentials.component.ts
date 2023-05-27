@@ -15,7 +15,7 @@ import { FormValidationService } from 'src/app/services/form-validation.service'
 })
 export class ChangeCredentialsComponent implements OnInit {
   mainAlert: AlertMessage | null = null;
-  mainAlertDismiss() {
+  mainAlertDismiss(): void {
     this.mainAlert = null;
   }
 

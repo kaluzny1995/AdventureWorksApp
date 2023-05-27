@@ -7,7 +7,7 @@ export class UtilsService {
 
   constructor() { }
 
-  getUrlBase(urlString: string) {
+  getUrlBase(urlString: string): string {
     let urlBase: string = decodeURIComponent(urlString);
     if (urlBase.indexOf(';') > -1) {
       urlBase = urlBase.split(';')[0];

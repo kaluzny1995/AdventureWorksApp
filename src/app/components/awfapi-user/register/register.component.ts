@@ -80,17 +80,12 @@ export class RegisterComponent implements OnInit {
   }
 
   register(): void {
-    const registeredUser: RegisteredUser = this.form.value as RegisteredUser;
+    const registeredUser: RegisteredUser = RegisteredUser.fromFormStructure(this.form.value);
     console.log('Registered user:', registeredUser);
 
-    this._userService.register({
-      username: registeredUser.username,
-      password: registeredUser.password,
-      repeated_password: registeredUser.repeatedPassword,
-      full_name: registeredUser.fullName,
-      email: registeredUser.email,
-      is_readonly: registeredUser.isReadonly,
-    }).subscribe({
+    this._userService.register(
+        registeredUser.toAPIStructure()
+      ).subscribe({
       next: (result: any) => {
         console.log('New user registered successfully.', result);
         this._router.navigate(['authenticate', {status: AlertMessage.SIGNUP_SUCCESS}]);
