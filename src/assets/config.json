@@ -28,7 +28,9 @@
         "host": "localhost",
         "port": 8080,
         "authRequiredEndpoints": [
-            "test", "jwt_auth_test", "current_user"
-        ]
+            "test", "verify", "jwt_auth_test", "current_user",
+            "view_awfapi_user_profile", "change_awfapi_user_data", "change_awfapi_user_credentials", "remove_awfapi_user_account"
+        ],
+        "forbiddenUsernames": ["admin", "user", "password"]
     }
 }

@@ -207,8 +207,39 @@ div.right-side-main-container {
         margin-bottom: 10px;
     }
 
+    button[color='warn'] mat-icon {
+        color: white !important;
+    }
+
     mat-icon {
         color: black !important;
+    }
+}
+
+.card-profile-view {
+    max-width: 80%;
+    margin: 40px auto 40px auto;
+
+    .cell-label div {
+        justify-content: right;
+        right: 10px;
+        font-weight: bold;
+    }
+
+    .cell-value div {
+        justify-content: left;
+        left: 10px;
+    }
+
+    mat-card-actions .link:not(:first-child):not(:last-child) {
+        margin-left: 10px;
+    }
+
+    mat-icon {
+        font-size: 24px !important;
+        position: relative !important;
+        width: unset !important;
+        height: unset !important;
     }
 }
 
@@ -250,12 +281,12 @@ mat-list {
 }
 
 /*Forms*/
-.form-authentication {
+.form {
     margin-top: 30px;
     margin-bottom: 30px;
 
     mat-card {
-        max-width: 30%;
+        max-width: 60%;
         margin: auto;
 
         mat-card-header {
@@ -270,11 +301,56 @@ mat-list {
 
             button {
                 margin-right: 0;
+
+                &:not([color]) {
+                    color: black !important;
+                    mat-icon {
+                        color: black !important;
+                    }
+
+                    &:disabled {
+                        color: rgba(0, 0, 0, 0.38) !important;
+                    }
+                }
+                &:disabled mat-icon {
+                    color: rgba(0, 0, 0, 0.38) !important;
+                }
+                &[color='warn'] mat-icon {
+                    color: white !important;
+                }
             }
+        }
+
+        mat-icon {
+            font-size: 24px !important;
+            position: relative !important;
+            width: unset !important;
+            height: unset !important;
         }
     }
 }
 
+.form-authentication {
+    mat-card {
+        max-width: 30%;
+
+        .mat-small {
+            text-align: right;
+        }
+    }
+}
+
+.form-registration {
+    mat-card {
+        .mat-small {
+            text-align: right;
+        }
+    }
+}
+
+.form-field-group-above {
+    margin-top: 15px !important;
+}
 .form-field-group {
     margin-bottom: 15px !important;
 }

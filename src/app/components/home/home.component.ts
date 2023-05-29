@@ -10,7 +10,7 @@ import { AppConfigService } from 'src/app/services/app-config.service';
 })
 export class HomeComponent implements OnInit {
   mainAlert: AlertMessage | null = null;
-  mainAlertDismiss() {
+  mainAlertDismiss(): void {
     this.mainAlert = null;
   }
 
@@ -33,8 +33,16 @@ export class HomeComponent implements OnInit {
           this.mainAlert = AlertMessage.ALREADY_AUTH;
           break;
         }
+        case 'signout_required': {
+          this.mainAlert = AlertMessage.SIGNOUT_REQUIRED;
+          break;
+        }
         case 'signed_out': {
           this.mainAlert = AlertMessage.SIGNED_OUT;
+          break;
+        }
+        case 'account_removed': {
+          this.mainAlert = AlertMessage.ACCOUNT_REMOVED;
           break;
         }
         default: {
@@ -50,15 +58,15 @@ export class HomeComponent implements OnInit {
     this.instructionNumber = 0;
   }
 
-  setInstruction(index: number) {
+  setInstruction(index: number): void {
     this.instructionNumber = index;
   }
 
-  nextInstruction() {
+  nextInstruction(): void {
     this.instructionNumber++;
   }
 
-  previousInstruction() {
+  previousInstruction(): void {
     this.instructionNumber--;
   }
 
