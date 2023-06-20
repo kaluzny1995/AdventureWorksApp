@@ -16,9 +16,9 @@ export class AuthenticationGuard implements CanActivate {
 
     this._auth.testAuthentication().subscribe({
       next: (response: any) => {
-        console.log('Authentication status:', response.message);
+        console.log('Authentication status result:', response);
         
-        switch(response.message) {
+        switch(response.title) {
           case EAuthenticationStatus.AUTHENTICATED: {
             isActivated = true;
             break;

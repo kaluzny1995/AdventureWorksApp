@@ -35,7 +35,7 @@ export class AuthenticationComponent implements OnInit {
   ngOnInit(): void {
     this._auth.testAuthentication().subscribe({
       next: (response: any) => {
-        if (response.message === EAuthenticationStatus.AUTHENTICATED) {
+        if (response.title === EAuthenticationStatus.AUTHENTICATED) {
           console.log('Already authenticated. Redirecting home.');
           this._router.navigate(['home', {status: AlertMessage.ALREADY_AUTH}]);
         }

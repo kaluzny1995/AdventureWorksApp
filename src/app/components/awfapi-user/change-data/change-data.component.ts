@@ -106,7 +106,7 @@ export class ChangeDataComponent implements OnInit {
     },
     error: (error) => {
       console.error('Error while changing user data.', error);
-      let errorMessage = error.error.detail.info;
+      let errorMessage = error.error.detail.title;
       if (errorMessage.includes('email')) {
         this.email.setErrors({unique: true});
       }

@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AlertMessage } from 'src/app/models/alert-message';
 import { ViewedUser } from 'src/app/models/awfapi-user/viewed-user';
+import { EPasswordVerificationStatus } from 'src/app/models/e-password-verification-status';
 import { AuthenticationService } from 'src/app/services/authentication.service';
 import { AwfapiUserService } from 'src/app/services/awfapi-user.service';
 
@@ -128,12 +129,18 @@ export class AccountDeletionDialog implements OnInit {
   confirm(): void {
     this._auth.verifyPassword(this.confirmationPassword.value).subscribe({
       next: (result: any) => {
-        console.log(`Password verified with result: ${result.verified}`);
-        if (!result.verified) {
-          this.confirmationPassword.setErrors({'password': true});
-        } else {
-          console.log('Account deletion confirmed.');
-          this._dialogRef.close(true);
+        console.log('Password verified with result:', result);
+        switch (result.title) {
+          case EPasswordVerificationStatus.UNVERIFIED:
+            this.confirmationPassword.setErrors({'password': true});
+            break;
+          case EPasswordVerificationStatus.VERIFIED:
+            console.log('Account deletion confirmed.');
+            this._dialogRef.close(true);
+            break;
+          default:
+            console.error(`Unknown verification status: ${result.title}`);
+            break;
         }
       },
       error: (error) => {

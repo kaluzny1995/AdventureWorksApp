@@ -32,7 +32,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {
     this._auth.testAuthentication().subscribe({
       next: (response: any) => {
-        if (response.message === EAuthenticationStatus.AUTHENTICATED) {
+        if (response.title === EAuthenticationStatus.AUTHENTICATED) {
           console.log('Signed up. Sign out before continuing. Redirecting home.');
           this._router.navigate(['home', {status: AlertMessage.SIGNOUT_REQUIRED}]);
         }
@@ -92,7 +92,7 @@ export class RegisterComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error while registering new user.', error);
-        let errorMessage = error.error.detail.info;
+        let errorMessage = error.error.detail.title;
         if (errorMessage.includes('username')) {
           this.username.setErrors({unique: true});
         }

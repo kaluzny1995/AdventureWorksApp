@@ -139,7 +139,7 @@ export class ChangeCredentialsComponent implements OnInit {
     },
     error: (error) => {
       console.error('Error while changing user credentials.', error);
-      let errorMessage = error.error.detail.info;
+      let errorMessage = error.error.detail.title;
       if (errorMessage.includes('username')) {
         this.newUsername.setErrors({unique: true});
       }
