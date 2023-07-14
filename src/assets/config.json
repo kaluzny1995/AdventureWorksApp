@@ -1,7 +1,7 @@
 {
     "app": {
-        "title": "Adventure Works Data Warehouse Management App",
-        "shortTitle": "AWDWMA",
+        "title": "AdventureWorks2017 Management App",
+        "shortTitle": "AW2017MA",
         "description": "An application for AdventureWork2017 data warehouse management.",
         "author": {
             "name": "Dzhejkob Awaria",

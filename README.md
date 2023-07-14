@@ -1,27 +1,17 @@
-# AdventureWorksApp
+# AdventureWorks2017 Management App
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.2.
+The AW2017 Management App is a solution for the maintenance of AdventureWorks2017 datawarehouse. It enables performing four basic CRUD operations on the datawarehouse entities. This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.2.
 
-## Development server
+## Setup
+### 1. Node.js
+First what you need to install is [Node.js](https://nodejs.org/). Proceed with installation instructions from official Node.js site.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+### 2. Angular
+After setting up Node.js install [Angular](https://angular.io/guide/setup-local). Additionally install [ng-scrollbar](https://material.angular.io/guide/getting-started) packages typing in `npm i ngx-scrollbar`.
 
-## Code scaffolding
+### 3. Github repo downloading
+Download from the [Github repo](https://github.com/kaluzny1995/AdventureWorksApp). Include [Angular Material](https://material.angular.io/guide/getting-started) packages into the project typing in `ng add @angular/material`. Open downloaded project repo via Visual Studio Code or other relevant Angular editor.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Running application server
 
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+To launch application server type in `ng serve` in terminal or click `Run/Run Without Debugging (Ctrl+F5)` from Visual Studio Code. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.

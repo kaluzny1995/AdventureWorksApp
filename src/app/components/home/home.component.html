@@ -1,4 +1,4 @@
-<div class="mat-h1">{{ this.title }} ({{ this.shortTitle }})</div>
+<div class="mat-h1">Home page</div>
 <mat-divider class="horizontal-line"></mat-divider>
 
 <div class="alert" *ngIf="this.mainAlert" [ngClass]="this.mainAlert.type ? 'alert-' + this.mainAlert.type : ''">
@@ -15,16 +15,16 @@
     <mat-divider class="horizontal-line"></mat-divider>
     <mat-card-content>
         <p>
-            The AWDWMA application is a solution for managing AdventureWorks2017 data warehouse.
+            The <b>{{ this.title }}</b> application is a solution for managing AdventureWorks2017 data warehouse.
             It provides basic CRUD (create, read, update, delete) operations for each of data warehouse main entities.
             This is done via so called admin pannels.
             Due to the well planned admin pannel tables with such components like: row coloring, header sorting,
             pagination, etc. the data are well visible.
         </p>
         <p>
-            The users of AWDWMA could sign up (register) via the included form. Every time after the user signs in he
+            The users of <b>{{ this.shortTitle }}</b> could sign up (register) via the included form. Every time after the user signs in he
             could change his personal data or credentials.
-            The users may have full or readonly access. Users with readonly access mya only view the data and cannot
+            The users may have full or readonly access. Users with readonly access may only view the data and cannot
             create, update or delete any entries.
             Users can also permanently remove their accounts.
         </p>
@@ -32,7 +32,7 @@
     </mat-card-content>
     <mat-divider class="horizontal-line"></mat-divider>
     <mat-card-actions>
-        <a routerLink="/author"><button mat-button><mat-icon>info</mat-icon> ABOUT AUTHOR</button></a>
+        <a routerLink="/author"><button mat-button><mat-icon>info</mat-icon> ABOUT ME</button></a>
         <a href="{{ this.emailUrl }}"><button mat-button><mat-icon>email</mat-icon> TEXT ME</button></a>
     </mat-card-actions>
 </mat-card>
