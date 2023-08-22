@@ -19,6 +19,10 @@ import { AppConfigService } from './services/app-config.service';
 import { RegisterComponent } from './components/awfapi-user/register/register.component';
 import { ChangeDataComponent } from './components/awfapi-user/change-data/change-data.component';
 import { ChangeCredentialsComponent } from './components/awfapi-user/change-credentials/change-credentials.component';
+import { FirstStepsComponent } from './components/instructions/first-steps/first-steps.component';
+import { DataflowDiagramsComponent } from './components/instructions/dataflow-diagrams/dataflow-diagrams.component';
+import { EntitiesComponent } from './components/instructions/entities/entities.component';
+import { AdminPannelsComponent } from './components/instructions/admin-pannels/admin-pannels.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +36,11 @@ import { ChangeCredentialsComponent } from './components/awfapi-user/change-cred
     AboutAuthorComponent,
     RegisterComponent,
     ChangeDataComponent,
-    ChangeCredentialsComponent
+    ChangeCredentialsComponent,
+    FirstStepsComponent,
+    DataflowDiagramsComponent,
+    EntitiesComponent,
+    AdminPannelsComponent
   ],
   imports: [
     BrowserModule,

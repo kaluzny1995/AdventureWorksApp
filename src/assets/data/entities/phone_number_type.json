@@ -1,0 +1,9 @@
+{
+    "name": "Phone Number Type",
+    "description": "Type of phone number of a person.",
+    "fields": [
+        {"name": "PhoneNumberTypeID", "type": "int", "description": "Primary key for telephone number type records. Identity / Auto increment column", "primary": true, "unique": true},
+        {"name": "Name", "type": "nvarchar(50)", "description": "Name of the telephone number type"},
+        {"name": "ModifiedDate", "type": "datetime", "description": "Date and time the record was last updated. Default: getdate()"}
+    ]
+}

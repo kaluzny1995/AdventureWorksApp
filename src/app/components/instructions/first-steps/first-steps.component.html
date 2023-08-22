@@ -1,0 +1,36 @@
+<div class="mat-h1">First steps instructions</div>
+<mat-divider class="horizontal-line"></mat-divider>
+<div class="mat-h4">Switch between instructions by clicking the icons below.</div>
+
+<mat-card class="card card-instruction">
+    <mat-card-header>
+        <mat-button-toggle-group [(ngModel)]="this.selectedInstruction">
+            <mat-button-toggle *ngFor="let ib of this.instructionButtons" [value]="ib.value" #signingUpTooltip="matTooltip" [matTooltip]="ib.name" matTooltipPosition="above">
+                <mat-icon>{{ ib.icon }}</mat-icon>
+            </mat-button-toggle>
+        </mat-button-toggle-group>
+    </mat-card-header>
+    <mat-divider class="horizontal-line"></mat-divider>
+
+    <span *ngFor="let ip of this.instructionPannels">
+        <mat-card-content *ngIf="this.selectedInstruction === ip.value">
+            <img [class.img-half]="ip.half" *ngIf="ip.image" src="/assets/images/first_steps/{{ ip.image }}.png">
+            <mat-tab-group *ngIf="ip.images">
+                <mat-tab *ngFor="let img of ip.images" [label]="img.label">
+                    <img [class.img-half]="img.half" src="/assets/images/first_steps/{{ img.name }}.png">
+                </mat-tab>
+            </mat-tab-group>
+    
+            <mat-accordion>
+                <mat-expansion-panel *ngFor="let sus of ip.steps">
+                    <mat-expansion-panel-header>
+                      <mat-panel-title>{{ sus.name }}</mat-panel-title>
+                      <mat-panel-description>{{ sus.title }}</mat-panel-description>
+                    </mat-expansion-panel-header>
+                    {{ sus.description }}
+                </mat-expansion-panel>
+            </mat-accordion>
+    </mat-card-content>
+    </span>
+
+</mat-card>

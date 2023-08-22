@@ -17,7 +17,6 @@ export class HomeComponent implements OnInit {
   title: string;
   shortTitle: string;
   emailUrl: string;
-  instructionNumber: number;
 
   constructor(private _appConfig: AppConfigService, private _route: ActivatedRoute) { }
 
@@ -55,20 +54,6 @@ export class HomeComponent implements OnInit {
     this.title = this._appConfig.title;
     this.shortTitle = this._appConfig.shortTitle;
     this.emailUrl = this._appConfig.emailUrl;
-    this.instructionNumber = 0;
   }
-
-  setInstruction(index: number): void {
-    this.instructionNumber = index;
-  }
-
-  nextInstruction(): void {
-    this.instructionNumber++;
-  }
-
-  previousInstruction(): void {
-    this.instructionNumber--;
-  }
-
 
 }

@@ -2,7 +2,15 @@
   <mat-drawer #drawer mode="side" opened>
     <h1 style="padding: 15px 16px">{{ this.shortTitle }}</h1>
     <mat-list role="list" class="side-bar">
-      <a *ngFor="let vl of this.viewLinks" href="{{ vl.url }}"><mat-list-item role="listitem">{{ vl.name }}</mat-list-item></a>
+      <span *ngFor="let vl of this.viewLinks">
+        <a *ngIf="!vl.subLinks" [routerLink]="vl.url"><mat-list-item role="listitem">{{ vl.name }}</mat-list-item></a>
+        <mat-expansion-panel *ngIf="vl.subLinks">
+          <mat-expansion-panel-header><mat-panel-title>{{ vl.name }}</mat-panel-title></mat-expansion-panel-header>
+          <span *ngFor="let vsl of vl.subLinks">
+            <a *ngIf="!vsl.isAuthRequired || this.isAuthenticated" [routerLink]="vsl.url"><mat-list-item role="listitem">{{ vsl.name }}</mat-list-item></a>
+          </span>
+        </mat-expansion-panel>
+      </span>
     </mat-list>
   </mat-drawer>
 

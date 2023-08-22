@@ -118,6 +118,23 @@ $bootstrap-danger: #d9534f;
     color: white !important;
 }
 
+.side-bar {
+    .mat-expansion-panel {
+        background-color: $theme-color;
+    }
+    .mat-expansion-panel-header {
+        padding: 0px 16px;
+
+        .mat-expansion-panel-header-title, .mat-expansion-indicator::after {
+            color: white;
+        }
+    }
+
+    .mat-expansion-panel-body {
+        padding: 0px 16px;
+    }
+}
+
 .right-side-navbar {
     padding: 15px !important;
     background-color: $theme-color;
@@ -214,6 +231,10 @@ div.right-side-main-container {
     mat-icon {
         color: black !important;
     }
+
+    img {
+        width: 100%;
+    }
 }
 
 .card-profile-view {
@@ -240,6 +261,27 @@ div.right-side-main-container {
         position: relative !important;
         width: unset !important;
         height: unset !important;
+    }
+}
+
+.card-instruction {
+    max-width: 80%;
+    margin: 40px auto 40px auto;
+
+    mat-button-toggle-group {
+        margin: 0 auto;
+    }
+
+    mat-card-content {
+        text-align: center;
+    }
+
+    .img-half {
+        width: 60%;
+    }
+
+    .text-left {
+        text-align: left;
     }
 }
 
@@ -380,4 +422,9 @@ mat-list {
 
 .label-checkable {
     margin-right: 6px;
+}
+
+/*hidden overflow for select lists*/
+div[role=listbox] {
+    overflow-x: hidden;
 }

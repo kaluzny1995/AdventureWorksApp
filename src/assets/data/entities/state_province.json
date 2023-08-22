@@ -1,0 +1,14 @@
+{
+    "name": "State Province",
+    "description": "State and province lookup table.",
+    "fields": [
+        {"name": "StateProvinceID", "type": "int", "description": "Primary key for StateProvince records. Identity / Auto increment column", "primary": true, "unique": true},
+        {"name": "StateProvinceCode", "type": "nchar(3)", "description": "ISO standard state or province code.", "unique": true},
+        {"name": "CountryRegionCode", "type": "nvarchar(3)", "description": "ISO standard country or region code. Foreign key to CountryRegion.CountryRegionCode.", "unique": true},
+        {"name": "IsOnlyStateProvinceFlag", "type": "bit", "description": "0 = StateProvinceCode exists. 1 = StateProvinceCode unavailable, using CountryRegionCode. Default: 1"},
+        {"name": "Name", "type": "nvarchar(50)", "description": "State or province description.", "unique": true},
+        {"name": "TerritoryID", "type": "int", "description": "ID of the territory in which the state or province is located. Foreign key to SalesTerritory.SalesTerritoryID."},
+        {"name": "rowguid", "type": "uniqueidentifier", "description": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample. Default: newid()", "unique": true},
+        {"name": "ModifiedDate", "type": "datetime", "description": "Date and time the record was last updated. Default: getdate()"}
+    ]
+}

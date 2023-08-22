@@ -1,0 +1,16 @@
+{
+    "name": "Sales Territory",
+    "description": "Sales territory lookup table.",
+    "fields": [
+        {"name": "TerritoryID", "type": "int", "description": "Primary key for SalesTerritory records. Identity / Auto increment column", "primary": true, "unique": true},
+        {"name": "Name", "type": "nvarchar(50)", "description": "Sales territory description", "unique": true},
+        {"name": "CountryRegionCode", "type": "nvarchar(3)", "description": "ISO standard country or region code. Foreign key to CountryRegion.CountryRegionCode."},
+        {"name": "Group", "type": "nvarchar(50)", "description": "Geographic area to which the sales territory belong."},
+        {"name": "SalesYTD", "type": "money", "description": "Sales in the territory year to date. Default: 0.00"},
+        {"name": "SalesLastYear", "type": "money", "description": "Sales in the territory the previous year. Default: 0.00"},
+        {"name": "CostYTD", "type": "money", "description": "Business costs in the territory year to date. Default: 0.00"},
+        {"name": "CostLastYear", "type": "money", "description": "Business costs in the territory the previous year. Default: 0.00"},
+        {"name": "rowguid", "type": "uniqueidentifier", "description": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample. Default: newid()", "unique": true},
+        {"name": "ModifiedDate", "type": "datetime", "description": "Date and time the record was last updated. Default: getdate()"}
+    ]
+}

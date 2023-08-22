@@ -1,0 +1,19 @@
+{
+    "name": "Person",
+    "description": "Human beings involved with AdventureWorks: employees, customer contacts, and vendor contacts.",
+    "fields": [
+        {"name": "BusinessEntityID", "type": "int", "description": "Primary key for Person records.", "primary": true, "unique": true},
+        {"name": "PersonType", "type": "nchar(2)", "description": "Primary type of person: SC = Store Contact, IN = Individual (retail) customer, SP = Sales person, EM = Employee (non-sales), VC = Vendor contact, GC = General contact"},
+        {"name": "NameStyle", "type": "bit", "description": "0 = The data in FirstName and LastName are stored in western style (first name, last name) order. 1 = Eastern style (last name, first name) order. Default: 0"},
+        {"name": "Title", "type": "nvarchar(8)", "description": "A courtesy title. For example, Mr. or Ms."},
+        {"name": "FirstName", "type": "nvarchar(50)", "description": "First name of the person."},
+        {"name": "MiddleName", "type": "nvarchar(50)", "description": "Middle name or middle initial of the person."},
+        {"name": "LastName", "type": "nvarchar(50)", "description": "Last name of the person."},
+        {"name": "Suffix", "type": "nvarchar(10)", "description": "Surname suffix. For example, Sr. or Jr."},
+        {"name": "EmailPromotion", "type": "int", "description": "0 = Contact does not wish to receive e-mail promotions, 1 = Contact does wish to receive e-mail promotions from AdventureWorks, 2 = Contact does wish to receive e-mail promotions from AdventureWorks and selected partners. Default: 0"},
+        {"name": "AdditionalContactInfo", "type": "xml", "description": "Additional contact information about the person stored in xml format."},
+        {"name": "Demographics", "type": "xml", "description": "Personal information such as hobbies, and income collected from online shoppers. Used for sales analysis."},
+        {"name": "rowguid", "type": "uniqueidentifier", "description": "ROWGUIDCOL number uniquely identifying the record. Used to support a merge replication sample. Default: newid()", "unique": true},
+        {"name": "ModifiedDate", "type": "datetime", "description": "Date and time the record was last updated. Default: getdate()"}
+    ]
+}

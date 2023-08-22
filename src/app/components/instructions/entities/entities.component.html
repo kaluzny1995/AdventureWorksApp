@@ -1,0 +1,54 @@
+<div class="mat-h1">Entities reference</div>
+<mat-divider class="horizontal-line"></mat-divider>
+<div class="mat-h4">Use dropdown list below to select entities to view.</div>
+
+<mat-card class="card card-instruction">
+    <mat-card-header>
+        <mat-form-field appearance="fill" class="form-field form-field-whole">
+            <mat-label>Select an entity</mat-label>
+            <mat-select [(ngModel)]="this.selectedEntity" (ngModelChange)="this.onEntitySelectionChange($event)">
+                <mat-form-field appearance="fill" class="form-field form-field-whole">
+                    <mat-label>Search entities</mat-label>
+                    <input matInput type="text" [(ngModel)]="this.searchText" (keyup)="this.searchEntities()">
+                </mat-form-field>
+                <mat-option *ngFor="let ae of this.searchedEntities" [value]="ae.value">{{ ae.name }}</mat-option>
+            </mat-select>
+          </mat-form-field>
+    </mat-card-header>
+    <mat-divider class="horizontal-line"></mat-divider>
+
+    <mat-card-content>
+        <div class="mat-h2 text-left">{{ this.entityName }}</div>
+        <div class="mat-body-1 text-left">{{ this.entityDescription }}</div>
+        
+        <table mat-table [dataSource]="this.tableData" class="mat-elevation-z8">
+            <!-- Name -->
+            <ng-container matColumnDef="name">
+              <th mat-header-cell *matHeaderCellDef>Name</th>
+              <td mat-cell *matCellDef="let element">
+                {{ element.name }}
+                <mat-chip-listbox *ngIf="element.primary || element.unique">
+                    <mat-chip *ngIf="element.primary" #primaryTooltip="matTooltip" matTooltip="Primary key" matTooltipPosition="above">P</mat-chip>
+                    <mat-chip *ngIf="element.unique"  #uniqueTooltip="matTooltip" matTooltip="Unique key" matTooltipPosition="above">U</mat-chip>
+                </mat-chip-listbox>
+              </td>
+            </ng-container>
+          
+            <!-- Type -->
+            <ng-container matColumnDef="type">
+              <th mat-header-cell *matHeaderCellDef>Type</th>
+              <td mat-cell *matCellDef="let element">{{ element.type }}</td>
+            </ng-container>
+          
+            <!-- Description -->
+            <ng-container matColumnDef="description">
+              <th mat-header-cell *matHeaderCellDef>Description</th>
+              <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+            </ng-container>
+          
+            <tr mat-header-row *matHeaderRowDef="this.displayedCols"></tr>
+            <tr mat-row *matRowDef="let row; columns: this.displayedCols;"></tr>
+          </table>
+    </mat-card-content>
+
+</mat-card>
