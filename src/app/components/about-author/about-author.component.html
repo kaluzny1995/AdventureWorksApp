@@ -1,11 +1,10 @@
 <div class="mat-h1">About author</div>
 <mat-divider class="horizontal-line"></mat-divider>
 
-<mat-card class="card">
+<mat-card class="card card-about">
     <mat-card-header>
         <mat-card-title-group>
-            <div mat-card-avatar class="example-header-image"
-                style="background-image: url('/assets/images/profile.png'); background-size: cover;"></div>
+            <div mat-card-avatar class="avatar"></div>
             <mat-card-title>{{ this.author.name }}</mat-card-title>
             <mat-card-subtitle>{{ this.author.position }}</mat-card-subtitle>
         </mat-card-title-group>
@@ -24,6 +23,9 @@
             "Hate Speech in social media detection"</a>. The solution first detects sentences containing hate speech and 
             second tells which type of hate speech (racism, homophobia, xenophobia, etc.) that is.</p>
         <p>You can find this and many other projects on my GitHub profile.</p>
+        <p><b>ENJOY</b></p>
+        <img mat-card-image class="card-image" alt="Dzhejkob Awaria photograph" src="/assets/images/profile.png">
+        <img mat-card-image class="card-image card-image-reduced" alt="Dzhejkob Awaria autograph" src="/assets/images/dzhawaria_autograph_written.png">
     </mat-card-content>
     <mat-divider class="horizontal-line"></mat-divider>
     <mat-card-actions>

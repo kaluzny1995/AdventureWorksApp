@@ -1,10 +1,11 @@
 <mat-drawer-container>
   <mat-drawer #drawer mode="side" opened>
-    <h1 style="padding: 15px 16px">{{ this.shortTitle }}</h1>
+    <!--<h1 style="padding: 15px 16px">{{ this.shortTitle }}</h1>-->
+    <img src="/assets/images/logo/aw2017ma_logo.png">
     <mat-list role="list" class="side-bar">
       <span *ngFor="let vl of this.viewLinks">
         <a *ngIf="!vl.subLinks" [routerLink]="vl.url"><mat-list-item role="listitem">{{ vl.name }}</mat-list-item></a>
-        <mat-expansion-panel *ngIf="vl.subLinks">
+        <mat-expansion-panel *ngIf="vl.subLinks && (!vl.isAuthRequired || this.isAuthenticated)">
           <mat-expansion-panel-header><mat-panel-title>{{ vl.name }}</mat-panel-title></mat-expansion-panel-header>
           <span *ngFor="let vsl of vl.subLinks">
             <a *ngIf="!vsl.isAuthRequired || this.isAuthenticated" [routerLink]="vsl.url"><mat-list-item role="listitem">{{ vsl.name }}</mat-list-item></a>
@@ -17,7 +18,7 @@
   <mat-drawer-content>
     <mat-toolbar class="right-side-navbar">
       <mat-icon aria-hidden="false" aria-label="Example home icon" (click)="drawer.toggle()">reorder</mat-icon>
-      <h1 style="margin-left: 10px;">{{ this.title }}</h1>
+      <h1>{{ this.title }}</h1>
       <span class="fill-remaining-space"></span>
       <!--menu-component-->
       <app-nav-menu></app-nav-menu>

@@ -1,3 +1,4 @@
+![AW2017MA app logo](/src/assets/images/logo/aw2017ma_app_logo_blue.png)
 # AdventureWorks2017 Management App
 
 The AW2017 Management App is a solution for the maintenance of AdventureWorks2017 datawarehouse. It enables performing four basic CRUD operations on the datawarehouse entities. This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.0.2.

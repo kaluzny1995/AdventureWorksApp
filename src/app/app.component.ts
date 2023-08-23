@@ -18,7 +18,12 @@ export class AppComponent implements OnInit {
       {name: 'Dataflow diagrams', url: 'instructions/dataflow-diagrams'},
       {name: 'Entities', url: 'instructions/entities'},
       {name: 'Admin pannels', url: 'instructions/admin-pannels', isAuthRequired: true},
-    ]}
+    ]},
+    {name: 'Admin pannels', subLinks: [
+      {name: 'Persons', url: 'pannels/persons'},
+      {name: 'Person phones', url: 'pannels/person-phones'},
+      {name: 'Phone number types', url: 'pannels/phone-number-types'}
+    ], isAuthRequired: true}
   ]
   isAuthenticated: boolean
 

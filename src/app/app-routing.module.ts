@@ -22,7 +22,7 @@ const routes: Routes = [
   {path: 'instructions/first-steps', component: FirstStepsComponent},
   {path: 'instructions/dataflow-diagrams', component: DataflowDiagramsComponent},
   {path: 'instructions/entities', component: EntitiesComponent},
-  {path: 'instructions/admin-pannels', component: AdminPannelsComponent},
+  {path: 'instructions/admin-pannels', component: AdminPannelsComponent, canActivate: [AuthenticationGuard]},
   {path: 'authenticate', component: AuthenticationComponent},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthenticationGuard]},
   {path: 'register', component: RegisterComponent},
