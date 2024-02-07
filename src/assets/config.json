@@ -32,5 +32,34 @@
             "view_awfapi_user_profile", "change_awfapi_user_data", "change_awfapi_user_credentials", "remove_awfapi_user_account"
         ],
         "forbiddenUsernames": ["admin", "user", "password"]
+    },
+    "defaults": {
+        "queryParams": {
+            "page": 1,
+            "perPage": 10,
+            "filters": null,
+            "orderBy": null,
+            "type": "asc"
+        },
+        "view": {
+            "isColumnSetOn": false,
+            "isFilterSetOn": false,
+            "perPageOptions": [10, 20, 50, 100],
+            "selectedId": null,
+            "newId": null,
+            "changedId": null
+
+        },
+        "person": {
+            "availableColumns": [
+                "personId", "personType", "nameStyle", "fullName", "emailPromotion",
+                "additionalContactInfo", "demographics", "rowguid", "modifiedDate"
+            ],
+            "availableColumnNames": ["ID", "Type", "Name\u00a0style", "Full\u00a0name", "EP*", "ACI*", "Demo*", "UUID", "Last\u00a0modified"],
+            "displayedIndices": [0, 3, 7, 8],
+            "availableFilters": ["personType", "lastNamePhrase", "firstNamePhrase"],
+            "availableFilterNames": ["Person\u00a0type", "Last\u00a0name\u00a0phrase", "First\u00a0name\u00a0phrase"],
+            "types": ["GC", "SP", "EM", "IN", "VC", "SC"]
+        }
     }
 }

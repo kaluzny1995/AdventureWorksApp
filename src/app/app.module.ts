@@ -23,6 +23,9 @@ import { FirstStepsComponent } from './components/instructions/first-steps/first
 import { DataflowDiagramsComponent } from './components/instructions/dataflow-diagrams/dataflow-diagrams.component';
 import { EntitiesComponent } from './components/instructions/entities/entities.component';
 import { AdminPannelsComponent } from './components/instructions/admin-pannels/admin-pannels.component';
+import { PersonsComponent } from './components/admin-pannels/persons/persons.component';
+import { XmlPipe } from './app.pipes';
+import { ErrorHandlersModule } from './modules/error-handlers.module';
 
 @NgModule({
   declarations: [
@@ -40,7 +43,9 @@ import { AdminPannelsComponent } from './components/instructions/admin-pannels/a
     FirstStepsComponent,
     DataflowDiagramsComponent,
     EntitiesComponent,
-    AdminPannelsComponent
+    AdminPannelsComponent,
+    PersonsComponent,
+    XmlPipe
   ],
   imports: [
     BrowserModule,
@@ -48,7 +53,8 @@ import { AdminPannelsComponent } from './components/instructions/admin-pannels/a
     BrowserAnimationsModule,
     FormsModule, ReactiveFormsModule,
     HttpClientModule,
-    MaterialModule
+    MaterialModule,
+    ErrorHandlersModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: RequestInterceptionService, multi: true},

@@ -7,26 +7,20 @@ export class UtilsService {
 
   constructor() { }
 
-  getUrlBase(urlString: string): string {
-    let urlBase: string = decodeURIComponent(urlString);
-    if (urlBase.indexOf(';') > -1) {
-      urlBase = urlBase.split(';')[0];
-    }
-    return urlBase;
-  }
+  /**
+   * Returns a dictionary based on two arrays, first of which are keys and second - values
+  */
+  dictFromArrays(keys: string[], values: any[]): {[key: string]: any} {
+    let dict: {[key: string]: any} = {};
 
-  getUrlOptionalParams(urlString: string): any {
-    let paramString: string = decodeURIComponent(urlString);
-    if (paramString.indexOf(';') > -1) {
-      paramString = paramString.split(';')[1];
-      if (!paramString) {
-        return {};
-      }
-    } else {
-      return {};
+    if (keys.length !== values.length) {
+      throw new EvalError(`Keys and values array length are different: ${keys.length}!==${values.length}`);
     }
-    paramString = paramString.replace(/&/g, '","').replace(/=/g,'":"');
-    let params: any = JSON.parse(`{"${paramString}"}`, function(key, value) { return value });
-    return params;
+
+    for (let i=0; i<keys.length; i++) {
+      dict[keys[i]] = values[i];
+    }
+
+    return dict;
   }
 }

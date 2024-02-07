@@ -44,6 +44,14 @@ export class HomeComponent implements OnInit {
           this.mainAlert = AlertMessage.ACCOUNT_REMOVED;
           break;
         }
+        case 'api_server_500': {
+          this.mainAlert = AlertMessage.API_SERVER_ERROR_500;
+          break;
+        }
+        case 'api_server_down': {
+          this.mainAlert = AlertMessage.API_SERVER_DOWN;
+          break;
+        }
         default: {
           this.mainAlert = AlertMessage.UNKNOWN_STATUS;
           break;

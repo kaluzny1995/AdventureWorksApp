@@ -13,6 +13,7 @@ import { FirstStepsComponent } from './components/instructions/first-steps/first
 import { DataflowDiagramsComponent } from './components/instructions/dataflow-diagrams/dataflow-diagrams.component';
 import { EntitiesComponent } from './components/instructions/entities/entities.component';
 import { AdminPannelsComponent } from './components/instructions/admin-pannels/admin-pannels.component';
+import { PersonsComponent } from './components/admin-pannels/persons/persons.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -28,6 +29,8 @@ const routes: Routes = [
   {path: 'register', component: RegisterComponent},
   {path: 'change-data', component: ChangeDataComponent, canActivate: [AuthenticationGuard]},
   {path: 'change-credentials', component: ChangeCredentialsComponent, canActivate: [AuthenticationGuard]},
+  {path: 'pannels', redirectTo: '/pannels/persons', pathMatch: 'full'},
+  {path: 'pannels/persons', component: PersonsComponent, canActivate: [AuthenticationGuard]},
   {path: '**', component: Error404Component}
 ];
 

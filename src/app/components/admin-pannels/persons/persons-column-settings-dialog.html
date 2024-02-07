@@ -1,0 +1,31 @@
+<form [formGroup]="this.form" (submit)="this.setUp()">
+    <div class="mat-h1" mat-dialog-title>Person columns display settings</div>
+    <div mat-dialog-content class="column-dialog">
+      <div class="mat-body-strong">Set up the column displaying order</div>
+      <mat-chip-set cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="this.move($event)">
+        <mat-chip *ngFor="let column of this.selectedNames; index as i" cdkDrag>
+            {{ this.columnNameMapping[column] }}
+            <button matChipRemove class="chip-remove" (click)="this.remove(i)">
+                <mat-icon>cancel</mat-icon>
+            </button>
+        </mat-chip>
+      </mat-chip-set>
+      
+      <div class="form-field-group-above">
+        <!--Available columns-->
+        <mat-form-field appearance="fill" class="form-field form-field-whole">
+          <mat-label>Select column to insert</mat-label>
+          <mat-select matInput formControlName="availableColumnsControl" type="text" (selectionChange)="this.insert($event)">
+            <mat-option *ngFor="let column of this.availableColumns" [value]="column">{{ this.columnNameMapping[column] }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <div mat-dialog-actions>
+          <a mat-raised-button mat-dialog-close>Cancel</a>
+          <div class="fill-remaining-space"></div>
+          <a mat-raised-button color="warn" (click)="this.restore()">Restore defaults</a>
+          <button mat-raised-button type="submit" color="accent" [disabled]="!this.form.valid">Set up</button>
+        </div>
+      </div>
+    </div>
+  </form>

@@ -24,7 +24,7 @@
       <app-nav-menu></app-nav-menu>
     </mat-toolbar>
     <ng-scrollbar #scrollable track="vertical" [autoHeightDisabled]="false">
-      <div class="right-side-main-container">
+      <div class="right-side-main-container" [class.opened]="drawer.opened">
         <router-outlet></router-outlet>
       </div>
     </ng-scrollbar>
