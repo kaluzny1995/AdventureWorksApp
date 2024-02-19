@@ -84,6 +84,12 @@ export class AppConfigService {
                               this._appConfig.defaults.person.displayedIndices,
                               this._appConfig.defaults.person.availableFilters,
                               this._appConfig.defaults.person.availableFilterNames,
-                              this._appConfig.defaults.person.types)
+                              this._appConfig.defaults.person.types,
+                              this._appConfig.defaults.person.nameStyles,
+                              this._appConfig.defaults.person.titles,
+                              this._appConfig.defaults.person.suffixes,
+                              this._appConfig.defaults.person.emailPromotions,
+                              this._appConfig.defaults.person.aciTemplate,
+                              this._appConfig.defaults.person.demoTemplate)
   }
 }

@@ -21,12 +21,16 @@ $material-primary: #3f51b5;
 $material-accent: #ff4081;
 $material-warn: #f44336;
 
-/*Bootstrap colors & classes*/
+/*Bootstrap colors*/
 $bootstrap-primary: #0275d8;
 $bootstrap-success: #5cb85c;
 $bootstrap-info: #5bc0de;
 $bootstrap-warning: #f0ad4e;
 $bootstrap-danger: #d9534f;
+
+/*Custom colors*/
+$row-hovered: #f3f3f7;
+$row-highlighted: #dcdcdc;
 
 .bg-primary {
     background-color: $bootstrap-primary;
@@ -419,17 +423,38 @@ mat-list {
     }
 }
 
+.form-admin {
+    padding-bottom: 30px;
+
+    .hint-header {
+        display: flex;
+        justify-content: flex-end;
+        margin-bottom: 0;
+    }
+
+    .hint-tooltip {
+        font-style: italic;
+    }
+}
+
 .form-field-group-above {
     margin-top: 15px !important;
 }
 .form-field-group {
     margin-bottom: 15px !important;
 }
+.form-field-group-inline {
+    display: flex;
+    flex-wrap: wrap;
+}
 
 .form-field {
     margin-right: 10px;
 }
 
+.form-field-shorter {
+    width: 100px;
+}
 .form-field-short {
     width: 160px;
 }
@@ -438,6 +463,9 @@ mat-list {
 }
 .form-field-long {
     width: 260px;
+}
+.form-field-longer {
+    width: 360px;
 }
 .form-field-address {
     width: 320px;
@@ -580,19 +608,20 @@ div[role=listbox] {
         min-width: 100%;
     }
 
-    .xml {
-        white-space: pre;
-    }
-
     .row {
         cursor: pointer;
 
         &:not(.highlighted):hover {
-            background-color: #f3f3f7;
+            background-color: $row-hovered;
         }
-
         &.highlighted {
-            background-color: #dcdcdc !important;
+            background-color: $row-highlighted !important;
+        }
+        &.new {
+            background-color: $bootstrap-success !important;
+        }
+        &.changed {
+            background-color: $bootstrap-warning !important;
         }
     }
 }
@@ -605,9 +634,20 @@ div[role=listbox] {
     }
 }
 
+.xml {
+    white-space: pre;
+}
 .xml-tooltip {
     .mdc-tooltip__surface {
         white-space: pre;
+    }
+}
+.xml-container {
+    overflow: auto;
+
+    div {
+        width: 100%;
+        margin: 0 20px 0 20px;
     }
 }
 

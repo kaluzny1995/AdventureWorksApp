@@ -10,7 +10,7 @@ import { MaterialModule } from './modules/material.module';
 import { HomeComponent } from './components/home/home.component';
 import { AuthenticationComponent } from './components/authentication/authentication.component';
 import { Error404Component } from './components/errors/error404/error404.component';
-import { Error401Component } from './components/errors/error401/error401.component';
+import { Error403Component } from './components/errors/error403/error403.component';
 import { RequestInterceptionService } from './services/request-interception.service';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { ProfileComponent } from './components/awfapi-user/profile/profile.component';
@@ -26,6 +26,8 @@ import { AdminPannelsComponent } from './components/instructions/admin-pannels/a
 import { PersonsComponent } from './components/admin-pannels/persons/persons.component';
 import { XmlPipe } from './app.pipes';
 import { ErrorHandlersModule } from './modules/error-handlers.module';
+import { PersonFormComponent } from './components/admin-pannels/person-form/person-form.component';
+import { PipeModule } from './modules/pipe.module';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,7 @@ import { ErrorHandlersModule } from './modules/error-handlers.module';
     HomeComponent,
     AuthenticationComponent,
     Error404Component,
-    Error401Component,
+    Error403Component,
     NavMenuComponent,
     ProfileComponent,
     AboutAuthorComponent,
@@ -45,7 +47,7 @@ import { ErrorHandlersModule } from './modules/error-handlers.module';
     EntitiesComponent,
     AdminPannelsComponent,
     PersonsComponent,
-    XmlPipe
+    PersonFormComponent
   ],
   imports: [
     BrowserModule,
@@ -54,6 +56,7 @@ import { ErrorHandlersModule } from './modules/error-handlers.module';
     FormsModule, ReactiveFormsModule,
     HttpClientModule,
     MaterialModule,
+    PipeModule,
     ErrorHandlersModule
   ],
   providers: [

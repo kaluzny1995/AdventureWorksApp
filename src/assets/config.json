@@ -29,9 +29,10 @@
         "port": 8080,
         "authRequiredEndpoints": [
             "test", "verify", "jwt_auth_test", "current_user",
-            "view_awfapi_user_profile", "change_awfapi_user_data", "change_awfapi_user_credentials", "remove_awfapi_user_account"
+            "view_awfapi_user_profile", "change_awfapi_user_data", "change_awfapi_user_credentials", "remove_awfapi_user_account",
+            "get_persons", "count_persons", "get_person", "create_person", "update_person", "delete_person"
         ],
-        "forbiddenUsernames": ["admin", "user", "password"]
+        "forbiddenUsernames": ["admin", "user", "username", "password", "P@ssw0rd"]
     },
     "defaults": {
         "queryParams": {
@@ -48,7 +49,6 @@
             "selectedId": null,
             "newId": null,
             "changedId": null
-
         },
         "person": {
             "availableColumns": [
@@ -59,7 +59,27 @@
             "displayedIndices": [0, 3, 7, 8],
             "availableFilters": ["personType", "lastNamePhrase", "firstNamePhrase"],
             "availableFilterNames": ["Person\u00a0type", "Last\u00a0name\u00a0phrase", "First\u00a0name\u00a0phrase"],
-            "types": ["GC", "SP", "EM", "IN", "VC", "SC"]
+            "types": {
+                "GC": "General\u00a0contact",
+                "SP": "Sales\u00a0person",
+                "EM": "Employee\u00a0(non\u2011sales)",
+                "IN": "Individual\u00a0(retail)\u00a0customer",
+                "VC": "Vendor\u00a0contact",
+                "SC": "Store\u00a0contact"
+            },
+            "nameStyles": {
+                "0": "western style - (first, middle, last name)",
+                "1": "eastern style - (last, first, middle name)"
+            },
+            "titles": ["Mr.", "Mrs.", "Ms."],
+            "suffixes": ["Jr.", "Sr."],
+            "emailPromotions": {
+                "0": "Contact does not wish to receive e-mail promotions",
+                "1": "Contact does wish to receive e-mail promotions from AdventureWorks",
+                "2": "Contact does wish to receive e-mail promotions from AdventureWorks and selected partners"
+            },
+            "aciTemplate": "<address><street>?</street><number>?</number><postalcode>?</postalcode><city>?</city><country>?</country></address>",
+            "demoTemplate": "<demographics><gender>?</gender><age>?</age><maritalStatus>?</maritalStatus><race>?</race><ethnicity>?</ethnicity></demographics>"
         }
     }
 }

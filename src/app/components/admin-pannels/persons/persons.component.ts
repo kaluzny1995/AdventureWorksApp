@@ -23,6 +23,11 @@ import { Sort } from '@angular/material/sort';
 import { EOrderType } from 'src/app/models/e-order-type';
 import { ViewParams } from 'src/app/models/view-params';
 import { ViewParamsService } from 'src/app/services/url/view-params.service';
+import { EAlertType } from 'src/app/models/e-alert-type';
+import { DeletionConfirmationDialog } from '../../utils/deletion-confirmation-dialog';
+import { EDeletionConfirmation } from 'src/app/models/e-deletion-confirmation';
+import { DeletionConfirmationData } from 'src/app/models/deletion-confirmation-data';
+import { AlertMessageService } from 'src/app/services/alert-message.service';
 
 @Component({
   selector: 'app-persons',
@@ -32,9 +37,6 @@ import { ViewParamsService } from 'src/app/services/url/view-params.service';
 export class PersonsComponent implements OnInit {
   isLoaderUp: boolean;
   mainAlert: AlertMessage | null = null;
-  mainAlertDismiss(): void {
-    this.mainAlert = null;
-  }
 
   isReadonly: boolean;
 
@@ -61,6 +63,8 @@ export class PersonsComponent implements OnInit {
     private _filterParams: FilterParamsService,
     private _filterDialog: MatDialog,
     private _person: PersonService,
+    private _alert: AlertMessageService,
+    private _deletionDialog: MatDialog,
     private _utils: UtilsService
   ) { }
 
@@ -97,17 +101,7 @@ export class PersonsComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         console.error('Error while checking user readonly mode.', error);
-        switch (error.status) {
-          case 0:
-            this.mainAlert = AlertMessage.API_SERVER_DOWN;
-            break;
-          case 401:
-            this.mainAlert = AlertMessage.API_SERVER_ERROR_401;
-            break;
-          default:
-            this.mainAlert = AlertMessage.API_SERVER_ERROR_500;
-            break;
-        }
+        this.mainAlert = this._alert.statusAlertMesssage(error.status);
       }
     });
 
@@ -159,21 +153,7 @@ export class PersonsComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         console.error('Error while getting persons.', error);
-        //TODO: Move the switch clause to AlertMessageService
-        switch (error.status) {
-          case 0:
-            this.mainAlert = AlertMessage.API_SERVER_DOWN;
-            break;
-          case 400:
-            this.mainAlert = AlertMessage.API_SERVER_ERROR_400;
-            break;
-          case 401:
-            this.mainAlert = AlertMessage.API_SERVER_ERROR_401;
-            break;
-          default:
-            this.mainAlert = AlertMessage.API_SERVER_ERROR_500;
-            break;
-        }
+        this.mainAlert = this._alert.statusAlertMesssage(error.status);
       }
     });
     this._person.countPersons(this.queryParams.filters).subscribe({
@@ -182,24 +162,33 @@ export class PersonsComponent implements OnInit {
       },
       error: (error: HttpErrorResponse) => {
         console.error('Error while getting persons count.', error);
-        //TODO: Move the switch clause to AlertMessageService
-        switch (error.status) {
-          case 0:
-            this.mainAlert = AlertMessage.API_SERVER_DOWN;
-            break;
-          case 400:
-            this.mainAlert = AlertMessage.API_SERVER_ERROR_400;
-            break;
-          case 401:
-            this.mainAlert = AlertMessage.API_SERVER_ERROR_401;
-            break;
-          default:
-            this.mainAlert = AlertMessage.API_SERVER_ERROR_500;
-            break;
-        }
+        this.mainAlert = this._alert.statusAlertMesssage(error.status);
       }
     });
     this.isLoaderUp = false;
+
+    /* Newly added person handling */
+    if (this.viewParams.newId !== null) {
+      this.mainAlert = new AlertMessage(EAlertType.SUCCESS, '', `New person with id: '${this.viewParams.newId}' registered successfully.`);
+
+      this._person.getPerson(this.viewParams.newId).subscribe({
+        next: (result: any) => {
+          const newPerson: Person = Person.fromAPIStructure(result);
+          if (this.dataSource.filter((person: Person) => person.personId === this.viewParams.newId).length === 0) {
+            this.dataSource = this._utils.prepend(newPerson, this.dataSource);
+          }
+        },
+        error: (error: HttpErrorResponse) => {
+          console.error('Error while getting newly added person.', error);
+          this.mainAlert = this._alert.statusAlertMesssage(error.status);
+        }
+      });
+    }
+
+    /* Recently changed person handling */
+    if (this.viewParams.changedId !== null) {
+      this.mainAlert = new AlertMessage(EAlertType.SUCCESS, '', `Persons data with id: '${this.viewParams.changedId}' changed successfully.`);
+    }
   }
 
   /**
@@ -222,7 +211,7 @@ export class PersonsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((results?: string[] | string) => {
       if (results !== undefined && typeof results !== 'string') {
         this.displayedColumns = results;
-        this._setURL(false);
+        this._setURL(false, false);
       }
     });
   }
@@ -282,7 +271,12 @@ export class PersonsComponent implements OnInit {
   /**
    * Sets up the page URL with proper optional parameters
   */
-  private _setURL(isReloaded: boolean = true): void {
+  private _setURL(isReloaded: boolean = true, isIdCleared: boolean = true): void {
+    if (isIdCleared) {
+      this.viewParams.newId = null;
+      this.viewParams.changedId = null;
+    }
+
     this._router.navigate(['pannels', 'persons', {
       ...this._queryParams.necessaryOptParams(this.queryParams),
       ...this._cols.necessaryOptParam(this.displayedColumns, this.personDefaults.availableColumns, this.personDefaults.displayedIndices),
@@ -294,10 +288,74 @@ export class PersonsComponent implements OnInit {
       }
     });
   }
+
+  /**
+   * Redirects to person form view as ADD mode.
+  */
+  addPerson(): void {
+    this._router.navigate(['pannels', 'persons', 'new', {returnUrl: this._router.url}]);
+  }
+
+  /**
+   * Redirects to person form view as EDIT mode.
+  */
+  editPerson(): void {
+    this._router.navigate(['pannels', 'persons', this.viewParams.selectedId, {returnUrl: this._router.url}]);
+  }
+
+  /**
+   * Deletes person & removes from view table
+  */
+  deletePerson(): void {
+    const deletionConfirmationData = new DeletionConfirmationData(
+      'Person dropping',
+      `Are you sure, you wanna drop person with id '${this.viewParams.selectedId}'?`,
+      'Cannot drop person.'
+    );
+
+    const dialogRef = this._deletionDialog.open(DeletionConfirmationDialog, {
+      data: deletionConfirmationData,
+      width: '600px'
+    });
+
+    dialogRef.afterClosed().subscribe((result: EDeletionConfirmation) => {
+      switch (result) {
+        case EDeletionConfirmation.OK:
+          /* Deleting person via API */
+          this._person.deletePerson(this.viewParams.selectedId || -1).subscribe({
+            next: (result: any) => {
+              console.log('Person dropped successfully.', result);
+              this.mainAlert = new AlertMessage(EAlertType.SUCCESS, '', `Person with id: '${this.viewParams.selectedId}' dropped successfully.`);
+
+              /* Removing person from view table */
+              this.dataSource = this.dataSource.filter((person: Person) => person.personId !== this.viewParams.selectedId);
+              this.viewParams.selectedId = null;
+              this._setURL(false, true);
+            },
+            error: (error: HttpErrorResponse) => {
+              console.error('Error while deleting person.', error);
+              this.mainAlert = this._alert.statusAlertMesssage(error.status);
+            }
+          });
+          break;
+        case EDeletionConfirmation.ERROR_0:
+        case EDeletionConfirmation.ERROR_400:
+        case EDeletionConfirmation.ERROR_401:
+        case EDeletionConfirmation.ERROR_404:
+        case EDeletionConfirmation.ERROR_500:
+          console.error('Password verification ended with error.');
+          this.mainAlert = this._alert.statusAlertMesssage(result);
+          break;
+        case EDeletionConfirmation.CANCEL:
+        default:
+          break;
+      }
+    });
+  }
 }
 
 /* For view testing purposes only */
-const TEMP_ELEMENT_DATA: Person[] = [
+const TEST_DATA: Person[] = [
   new Person(0, EPersonType.GC, '0', null, 'Roberto', 'Murray', 'Tamburello', null, 1, '<address><street>24th Avenue</street><city>NYC</city><postalcode>34256-311</postalcode></address>', null, 'e1a2555e-0828-434b-a33b-6f38136a37de', new Date('2007-11-04 00:00:00.000')),
   new Person(1, EPersonType.GC, '1', null, 'Rob', null, 'Walters', null, 0, null, null, 'f2d7ce06-38b3-4357-805b-f4b6b71c01ff', new Date('2007-11-28 00:00:00.000')),
   new Person(2, EPersonType.VC, '0', null, 'Gail', null, 'Erickson', 'Ov.', 0, null, null, 'f3a3f6b4-ae3b-430c-a754-9f2231ba6fef', new Date('2007-12-30 00:00:00.000')),

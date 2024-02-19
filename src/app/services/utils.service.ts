@@ -23,4 +23,13 @@ export class UtilsService {
 
     return dict;
   }
+
+  /**
+   * Prepends an item into array, inserts item at the arrays beginning
+  */
+  prepend<T>(item: T, array: T[]): T[] {
+    let copy = array.slice();
+    copy.unshift(item);
+    return copy;
+  }
 }

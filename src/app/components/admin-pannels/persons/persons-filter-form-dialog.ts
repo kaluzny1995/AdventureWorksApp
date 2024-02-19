@@ -30,7 +30,7 @@ export class PersonsFilterFormDialog implements OnInit {
   lastNamePhrase: FormControl;
   firstNamePhrase: FormControl;
 
-  personTypes: string[];
+  personTypes: {[key: string]: string};
 
   constructor(
     private _person: PersonService,

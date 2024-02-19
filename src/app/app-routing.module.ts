@@ -14,6 +14,9 @@ import { DataflowDiagramsComponent } from './components/instructions/dataflow-di
 import { EntitiesComponent } from './components/instructions/entities/entities.component';
 import { AdminPannelsComponent } from './components/instructions/admin-pannels/admin-pannels.component';
 import { PersonsComponent } from './components/admin-pannels/persons/persons.component';
+import { PersonFormComponent } from './components/admin-pannels/person-form/person-form.component';
+import { NonReadonlyGuard } from './guards/non-readonly.guard';
+import { Error403Component } from './components/errors/error403/error403.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -31,6 +34,8 @@ const routes: Routes = [
   {path: 'change-credentials', component: ChangeCredentialsComponent, canActivate: [AuthenticationGuard]},
   {path: 'pannels', redirectTo: '/pannels/persons', pathMatch: 'full'},
   {path: 'pannels/persons', component: PersonsComponent, canActivate: [AuthenticationGuard]},
+  {path: 'pannels/persons/:id', component: PersonFormComponent, canActivate: [AuthenticationGuard, NonReadonlyGuard]},
+  {path: '403', component: Error403Component},
   {path: '**', component: Error404Component}
 ];
 

@@ -9,7 +9,7 @@
         <mat-label>Person type</mat-label>
         <mat-select matInput formControlName="personType" type="text">
           <mat-option value="">----</mat-option>
-          <mat-option *ngFor="let pt of this.personTypes" [value]="pt">{{ pt }}</mat-option>
+          <mat-option *ngFor="let pt of this.personTypes | keyvalue" [value]="pt.key">{{ pt.key }}&nbsp;&minus;&nbsp;{{ pt.value }}</mat-option>
         </mat-select>
       </mat-form-field>
 
