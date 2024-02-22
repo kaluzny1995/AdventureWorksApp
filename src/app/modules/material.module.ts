@@ -23,11 +23,15 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatRadioModule } from '@angular/material/radio';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTabsModule } from '@angular/material/tabs';
+import { MatRippleModule } from '@angular/material/core';
 import { MatTableModule } from '@angular/material/table';
 import { MatSortModule } from '@angular/material/sort';
 import { MatPaginatorModule } from '@angular/material/paginator';
 
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 import { NgScrollbarModule } from 'ngx-scrollbar'
 
@@ -60,12 +64,16 @@ const MaterialComponents = [
 
   MatSnackBarModule,
 
+  MatProgressBarModule,
+  MatProgressSpinnerModule,
+
   NgScrollbarModule,
   
+  MatRippleModule,
   MatTableModule,
   MatSortModule,
   MatPaginatorModule
-]
+];
 
 @NgModule({
   declarations: [],

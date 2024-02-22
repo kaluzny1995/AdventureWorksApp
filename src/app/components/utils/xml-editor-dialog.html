@@ -1,0 +1,30 @@
+<!-- XML editor -->
+<form [formGroup]="this.form" (submit)="this.submit()">
+    <div class="mat-h1" mat-dialog-title>'{{ this.data.name }}' field XML editor</div>
+    <div mat-dialog-content class="xml-dialog">
+      <div class="mat-body-strong">Type in the valid XML text.</div>
+      <div class="form-field-group-above">
+
+        <mat-grid-list cols="2" rowHeight="2:1">
+            <mat-grid-tile class="xml-field">
+
+                <!--XML field-->
+                <mat-form-field appearance="fill" class="form-field form-field-whole">
+                    <mat-label>XML</mat-label>
+                    <textarea matInput rows="6" formControlName="xml"></textarea>
+                    <mat-error *ngIf="this.xml?.errors?.xml">Invalid XML document.</mat-error>
+                </mat-form-field>
+
+            </mat-grid-tile>
+            <mat-grid-tile class="xml-container"><div class="xml">{{ this.xml.value | xml }}</div></mat-grid-tile>
+        </mat-grid-list>
+      </div>
+    </div>
+    <div mat-dialog-actions>
+        <a mat-raised-button mat-dialog-close>Cancel</a>
+        <a mat-raised-button color="primary" [disabled]="!!this.xml.value" (click)="this.loadTemplate()">Use template</a>
+        <div class="fill-remaining-space"></div>
+        <button mat-raised-button color="warn" type="reset">Clear</button>
+        <button mat-raised-button type="submit" color="accent" [disabled]="!this.form.valid">Set up</button>
+      </div>
+  </form>

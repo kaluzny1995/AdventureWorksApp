@@ -10,7 +10,7 @@ import { MaterialModule } from './modules/material.module';
 import { HomeComponent } from './components/home/home.component';
 import { AuthenticationComponent } from './components/authentication/authentication.component';
 import { Error404Component } from './components/errors/error404/error404.component';
-import { Error401Component } from './components/errors/error401/error401.component';
+import { Error403Component } from './components/errors/error403/error403.component';
 import { RequestInterceptionService } from './services/request-interception.service';
 import { NavMenuComponent } from './components/nav-menu/nav-menu.component';
 import { ProfileComponent } from './components/awfapi-user/profile/profile.component';
@@ -23,6 +23,11 @@ import { FirstStepsComponent } from './components/instructions/first-steps/first
 import { DataflowDiagramsComponent } from './components/instructions/dataflow-diagrams/dataflow-diagrams.component';
 import { EntitiesComponent } from './components/instructions/entities/entities.component';
 import { AdminPannelsComponent } from './components/instructions/admin-pannels/admin-pannels.component';
+import { PersonsComponent } from './components/admin-pannels/persons/persons.component';
+import { XmlPipe } from './app.pipes';
+import { ErrorHandlersModule } from './modules/error-handlers.module';
+import { PersonFormComponent } from './components/admin-pannels/person-form/person-form.component';
+import { PipeModule } from './modules/pipe.module';
 
 @NgModule({
   declarations: [
@@ -30,7 +35,7 @@ import { AdminPannelsComponent } from './components/instructions/admin-pannels/a
     HomeComponent,
     AuthenticationComponent,
     Error404Component,
-    Error401Component,
+    Error403Component,
     NavMenuComponent,
     ProfileComponent,
     AboutAuthorComponent,
@@ -40,7 +45,9 @@ import { AdminPannelsComponent } from './components/instructions/admin-pannels/a
     FirstStepsComponent,
     DataflowDiagramsComponent,
     EntitiesComponent,
-    AdminPannelsComponent
+    AdminPannelsComponent,
+    PersonsComponent,
+    PersonFormComponent
   ],
   imports: [
     BrowserModule,
@@ -48,7 +55,9 @@ import { AdminPannelsComponent } from './components/instructions/admin-pannels/a
     BrowserAnimationsModule,
     FormsModule, ReactiveFormsModule,
     HttpClientModule,
-    MaterialModule
+    MaterialModule,
+    PipeModule,
+    ErrorHandlersModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: RequestInterceptionService, multi: true},

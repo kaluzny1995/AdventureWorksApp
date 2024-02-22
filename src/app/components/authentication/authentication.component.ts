@@ -4,7 +4,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { AlertMessage } from 'src/app/models/alert-message';
 import { EAuthenticationStatus } from 'src/app/models/e-authentication-status';
 import { AuthenticationService } from 'src/app/services/authentication.service';
-import { UtilsService } from 'src/app/services/utils.service';
+import { UrlProcessingService } from 'src/app/services/url/url-processing.service';
 
 @Component({
   selector: 'app-authentication',
@@ -29,7 +29,7 @@ export class AuthenticationComponent implements OnInit {
   constructor(
     private _fb: FormBuilder, private _route: ActivatedRoute,
     private _router: Router, private _auth: AuthenticationService,
-    private _util: UtilsService
+    private __urlProc: UrlProcessingService
   ) { }
 
   ngOnInit(): void {
@@ -42,7 +42,17 @@ export class AuthenticationComponent implements OnInit {
       },
       error: (error) => {
         console.error('Error while checking authentication status.', error);
-        this._router.navigate(['home', {status: AlertMessage.UNKNOWN_ERROR}]);
+        switch(error.status) {
+          case 0:
+            this._router.navigate(['home', {status: AlertMessage.API_SERVER_DOWN}]);
+            break;
+          case 500:
+            this._router.navigate(['home', {status: AlertMessage.API_SERVER_ERROR_500}]);
+            break;
+          default:
+            this._router.navigate(['home', {status: AlertMessage.UNKNOWN_ERROR}]);
+            break;
+        }
       }
     });
 
@@ -103,9 +113,9 @@ export class AuthenticationComponent implements OnInit {
           });
         } else {
           let returnUrlAddress = this._route.snapshot.paramMap.get('returnUrl') || '';
-          let urlBase = this._util.getUrlBase(returnUrlAddress);
-          let urlOptionalParams = this._util.getUrlOptionalParams(returnUrlAddress);
-          urlOptionalParams['status'] = AlertMessage.SIGNED_IN;
+          let urlBase = this.__urlProc.base(returnUrlAddress);
+          let urlOptionalParams = this.__urlProc.optParams(returnUrlAddress);
+          urlOptionalParams['status'] = AlertMessage.SIGNED_IN.status;
 
           this._router.navigate([urlBase, urlOptionalParams]).then(() => {
             window.location.reload();

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
+import xmlFormat from 'xml-formatter';
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,19 @@ export class FormValidationService {
       let result = control.value !== matchingControl.value? {match: true} : null;
       matchingControl.setErrors(result);
       return result;
+    };
+  }
+
+  XMLValidator(): ValidatorFn {
+    return (control: AbstractControl): { [key: string]: any } | null => {
+      try {
+        if (control.value !== null) {
+          xmlFormat(control.value)
+        }
+        return null;
+      } catch (error: unknown) {
+        return {xml: true};
+      }
     };
   }
 }

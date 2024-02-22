@@ -8,7 +8,7 @@ The AW2017 Management App is a solution for the maintenance of AdventureWorks201
 First what you need to install is [Node.js](https://nodejs.org/). Proceed with installation instructions from official Node.js site.
 
 ### 2. Angular
-After setting up Node.js install [Angular](https://angular.io/guide/setup-local). Additionally install [ng-scrollbar](https://material.angular.io/guide/getting-started) packages typing in `npm i ngx-scrollbar`.
+After setting up Node.js install [Angular](https://angular.io/guide/setup-local). Additionally install [ng-scrollbar](https://www.npmjs.com/package/ngx-scrollbar) packages typing in `npm i ngx-scrollbar`. For pretty XML formatting install [XML-formatter](https://www.npmjs.com/package/xml-formatter) `npm i xml-formatter`.
 
 ### 3. Github repo downloading
 Download from the [Github repo](https://github.com/kaluzny1995/AdventureWorksApp). Include [Angular Material](https://material.angular.io/guide/getting-started) packages into the project typing in `ng add @angular/material`. Open downloaded project repo via Visual Studio Code or other relevant Angular editor.
