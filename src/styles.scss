@@ -297,6 +297,9 @@ div.right-side-main-container {
     }
 }
 
+.card-container {
+    padding-bottom: 30px;
+}
 .card-instruction {
     max-width: 80%;
     margin: 40px auto 40px auto;
@@ -316,6 +319,10 @@ div.right-side-main-container {
     .text-left {
         text-align: left;
     }
+}
+.card-title {
+    text-align: center;
+    margin-bottom: 8px !important;
 }
 
 /*Pannels*/
