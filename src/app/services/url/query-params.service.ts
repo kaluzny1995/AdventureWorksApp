@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { QueryParams } from 'src/app/models/query-params';
-import { AppConfigService } from '../app-config.service';
-import { EOrderType } from 'src/app/models/e-order-type';
+import { QueryParams } from 'src/app/models/admin-pannels/common/query-params';
+import { AppConfigService } from '../utils/app-config.service';
+import { EOrderType } from 'src/app/models/admin-pannels/common/e-order-type';
 import { UrlProcessingService } from './url-processing.service';
 import { FilterNameError, FilterValueError, OptionalParamError } from 'src/app/app.errors';
 import { FilterParamsService } from './filter-params.service';

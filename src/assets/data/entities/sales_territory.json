@@ -4,7 +4,7 @@
     "fields": [
         {"name": "TerritoryID", "type": "int", "description": "Primary key for SalesTerritory records. Identity / Auto increment column", "primary": true, "unique": true},
         {"name": "Name", "type": "nvarchar(50)", "description": "Sales territory description", "unique": true},
-        {"name": "CountryRegionCode", "type": "nvarchar(3)", "description": "ISO standard country or region code. Foreign key to CountryRegion.CountryRegionCode."},
+        {"name": "CountryRegionCode", "type": "nvarchar(3)", "description": "ISO standard country or region code. Foreign key to CountryRegion.CountryRegionCode.", "foreign": true},
         {"name": "Group", "type": "nvarchar(50)", "description": "Geographic area to which the sales territory belong."},
         {"name": "SalesYTD", "type": "money", "description": "Sales in the territory year to date. Default: 0.00"},
         {"name": "SalesLastYear", "type": "money", "description": "Sales in the territory the previous year. Default: 0.00"},

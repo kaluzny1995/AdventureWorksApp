@@ -312,11 +312,15 @@ div.right-side-main-container {
         text-align: center;
     }
 
+    img {
+        cursor: pointer;
+    }
+
     .img-half {
         width: 60%;
     }
 
-    .text-left {
+    .text-left,.mat-expansion-panel-body {
         text-align: left;
     }
 }
@@ -494,7 +498,7 @@ div[role=listbox] {
 }
 
 
-/*admin pannels - tables, filters, sorting, pagination*/
+/*admin pannel - action button*/
 .header-actions {
     margin-bottom: 16px;
     display: flex;
@@ -535,6 +539,7 @@ div[role=listbox] {
     }
 }
 
+/* admin pannel - filters and columns display dialog */
 .filters,.columns {
     margin-bottom: 10px;
     margin-left: 0;
@@ -581,7 +586,6 @@ div[role=listbox] {
         }
     }
 }
-
 .filter-dialog, .column-dialog {
     .chip-remove {
         .mat-icon {
@@ -590,6 +594,7 @@ div[role=listbox] {
     }
 }
 
+/* admin pannel - table */
 .table-admin {
     overflow: auto;
     max-height: calc(100vh - 270px);
@@ -632,7 +637,6 @@ div[role=listbox] {
         }
     }
 }
-
 .no-results {
     margin-top: 10px;
 
@@ -641,6 +645,28 @@ div[role=listbox] {
     }
 }
 
+/* image displaying dialog */
+.cdk-overlay-pane.image-dialog {
+    position: relative !important;
+}
+.image-dialog-close {
+    position: absolute !important;
+    top: 15px;
+    right: 15px;
+    padding: 5px !important;
+    line-height: 14px !important;
+    min-width: auto !important;
+    font-size: xx-large;
+
+    .mdc-button__label {
+        right: -2px;
+    }
+}
+.image-dialog-content {
+    max-height: 90vh !important;
+}
+
+/* xml editor */
 .xml {
     white-space: pre;
 }

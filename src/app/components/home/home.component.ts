@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { AlertMessage } from 'src/app/models/alert-message';
-import { AppConfigService } from 'src/app/services/app-config.service';
+import { AlertMessage } from 'src/app/models/utils/alert-message';
+import { AppConfigService } from 'src/app/services/utils/app-config.service';
 
 @Component({
   selector: 'app-home',
@@ -10,9 +10,6 @@ import { AppConfigService } from 'src/app/services/app-config.service';
 })
 export class HomeComponent implements OnInit {
   mainAlert: AlertMessage | null = null;
-  mainAlertDismiss(): void {
-    this.mainAlert = null;
-  }
 
   title: string;
   shortTitle: string;
@@ -22,7 +19,8 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     if (this._route.snapshot.paramMap.has('status')) {
-      let status = this._route.snapshot.paramMap.get('status');
+      /* Status alerts setting */
+      const status = this._route.snapshot.paramMap.get('status');
       switch (status) {
         case 'signed_in': {
           this.mainAlert = AlertMessage.SIGNED_IN;

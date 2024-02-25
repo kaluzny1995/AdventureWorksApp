@@ -4,30 +4,30 @@ import { PageEvent } from '@angular/material/paginator';
 import { ActivatedRoute, NavigationStart, Router } from '@angular/router';
 import { filter } from 'rxjs';
 import { ColumnNotFoundError, FilterNameError, FilterValueError, OptionalParamError } from 'src/app/app.errors';
-import { EPersonType } from 'src/app/models/admin-pannels/e-person-type';
-import { Person } from 'src/app/models/admin-pannels/person';
-import { PersonDefaults } from 'src/app/models/admin-pannels/person-defaults';
-import { AlertMessage } from 'src/app/models/alert-message';
-import { PersonFilterParams } from 'src/app/models/filter-params';
-import { QueryParams } from 'src/app/models/query-params';
-import { PersonService } from 'src/app/services/person.service';
+import { EPersonType } from 'src/app/models/admin-pannels/persons/e-person-type';
+import { Person } from 'src/app/models/admin-pannels/persons/person';
+import { PersonDefaults } from 'src/app/models/admin-pannels/persons/person-defaults';
+import { AlertMessage } from 'src/app/models/utils/alert-message';
+import { PersonFilterParams } from 'src/app/models/admin-pannels/common/filter-params';
+import { QueryParams } from 'src/app/models/admin-pannels/common/query-params';
+import { PersonService } from 'src/app/services/admin-pannels/person.service';
 import { ColumnDisplayingService } from 'src/app/services/url/column-displaying.service';
 import { FilterParamsService } from 'src/app/services/url/filter-params.service';
 import { QueryParamsService } from 'src/app/services/url/query-params.service';
 import { PersonsFilterFormDialog } from './persons-filter-form-dialog';
 import { PersonsColumnSettingsDialog } from './persons-column-settings-dialog';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AuthenticationService } from 'src/app/services/awfapi-user/authentication.service';
 import { HttpErrorResponse } from '@angular/common/http';
-import { UtilsService } from 'src/app/services/utils.service';
+import { UtilsService } from 'src/app/services/utils/utils.service';
 import { Sort } from '@angular/material/sort';
-import { EOrderType } from 'src/app/models/e-order-type';
-import { ViewParams } from 'src/app/models/view-params';
+import { EOrderType } from 'src/app/models/admin-pannels/common/e-order-type';
+import { ViewParams } from 'src/app/models/admin-pannels/common/view-params';
 import { ViewParamsService } from 'src/app/services/url/view-params.service';
-import { EAlertType } from 'src/app/models/e-alert-type';
+import { EAlertType } from 'src/app/models/utils/e-alert-type';
 import { DeletionConfirmationDialog } from '../../utils/deletion-confirmation-dialog';
-import { EDeletionConfirmation } from 'src/app/models/e-deletion-confirmation';
-import { DeletionConfirmationData } from 'src/app/models/deletion-confirmation-data';
-import { AlertMessageService } from 'src/app/services/alert-message.service';
+import { EDeletionConfirmation } from 'src/app/models/utils/e-deletion-confirmation';
+import { DeletionConfirmationData } from 'src/app/models/utils/deletion-confirmation-data';
+import { AlertMessageService } from 'src/app/services/utils/alert-message.service';
 
 @Component({
   selector: 'app-persons',
@@ -81,7 +81,7 @@ export class PersonsComponent implements OnInit {
 
     /* Status alerts setting */
     if (this._route.snapshot.paramMap.has('status')) {
-      let status = this._route.snapshot.paramMap.get('status');
+      const status = this._route.snapshot.paramMap.get('status');
       switch (status) {
         case 'signed_in': {
           this.mainAlert = AlertMessage.SIGNED_IN;

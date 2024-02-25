@@ -6,8 +6,8 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/materia
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
-import { PersonFilterParams } from "src/app/models/filter-params";
-import { PersonService } from "src/app/services/person.service";
+import { PersonFilterParams } from "src/app/models/admin-pannels/common/filter-params";
+import { PersonService } from "src/app/services/admin-pannels/person.service";
 
 @Component({
   selector: 'persons-filter-form-dialog',

@@ -9,9 +9,9 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectChange, MatSelectModule } from "@angular/material/select";
-import { PersonService } from "src/app/services/person.service";
+import { PersonService } from "src/app/services/admin-pannels/person.service";
 import { ColumnDisplayingService } from "src/app/services/url/column-displaying.service";
-import { UtilsService } from "src/app/services/utils.service";
+import { UtilsService } from "src/app/services/utils/utils.service";
 
 @Component({
   selector: 'persons-column-settings-dialog',

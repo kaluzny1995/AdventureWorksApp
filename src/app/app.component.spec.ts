@@ -3,7 +3,7 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
-import { AppConfigService } from './services/app-config.service';
+import { AppConfigService } from './services/utils/app-config.service';
 
 describe('AppComponent', () => {
   beforeEach(async () => {

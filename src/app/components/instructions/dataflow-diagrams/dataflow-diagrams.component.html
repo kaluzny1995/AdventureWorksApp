@@ -1,36 +1,24 @@
 <div class="mat-h1">Dataflow diagrams</div>
 <mat-divider class="horizontal-line"></mat-divider>
 
-<mat-card class="card card-instruction">
-    <mat-card-content>
-        <mat-tab-group>
-            <mat-tab label="Application">
-                <img src="/assets/images/awma_frontend.png">
-        
-                <mat-accordion>
-                    <mat-expansion-panel *ngFor="let ff of this.frontendFlow" [disabled]="ff.disabled">
-                        <mat-expansion-panel-header>
-                          <mat-panel-title>{{ ff.name }}</mat-panel-title>
-                          <mat-panel-description>{{ ff.title }}</mat-panel-description>
-                        </mat-expansion-panel-header>
-                        {{ ff.description }}
-                    </mat-expansion-panel>
-                </mat-accordion>
-            </mat-tab>
-        
-            <mat-tab label="API">
-                <img src="/assets/images/awma_backend.png">
-        
-                <mat-accordion>
-                    <mat-expansion-panel *ngFor="let bf of this.backendFlow">
-                        <mat-expansion-panel-header>
-                          <mat-panel-title>{{ bf.name }}</mat-panel-title>
-                          <mat-panel-description>{{ bf.title }}</mat-panel-description>
-                        </mat-expansion-panel-header>
-                        {{ bf.description }}
-                    </mat-expansion-panel>
-                </mat-accordion>
-            </mat-tab>
-        </mat-tab-group>
-    </mat-card-content>
-</mat-card>
+<div class="card-container">
+    <mat-card class="card card-instruction">
+        <mat-card-content>
+            <mat-tab-group>
+                <mat-tab *ngFor="let instr of this.instructions" [label]="instr.name">
+                    <img [src]="instr.images[0].src" (click)="this.displayImage(instr.images[0].title, instr.images[0].src)">
+
+                    <mat-accordion>
+                        <mat-expansion-panel *ngFor="let step of instr.steps; let i = index;" [disabled]="!step.description">
+                            <mat-expansion-panel-header>
+                                <mat-panel-title>{{ i+1 }}&nbsp;{{ step.name }}</mat-panel-title>
+                                <mat-panel-description>{{ step.title }}</mat-panel-description>
+                            </mat-expansion-panel-header>
+                            {{ step.description }}
+                        </mat-expansion-panel>
+                    </mat-accordion>
+                </mat-tab>
+            </mat-tab-group>
+        </mat-card-content>
+    </mat-card>
+</div>

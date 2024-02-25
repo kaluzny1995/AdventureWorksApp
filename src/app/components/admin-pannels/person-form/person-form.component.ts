@@ -1,18 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Params, Router } from '@angular/router';
-import { EPersonType } from 'src/app/models/admin-pannels/e-person-type';
-import { Person, PersonInput } from 'src/app/models/admin-pannels/person';
-import { PersonDefaults } from 'src/app/models/admin-pannels/person-defaults';
-import { EFormMode } from 'src/app/models/e-form-mode';
-import { PersonService } from 'src/app/services/person.service';
+import { EPersonType } from 'src/app/models/admin-pannels/persons/e-person-type';
+import { Person, PersonInput } from 'src/app/models/admin-pannels/persons/person';
+import { PersonDefaults } from 'src/app/models/admin-pannels/persons/person-defaults';
+import { EFormMode } from 'src/app/models/admin-pannels/common/e-form-mode';
+import { PersonService } from 'src/app/services/admin-pannels/person.service';
 import { XMLEditorDialog } from '../../utils/xml-editor-dialog';
 import { MatDialog } from '@angular/material/dialog';
-import { EXmlField } from 'src/app/models/e-xml-field';
-import { AlertMessage } from 'src/app/models/alert-message';
+import { EXmlField } from 'src/app/models/utils/e-xml-field';
+import { AlertMessage } from 'src/app/models/utils/alert-message';
 import { HttpErrorResponse } from '@angular/common/http';
-import { XmlEditorData } from 'src/app/models/xml-editor-data';
-import { AlertMessageService } from 'src/app/services/alert-message.service';
+import { XmlEditorData } from 'src/app/models/utils/xml-editor-data';
+import { AlertMessageService } from 'src/app/services/utils/alert-message.service';
 
 @Component({
   selector: 'app-person-form',
@@ -158,7 +158,6 @@ export class PersonFormComponent implements OnInit {
    * Submits the form, registers new person or modifies the data of one
   */
   submit(): void {
-    console.log('Submitted:', this.form.value)
     const personInput: PersonInput = PersonInput.fromFormStructure(this.form.value);
 
     this.isLoaderUp = true;

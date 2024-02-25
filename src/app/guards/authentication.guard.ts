@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from '@angular/router';
-import { AlertMessage } from '../models/alert-message';
-import { EAuthenticationStatus } from '../models/e-authentication-status';
-import { AuthenticationService } from '../services/authentication.service';
+import { AlertMessage } from '../models/utils/alert-message';
+import { EAuthenticationStatus } from '../models/utils/e-authentication-status';
+import { AuthenticationService } from '../services/awfapi-user/authentication.service';
 
 @Injectable({
   providedIn: 'root'

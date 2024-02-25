@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
-import { AppConfigService } from './app-config.service';
-import { PersonDefaults } from '../models/admin-pannels/person-defaults';
+import { AppConfigService } from '../utils/app-config.service';
+import { PersonDefaults } from '../../models/admin-pannels/persons/person-defaults';
 import { Observable } from 'rxjs';
-import { QueryParams } from '../models/query-params';
-import { QueryParamsService } from './url/query-params.service';
+import { QueryParams } from '../../models/admin-pannels/common/query-params';
+import { QueryParamsService } from '../url/query-params.service';
 import { HttpClient } from '@angular/common/http';
-import { PersonInput } from '../models/admin-pannels/person';
+import { PersonInput } from '../../models/admin-pannels/persons/person';
 
 @Injectable({
   providedIn: 'root'

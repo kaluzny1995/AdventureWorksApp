@@ -1,8 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { QueryParams } from '../models/query-params';
-import { PersonDefaults } from '../models/admin-pannels/person-defaults';
-import { ViewParams } from '../models/view-params';
+import { QueryParams } from '../../models/admin-pannels/common/query-params';
+import { PersonDefaults } from '../../models/admin-pannels/persons/person-defaults';
+import { ViewParams } from '../../models/admin-pannels/common/view-params';
 
 @Injectable({
   providedIn: 'root'

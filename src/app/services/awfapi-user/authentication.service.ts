@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { AppConfigService } from './app-config.service';
+import { AppConfigService } from '../utils/app-config.service';
 import { Observable } from 'rxjs';
 import jwtDecode from 'jwt-decode';
 

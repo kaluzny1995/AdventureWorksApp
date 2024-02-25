@@ -1,7 +1,7 @@
 <div class="alert" *ngIf="this.mainAlert" [ngClass]="this.mainAlert.type ? 'alert-' + this.mainAlert.type : ''">
     <span>{{ this.mainAlert.message }}</span>
     <span class="fill-remaining-space"></span>
-    <button mat-raised-button (click)="this.mainAlertDismiss()">&times;</button>
+    <button mat-raised-button (click)="this.mainAlert = null">&times;</button>
 </div>
 
 
@@ -35,7 +35,6 @@
         <a class="link" routerLink="/change-credentials"><button mat-raised-button type="button"><mat-icon>laptop</mat-icon> Change credentials</button></a>
         <div class="fill-remaining-space"></div>
         <button class="link" mat-raised-button
-        #profileDeletionTooltip="matTooltip" matTooltip="{{ this.profileDeletionWarning }}" matTooltipPosition="above" matTooltipHideDelay="100000"
         type="button" color="warn" (click)="this.showAccountDeletionDialog()"><mat-icon>delete_forever</mat-icon> Remove account</button>
     </mat-card-actions>
 </mat-card>

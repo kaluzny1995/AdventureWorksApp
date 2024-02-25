@@ -1,13 +1,13 @@
 import { TestBed } from '@angular/core/testing';
 
-import { EntityDescriptionService } from './entity-description.service';
+import { JsonLoadingService } from './json-loading.service';
 
 describe('EntityDescriptionService', () => {
-  let service: EntityDescriptionService;
+  let service: JsonLoadingService;
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
-    service = TestBed.inject(EntityDescriptionService);
+    service = TestBed.inject(JsonLoadingService);
   });
 
   it('should be created', () => {

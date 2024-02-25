@@ -6,30 +6,33 @@
     <mat-card class="card card-instruction">
         <mat-card-header>
             <mat-button-toggle-group [(ngModel)]="this.selectedInstruction">
-                <mat-button-toggle *ngFor="let ib of this.instructionButtons" [value]="ib.value" #signingUpTooltip="matTooltip" [matTooltip]="ib.name" matTooltipPosition="above">
-                    <mat-icon>{{ ib.icon }}</mat-icon>
+                <mat-button-toggle *ngFor="let instr of this.instructions" [value]="instr.value"
+                [matTooltip]="instr.name" matTooltipPosition="above">
+                    <mat-icon>{{ instr.btnIcon }}</mat-icon>
                 </mat-button-toggle>
             </mat-button-toggle-group>
         </mat-card-header>
         <mat-divider class="horizontal-line"></mat-divider>
     
-        <span *ngFor="let ip of this.instructionPannels">
-            <mat-card-content *ngIf="this.selectedInstruction === ip.value">
-                <div class="mat-h2 card-title">{{ ip.name }}</div>
-                <img [class.img-half]="ip.half" *ngIf="ip.image" src="/assets/images/admin_pannels/{{ ip.image }}.png">
-                <mat-tab-group *ngIf="ip.images">
-                    <mat-tab *ngFor="let img of ip.images" [label]="img.label">
-                        <img [class.img-half]="img.half" src="/assets/images/admin_pannels/{{ img.name }}.png">
+        <span *ngFor="let instr of this.instructions">
+            <mat-card-content *ngIf="this.selectedInstruction === instr.value">
+                <div class="mat-h2 card-title">{{ instr.name }}</div>
+                <img *ngIf="instr.images.length <= 1" [class.img-half]="instr.images[0].isHalf" [src]="instr.images[0].src"
+                (click)="this.displayImage(instr.images[0].title, instr.images[0].src)">
+                <mat-tab-group *ngIf="instr.images.length > 1">
+                    <mat-tab *ngFor="let img of instr.images" [label]="img.label || ''">
+                        <img [class.img-half]="img.isHalf" [src]="img.src"
+                        (click)="this.displayImage(img.title, img.src)">
                     </mat-tab>
                 </mat-tab-group>
         
                 <mat-accordion>
-                    <mat-expansion-panel *ngFor="let sus of ip.steps">
+                    <mat-expansion-panel *ngFor="let step of instr.steps; let i = index;">
                         <mat-expansion-panel-header>
-                          <mat-panel-title>{{ sus.name }}</mat-panel-title>
-                          <mat-panel-description>{{ sus.title }}</mat-panel-description>
+                          <mat-panel-title>&nbsp;{{ i+1 }}.&nbsp;{{ step.name }}</mat-panel-title>
+                          <mat-panel-description>{{ step.title }}</mat-panel-description>
                         </mat-expansion-panel-header>
-                        {{ sus.description }}
+                        {{ step.description }}
                     </mat-expansion-panel>
                 </mat-accordion>
         </mat-card-content>

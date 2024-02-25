@@ -1,9 +1,9 @@
 import { HttpEvent, HttpHandler, HttpInterceptor, HttpRequest } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AUTH_REQUIRED_ADDRESSES, FAST_API_SERVER } from '../app.constants';
+import { AUTH_REQUIRED_ADDRESSES, FAST_API_SERVER } from '../../app.constants';
 import { AppConfigService } from './app-config.service';
-import { AuthenticationService } from './authentication.service';
+import { AuthenticationService } from '../awfapi-user/authentication.service';
 
 @Injectable({
   providedIn: 'root'

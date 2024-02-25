@@ -1,13 +1,15 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AlertMessage } from 'src/app/models/alert-message';
+import { AlertMessage } from 'src/app/models/utils/alert-message';
 import { RegisteredUser } from 'src/app/models/awfapi-user/registered-user';
-import { EAuthenticationStatus } from 'src/app/models/e-authentication-status';
-import { AppConfigService } from 'src/app/services/app-config.service';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { AwfapiUserService } from 'src/app/services/awfapi-user.service';
-import { FormValidationService } from 'src/app/services/form-validation.service';
+import { EAuthenticationStatus } from 'src/app/models/utils/e-authentication-status';
+import { AlertMessageService } from 'src/app/services/utils/alert-message.service';
+import { AppConfigService } from 'src/app/services/utils/app-config.service';
+import { AuthenticationService } from 'src/app/services/awfapi-user/authentication.service';
+import { AwfapiUserService } from 'src/app/services/awfapi-user/awfapi-user.service';
+import { FormValidationService } from 'src/app/services/utils/form-validation.service';
 
 @Component({
   selector: 'app-register',
@@ -15,6 +17,8 @@ import { FormValidationService } from 'src/app/services/form-validation.service'
   styleUrls: ['./register.component.scss']
 })
 export class RegisterComponent implements OnInit {
+  mainAlert: AlertMessage | null = null;
+
   form: FormGroup;
   username: FormControl;
   password: FormControl;
@@ -24,12 +28,17 @@ export class RegisterComponent implements OnInit {
   isReadonly: FormControl;
 
   constructor(
-    private _fb: FormBuilder, private _router: Router,
-    private _appConfig: AppConfigService, private _auth: AuthenticationService,
-    private _fv: FormValidationService, private _userService: AwfapiUserService
+    private _fb: FormBuilder,
+    private _router: Router,
+    private _appConfig: AppConfigService,
+    private _auth: AuthenticationService,
+    private _fv: FormValidationService,
+    private _userService: AwfapiUserService,
+    private _alert: AlertMessageService
   ) { }
 
   ngOnInit(): void {
+    /* Checking authentication status, if signed in then redirect */
     this._auth.testAuthentication().subscribe({
       next: (response: any) => {
         if (response.title === EAuthenticationStatus.AUTHENTICATED) {
@@ -37,17 +46,18 @@ export class RegisterComponent implements OnInit {
           this._router.navigate(['home', {status: AlertMessage.SIGNOUT_REQUIRED}]);
         }
       },
-      error: (error) => {
+      error: (error: HttpErrorResponse) => {
         console.error('Error while checking authentication status.', error);
-        this._router.navigate(['home', {status: AlertMessage.UNKNOWN_ERROR}]);
+        this.mainAlert = this._alert.statusAlertMesssage(error.status);
       }
     });
 
-    this.username = new FormControl('', [Validators.required, this._fv.ForbiddenValueValidator(this._appConfig.forbiddenUsernames)]);
-    this.password = new FormControl('', Validators.required);
-    this.repeatedPassword = new FormControl('', Validators.required);
-    this.fullName = new FormControl('', Validators.required);
-    this.email = new FormControl('', [Validators.required, Validators.email]);
+    /* Form initialization */
+    this.username = new FormControl(null, [Validators.required, this._fv.ForbiddenValueValidator(this._appConfig.forbiddenUsernames)]);
+    this.password = new FormControl(null, Validators.required);
+    this.repeatedPassword = new FormControl(null, Validators.required);
+    this.fullName = new FormControl(null, Validators.required);
+    this.email = new FormControl(null, [Validators.required, Validators.email]);
     this.isReadonly = new FormControl(false);
     this.form = this._fb.group({
       username: this.username,
@@ -59,6 +69,9 @@ export class RegisterComponent implements OnInit {
     }, {validator: this._fv.PasswordsMatchingValidator('password', 'repeatedPassword')});
   }
 
+  /**
+   * Clears non-unique value error (for username and email fields)
+  */
   clearUniqueError(fieldName: string): void {
     switch (fieldName) {
       case 'username': {
@@ -79,25 +92,29 @@ export class RegisterComponent implements OnInit {
     }
   }
 
+  /**
+   * Registers new user
+  */
   register(): void {
     const registeredUser: RegisteredUser = RegisteredUser.fromFormStructure(this.form.value);
-    console.log('Registered user:', registeredUser);
 
-    this._userService.register(
-        registeredUser.toAPIStructure()
-      ).subscribe({
+    this._userService.register(registeredUser.toAPIStructure()).subscribe({
       next: (result: any) => {
         console.log('New user registered successfully.', result);
         this._router.navigate(['authenticate', {status: AlertMessage.SIGNUP_SUCCESS}]);
       },
-      error: (error) => {
+      error: (error: HttpErrorResponse) => {
         console.error('Error while registering new user.', error);
-        let errorMessage = error.error.detail.title;
-        if (errorMessage.includes('username')) {
-          this.username.setErrors({unique: true});
-        }
-        if (errorMessage.includes('email')) {
-          this.email.setErrors({unique: true});
+        if (error.status === 400) {
+          const errorMessage = error.error.detail.title;
+          if (errorMessage.includes('username')) {
+            this.username.setErrors({unique: true});
+          }
+          if (errorMessage.includes('email')) {
+            this.email.setErrors({unique: true});
+          }
+        } else {
+          this.mainAlert = this._alert.statusAlertMesssage(error.status);
         }
       }
     });

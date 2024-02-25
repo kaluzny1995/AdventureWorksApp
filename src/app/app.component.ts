@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { AppConfigService } from './services/app-config.service';
-import { AuthenticationService } from './services/authentication.service';
+import { AppConfigService } from './services/utils/app-config.service';
+import { AuthenticationService } from './services/awfapi-user/authentication.service';
+import { HttpErrorResponse } from '@angular/common/http';
+import { EAuthenticationStatus } from './models/utils/e-authentication-status';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +10,8 @@ import { AuthenticationService } from './services/authentication.service';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title: string
-  shortTitle: string
+  title: string;
+  shortTitle: string;
   viewLinks: any[] = [
     {name: 'Home', url: 'home'},
     {name: 'About author', url: 'author'},
@@ -24,8 +26,8 @@ export class AppComponent implements OnInit {
       {name: 'Person phones', url: 'pannels/person-phones'},
       {name: 'Phone number types', url: 'pannels/phone-number-types'}
     ], isAuthRequired: true}
-  ]
-  isAuthenticated: boolean
+  ];
+  isAuthenticated: boolean;
 
   constructor(private _appConfig: AppConfigService, private _auth: AuthenticationService) {}
 
@@ -33,6 +35,14 @@ export class AppComponent implements OnInit {
     this.title = this._appConfig.title;
     this.shortTitle = this._appConfig.shortTitle;
 
-    this.isAuthenticated = this._auth.isAuthenticated();
+    /* Checking authentication status */
+    this._auth.testAuthentication().subscribe({
+      next: (result: any) => {
+        this.isAuthenticated = result.title === EAuthenticationStatus.AUTHENTICATED;
+      },
+      error: (error: HttpErrorResponse) => {
+        console.error('Error while checking authentication status.', error);
+      }
+    });
   }
 }

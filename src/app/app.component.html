@@ -1,8 +1,9 @@
 <mat-drawer-container>
   <mat-drawer #drawer mode="side" opened>
-    <!--<h1 style="padding: 15px 16px">{{ this.shortTitle }}</h1>-->
+    <!-- App logo -->
     <img src="/assets/images/logo/aw2017ma_logo.png">
     <mat-list role="list" class="side-bar">
+      <!-- Vetical navigation bar menu -->
       <span *ngFor="let vl of this.viewLinks">
         <a *ngIf="!vl.subLinks" [routerLink]="vl.url"><mat-list-item role="listitem">{{ vl.name }}</mat-list-item></a>
         <mat-expansion-panel *ngIf="vl.subLinks && (!vl.isAuthRequired || this.isAuthenticated)">
@@ -20,7 +21,7 @@
       <mat-icon aria-hidden="false" aria-label="Example home icon" (click)="drawer.toggle()">reorder</mat-icon>
       <h1>{{ this.title }}</h1>
       <span class="fill-remaining-space"></span>
-      <!--menu-component-->
+      <!-- Horizontal navigation bar dropdown menu -->
       <app-nav-menu></app-nav-menu>
     </mat-toolbar>
     <ng-scrollbar #scrollable track="vertical" [autoHeightDisabled]="false">

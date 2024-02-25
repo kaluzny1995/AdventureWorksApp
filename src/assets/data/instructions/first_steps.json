@@ -1,0 +1,62 @@
+{
+    "imagePathTemplate": "/assets/images/first_steps/${}.png",
+    "selectedInstruction": "signing_up",
+    "instructions": [
+        {"name": "Signing up", "value": "signing_up", "btnIcon": "person_add", "images": [
+            {"title": "Signing up form", "src": "signing_up", "label": "Empty", "isHalf": true},
+            {"title": "Signing up filled in form", "src": "signing_up_filled", "label": "Filled in", "isHalf": true}
+        ], "steps": [
+            {"name": "Username", "title": "Unique username.", "description": "Username must be provided in order to use it by signing in. The username must be unique."},
+            {"name": "Password & repeating", "title": "Password typed twice.", "description": "Password must be provided in order to use it by signing in. Then it must be repeated."},
+            {"name": "Full name", "title": "Full name for greeting.", "description": "Full name must be provided for greeting by application, like \"Hello XYZ\"."},
+            {"name": "E-mail address", "title": "Unique e-mail for communication.", "description": "E-mail address must be provided to let the application send necessary informations. The e-mail must be unique."},
+            {"name": "(Non)Readonly access", "title": "Access only for reading or also for modification/removing.", "description": "Check this if the new application user may only view the data. Leave unchecked if this user may also modify or remove certain data."}
+        ]},
+        {"name": "Signing in", "value": "signing_in", "btnIcon": "person", "images": [
+            {"title": "Signing in form", "src": "signing_in", "label": "Empty", "isHalf": true},
+            {"title": "Signing in filled in form", "src": "signing_in_filled", "label": "Filled in", "isHalf": true}
+        ], "steps": [
+            {"name": "Username", "title": "Username (login).", "description": "Provide username to sign in. Same as during signing up."},
+            {"name": "Password", "title": "Password.", "description": "Provide password to sign in. Same as during signing up."}
+        ]},
+        {"name": "Viewing users profile", "value": "viewing", "btnIcon": "info", "images": [
+            {"title": "Users profile overview", "src": "viewing", "label": null, "isHalf": false}
+        ], "steps": [
+            {"name": "Your profile", "title": "View your profile.", "description": "Click on right hand side top menu bar and select \"View profile\"."},
+            {"name": "Personal data", "title": "View your data.", "description": "The profile view shows your: username, full name, e-mail address, whether your access is readonly and creation/last modification date."},
+            {"name": "Further options", "title": "What's next?", "description": "Click on \"Change personal data\" to modify your personal data (Full name, e-mail, etc.). Click on \"Change credentials\" to modify your current username or password. Click on \"Remove account\" in order to permanently delete your account."}
+        ]},
+        {"name": "Changing users data", "value": "changing_data", "btnIcon": "edit", "images": [
+            {"title": "Changing users data", "src": "changing_user_data_filled", "label": null, "isHalf": true}
+        ], "steps": [
+            {"name": "Full name", "title": "Changing full name.", "description": "You may change your full name visible at application greetings."},
+            {"name": "E-mail", "title": "Changing e-mail address.", "description": "You may change your contact e-mail address. The e-mail must be unique."},
+            {"name": "(Non)Readonly access", "title": "Changing mode of access.", "description": "You may change your mode of application access between readonly and nonreadonly and backwards."}
+        ]},
+        {"name": "Changing credentials", "value": "changing_credentials", "btnIcon": "laptop", "images": [
+            {"title": "Changing users username", "src": "changing_user_credentials_username_only", "label": "Username only", "isHalf": true},
+            {"title": "Changing users password", "src": "changing_user_credentials_password_only", "label": "Password only", "isHalf": true},
+            {"title": "Changing users both credentials", "src": "changing_user_credentials_both", "label": "Both", "isHalf": true},
+            {"title": "Signing in again after change", "src": "signing_in_new_credentials", "label": "Resigning in", "isHalf": true}
+        ], "steps": [
+            {"name": "Changing options", "title": "User credentials changing options.", "description": "You may change username only, password only or both username and password."},
+            {"name": "New username", "title": "Changed username.", "description": "You may change your username by providing the new one."},
+            {"name": "Current password", "title": "Current password.", "description": "You must provide your current password when changing password to new one."},
+            {"name": "New password & repeating", "title": "New password typed twice.", "description": "You may change your current password providing the new one. You must repeat your new password to proceed."},
+            {"name": "Resigning in", "title": "Resigning in required.", "description": "Remember when changing username you must resign in with changed one to continue."}
+        ]},
+        {"name": "Removing account", "value": "removing_account", "btnIcon": "delete_forever", "images": [
+            {"title": "Removing account confirmation", "src": "removing_account_confirmation", "label": "Confirmation", "isHalf": false},
+            {"title": "Removing account password check", "src": "removing_account_password", "label": "Password", "isHalf": false}
+        ], "steps": [
+            {"name": "Removal confirmation", "title": "User account removal confirmation (Yes/No).", "description": "You may permanently remove your account by clicking \"Yes\" or cancel remove by \"No\"."},
+            {"name": "Password", "title": "Mandatory password control.", "description": "If account deletion confirmed you must provide your current password and click \"Confirm\". You may still cancel by clicking \"Cancel\"."}
+        ]},
+        {"name": "Signing out", "value": "signing_out", "btnIcon": "exit_to_app", "images": [
+            {"title": "Signing out menu button", "src": "signing_out", "label": null, "isHalf": true}
+        ], "steps": [
+            {"name": "Toolbar menu", "title": "Left top corner personal menu.", "description": "To sign out you must click on the left hand side top corner menu."},
+            {"name": "Signout", "title": "Bottom signout option.", "description": "Then click on \"Sign out\" option at the very bottom of menu dropdown."}
+          ]}
+      ]
+}

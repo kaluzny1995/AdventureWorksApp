@@ -6,12 +6,12 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/materia
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatGridListModule } from "@angular/material/grid-list";
 import { MatInputModule } from "@angular/material/input";
-import { PersonDefaults } from "src/app/models/admin-pannels/person-defaults";
-import { EXmlField } from "src/app/models/e-xml-field";
-import { XmlEditorData } from "src/app/models/xml-editor-data";
+import { PersonDefaults } from "src/app/models/admin-pannels/persons/person-defaults";
+import { EXmlField } from "src/app/models/utils/e-xml-field";
+import { XmlEditorData } from "src/app/models/utils/xml-editor-data";
 import { PipeModule } from "src/app/modules/pipe.module";
-import { FormValidationService } from "src/app/services/form-validation.service";
-import { PersonService } from "src/app/services/person.service";
+import { FormValidationService } from "src/app/services/utils/form-validation.service";
+import { PersonService } from "src/app/services/admin-pannels/person.service";
 
 @Component({
   selector: 'xml-editor-dialog',

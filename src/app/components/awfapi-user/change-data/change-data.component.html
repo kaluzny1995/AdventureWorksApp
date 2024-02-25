@@ -1,7 +1,7 @@
 <div class="alert" *ngIf="this.mainAlert" [ngClass]="this.mainAlert.type ? 'alert-' + this.mainAlert.type : ''">
     <span>{{ this.mainAlert.message }}</span>
     <span class="fill-remaining-space"></span>
-    <button mat-raised-button (click)="this.mainAlertDismiss()">&times;</button>
+    <button mat-raised-button (click)="this.mainAlert = null">&times;</button>
 </div>
 
 <form class="form form-registration" [formGroup]="this.form" (ngSubmit)="this.changeData()">

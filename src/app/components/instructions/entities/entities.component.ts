@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EEntity } from 'src/app/models/instructions/e-entity';
-import { EntityDescriptionService } from 'src/app/services/entity-description.service';
+import { JsonLoadingService } from 'src/app/services/utils/json-loading.service';
 
 @Component({
   selector: 'app-entities',
@@ -24,7 +24,7 @@ export class EntitiesComponent implements OnInit {
   tableData: any[]
   displayedCols: string[] = ["name", "type", "description"]
 
-  constructor(private _entityDesc: EntityDescriptionService) {}
+  constructor(private _entityDesc: JsonLoadingService) {}
 
   ngOnInit(): void {
     this.searchText = "";
@@ -33,6 +33,9 @@ export class EntitiesComponent implements OnInit {
     this.loadEntityDescription(this.selectedEntity);
   }
 
+  /**
+   * Loads selected entity description from JSON file
+  */
   loadEntityDescription(entity: string): void {
     this._entityDesc.loadEntityDescription(entity).subscribe({
       next: (result: any) => {
@@ -40,16 +43,22 @@ export class EntitiesComponent implements OnInit {
         this.entityDescription = result.description;
         this.tableData = result.fields;
       },
-      error: (error) => {
+      error: (error: any) => {
         console.error(`Error while loading entity ${this.selectedEntity} description.`, error);
       }
     });
   }
 
+  /**
+   * Filters available entities by given phrase
+  */
   searchEntities(): void {
     this.searchedEntities = this.availableEntities.filter((ae: any) => ae.name.toLowerCase().includes(this.searchText.toLowerCase()));
   }
 
+  /**
+   * Loads selected entity when changed
+  */
   onEntitySelectionChange(entity: string): void {
     this.loadEntityDescription(entity);
   }

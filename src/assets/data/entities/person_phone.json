@@ -2,9 +2,9 @@
     "name": "Person Phone",
     "description": "Telephone number and type of a person.",
     "fields": [
-        {"name": "BusinessEntityID", "type": "int", "description": "Business entity identification number. Foreign key to Person.BusinessEntityID.", "primary": true},
+        {"name": "BusinessEntityID", "type": "int", "description": "Business entity identification number. Foreign key to Person.BusinessEntityID.", "primary": true, "foreign": true},
         {"name": "PhoneNumber", "type": "nvarchar(25)", "description": "Telephone number identification number.", "primary": true},
-        {"name": "PhoneNumberTypeID", "type": "int", "description": "Kind of phone number. Foreign key to PhoneNumberType.PhoneNumberTypeID.", "primary": true},
+        {"name": "PhoneNumberTypeID", "type": "int", "description": "Kind of phone number. Foreign key to PhoneNumberType.PhoneNumberTypeID.", "primary": true, "foreign": true},
         {"name": "ModifiedDate", "type": "datetime", "description": "Date and time the record was last updated. Default: getdate()"}
     ]
 }

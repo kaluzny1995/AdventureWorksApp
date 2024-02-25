@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AppConfigService } from 'src/app/services/app-config.service';
+import { AppConfigService } from 'src/app/services/utils/app-config.service';
 
 @Component({
   selector: 'app-about-author',

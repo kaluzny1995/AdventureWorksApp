@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { ViewParams } from 'src/app/models/view-params';
-import { AppConfigService } from '../app-config.service';
+import { ViewParams } from 'src/app/models/admin-pannels/common/view-params';
+import { AppConfigService } from '../utils/app-config.service';
 import { UrlProcessingService } from './url-processing.service';
 
 @Injectable({

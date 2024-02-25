@@ -1,12 +1,14 @@
+import { HttpErrorResponse } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { AlertMessage } from 'src/app/models/alert-message';
+import { AlertMessage } from 'src/app/models/utils/alert-message';
 import { ChangedUserCredentials } from 'src/app/models/awfapi-user/changed-user-credentials';
-import { AppConfigService } from 'src/app/services/app-config.service';
-import { AuthenticationService } from 'src/app/services/authentication.service';
-import { AwfapiUserService } from 'src/app/services/awfapi-user.service';
-import { FormValidationService } from 'src/app/services/form-validation.service';
+import { AlertMessageService } from 'src/app/services/utils/alert-message.service';
+import { AppConfigService } from 'src/app/services/utils/app-config.service';
+import { AuthenticationService } from 'src/app/services/awfapi-user/authentication.service';
+import { AwfapiUserService } from 'src/app/services/awfapi-user/awfapi-user.service';
+import { FormValidationService } from 'src/app/services/utils/form-validation.service';
 
 @Component({
   selector: 'app-change-credentials',
@@ -15,9 +17,6 @@ import { FormValidationService } from 'src/app/services/form-validation.service'
 })
 export class ChangeCredentialsComponent implements OnInit {
   mainAlert: AlertMessage | null = null;
-  mainAlertDismiss(): void {
-    this.mainAlert = null;
-  }
 
   form: FormGroup;
   changeType: FormControl;
@@ -27,25 +26,23 @@ export class ChangeCredentialsComponent implements OnInit {
   repeatedPassword: FormControl;
 
   constructor(
-    private _appConfig: AppConfigService, private _userService: AwfapiUserService,
-    private _auth: AuthenticationService, private _fv: FormValidationService,
-    private _fb: FormBuilder, private _route: ActivatedRoute, private _router: Router
+    private _appConfig: AppConfigService,
+    private _userService: AwfapiUserService,
+    private _auth: AuthenticationService,
+    private _fv: FormValidationService,
+    private _fb: FormBuilder,
+    private _route: ActivatedRoute,
+    private _router: Router,
+    private _alert: AlertMessageService
   ) {}
 
   ngOnInit(): void {
+    /* Status alerts setting */
     if (this._route.snapshot.paramMap.has('status')) {
-      let status = this._route.snapshot.paramMap.get('status');
+      const status = this._route.snapshot.paramMap.get('status');
       switch (status) {
         case 'signed_in': {
           this.mainAlert = AlertMessage.SIGNED_IN;
-          break;
-        }
-        case 'user_cred_changed': {
-          this.mainAlert = AlertMessage.USER_CRED_CHANGED;
-          break;
-        }
-        case 'user_cred_ch_signout': {
-          this.mainAlert = AlertMessage.USER_CRED_CH_SIGNOUT;
           break;
         }
         default: {
@@ -55,11 +52,12 @@ export class ChangeCredentialsComponent implements OnInit {
       }
     }
 
+    /* Form initialization */
     this.changeType = new FormControl('both');
-    this.newUsername = new FormControl('', [Validators.required, this._fv.ForbiddenValueValidator(this._appConfig.forbiddenUsernames)]);
-    this.currentPassword = new FormControl('', Validators.required);
-    this.newPassword = new FormControl('', Validators.required);
-    this.repeatedPassword = new FormControl('', Validators.required);
+    this.newUsername = new FormControl(null, [Validators.required, this._fv.ForbiddenValueValidator(this._appConfig.forbiddenUsernames)]);
+    this.currentPassword = new FormControl(null, Validators.required);
+    this.newPassword = new FormControl(null, Validators.required);
+    this.repeatedPassword = new FormControl(null, Validators.required);
     this.form = this._fb.group({
       changeType: this.changeType,
       newUsername: this.newUsername,
@@ -68,6 +66,7 @@ export class ChangeCredentialsComponent implements OnInit {
       repeatedPassword: this.repeatedPassword
     }, {validator: this._fv.PasswordsMatchingValidator('newPassword', 'repeatedPassword')});
 
+    /* Switching fields enability dependently on credentials change type */
     this.changeType.valueChanges.subscribe(value => {
       switch (value) {
         case 'username': {
@@ -95,6 +94,9 @@ export class ChangeCredentialsComponent implements OnInit {
     });
   }
 
+  /**
+   * Clears non-unique value error (for new username field) and current password invalidity error
+  */
   clearUniqueError(fieldName: string): void {
     switch (fieldName) {
       case 'newUsername': {
@@ -115,36 +117,39 @@ export class ChangeCredentialsComponent implements OnInit {
     }
   }
 
+  /**
+   * Changes current users credentials
+  */
   changeCredentials(): void {
     const changedUserCredentials: ChangedUserCredentials = ChangedUserCredentials.fromFormStructure(this.form.value);
-    console.log('Changed user credentials:', changedUserCredentials);
 
     const awfapiUsername: string = this._auth.getUsernameFromToken();
-    this._userService.changeCredentials(
-      awfapiUsername,
-      changedUserCredentials.toAPIStructure()
-    ).subscribe({
+    this._userService.changeCredentials(awfapiUsername, changedUserCredentials.toAPIStructure()).subscribe({
     next: (result: any) => {
       console.log('User credentials changed successfully.', result);
       if (this.changeType.value === 'password') {
-        this._router.navigate(['change-credentials', {status: AlertMessage.USER_CRED_CHANGED}]).then(() => {
+        this._router.navigate(['profile', {status: AlertMessage.USER_CRED_CHANGED}]).then(() => {
           window.location.reload();
         });
       } else {
         this._auth.removeToken();
-        this._router.navigate(['authenticate', {status: AlertMessage.USER_CRED_CH_SIGNOUT}]).then(() => {
+        this._router.navigate(['authenticate', {status: AlertMessage.USER_CRED_CH_SIGNOUT, returnUrl: '/profile'}]).then(() => {
           window.location.reload();
         });
       }
     },
-    error: (error) => {
+    error: (error: HttpErrorResponse) => {
       console.error('Error while changing user credentials.', error);
-      let errorMessage = error.error.detail.title;
-      if (errorMessage.includes('username')) {
-        this.newUsername.setErrors({unique: true});
-      }
-      if (errorMessage.includes('password')) {
-        this.currentPassword.setErrors({password: true});
+      if (error.status === 400) {
+        const errorMessage = error.error.detail.title;
+        if (errorMessage.includes('username')) {
+          this.newUsername.setErrors({unique: true});
+        }
+        if (errorMessage.includes('password')) {
+          this.currentPassword.setErrors({password: true});
+        }
+      } else {
+        this.mainAlert = this._alert.statusAlertMesssage(error.status);
       }
     }
   });

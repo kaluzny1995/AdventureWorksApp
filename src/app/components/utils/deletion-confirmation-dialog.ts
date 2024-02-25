@@ -6,10 +6,10 @@ import { MatButtonModule } from "@angular/material/button";
 import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/material/dialog";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
-import { DeletionConfirmationData } from "src/app/models/deletion-confirmation-data";
-import { EDeletionConfirmation } from "src/app/models/e-deletion-confirmation";
-import { EPasswordVerificationStatus } from "src/app/models/e-password-verification-status";
-import { AuthenticationService } from "src/app/services/authentication.service";
+import { DeletionConfirmationData } from "src/app/models/utils/deletion-confirmation-data";
+import { EDeletionConfirmation } from "src/app/models/utils/e-deletion-confirmation";
+import { EPasswordVerificationStatus } from "src/app/models/utils/e-password-verification-status";
+import { AuthenticationService } from "src/app/services/awfapi-user/authentication.service";
 
 @Component({
     selector: 'deletion-confirmation-dialog',
