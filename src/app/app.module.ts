@@ -27,6 +27,8 @@ import { PersonsComponent } from './components/admin-pannels/persons/persons.com
 import { ErrorHandlersModule } from './modules/error-handlers.module';
 import { PersonFormComponent } from './components/admin-pannels/person-form/person-form.component';
 import { PipeModule } from './modules/pipe.module';
+import { DirectiveModule } from './modules/directive.module';
+import { Error500Component } from './components/errors/error500/error500.component';
 
 @NgModule({
   declarations: [
@@ -46,7 +48,8 @@ import { PipeModule } from './modules/pipe.module';
     EntitiesComponent,
     AdminPannelsComponent,
     PersonsComponent,
-    PersonFormComponent
+    PersonFormComponent,
+    Error500Component
   ],
   imports: [
     BrowserModule,
@@ -56,7 +59,8 @@ import { PipeModule } from './modules/pipe.module';
     HttpClientModule,
     MaterialModule,
     PipeModule,
-    ErrorHandlersModule
+    ErrorHandlersModule,
+    DirectiveModule
   ],
   providers: [
     {provide: HTTP_INTERCEPTORS, useClass: RequestInterceptionService, multi: true},

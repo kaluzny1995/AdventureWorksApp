@@ -8,6 +8,8 @@ import { CustomErrorHandler } from '../app.error-handlers';
   imports: [
     CommonModule
   ],
-  providers: [{provide: ErrorHandler, useClass: CustomErrorHandler}]
+  providers: [
+    {provide: ErrorHandler, useClass: CustomErrorHandler}
+  ]
 })
 export class ErrorHandlersModule { }

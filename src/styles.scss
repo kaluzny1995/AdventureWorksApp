@@ -329,6 +329,32 @@ div.right-side-main-container {
     margin-bottom: 8px !important;
 }
 
+.card-error {
+    .mat-mdc-card-content {
+        line-height: 100px;
+        text-align: center;
+
+        .number {
+            font-size: 100pt;
+            padding-top: 100px;
+        }
+        .text {
+            line-height: 40px;
+            font-size: 20pt;
+            padding-top: 15px;
+            padding-bottom: 15px;
+        }
+        .details {
+            line-height: normal;
+            text-align: left;
+            font-size: 16pt;
+            padding-bottom: 100px;
+            margin-left: 10%;
+            margin-right: 10%;
+        }
+    }
+}
+
 /*Pannels*/
 .accordion {
     margin-bottom: 40px;

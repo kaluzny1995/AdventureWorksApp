@@ -21,7 +21,7 @@
         </mat-form-field>
   
         <div mat-dialog-actions>
-          <a mat-raised-button mat-dialog-close>Cancel</a>
+          <a mat-raised-button (click)="this.cancel()">Cancel</a>
           <div class="fill-remaining-space"></div>
           <a mat-raised-button color="warn" (click)="this.restore()">Restore defaults</a>
           <button mat-raised-button type="submit" color="accent" [disabled]="!this.form.valid">Set up</button>

@@ -14,7 +14,7 @@
                  <!--Full name-->
                 <mat-form-field appearance="fill" class="form-field form-field-whole">
                     <mat-label>Full name</mat-label>
-                    <input matInput formControlName="fullName" required>
+                    <input matInput formControlName="fullName" nullDefault required>
                     <mat-error *ngIf="this.fullName?.errors?.required">Full name is required.</mat-error>
                 </mat-form-field>
             </div>
@@ -22,7 +22,7 @@
                 <!--E-mail-->
                 <mat-form-field appearance="fill" class="form-field form-field-whole">
                     <mat-label>E-mail</mat-label>
-                    <input matInput formControlName="email" required (input)="this.clearUniqueError('email')">
+                    <input matInput formControlName="email"nullDefault required (input)="this.clearUniqueError('email')">
                     <mat-error *ngIf="this.email?.errors?.required">E-mail is required.</mat-error>
                     <mat-error *ngIf="this.email?.errors?.email">Wrong e-mail address.</mat-error>
                     <mat-error *ngIf="this.email?.errors?.unique">This e-mail already exists. Provide other.</mat-error>

@@ -30,20 +30,6 @@ export class AuthenticationComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    /* Checking authentication status, if authenticated then redirect */
-    this._auth.testAuthentication().subscribe({
-      next: (response: any) => {
-        if (response.title === EAuthenticationStatus.AUTHENTICATED) {
-          console.log('Already authenticated. Redirecting home.');
-          this._router.navigate(['home', {status: AlertMessage.ALREADY_AUTH}]);
-        }
-      },
-      error: (error: HttpErrorResponse) => {
-        console.error('Error while checking authentication status.', error);
-        this.mainAlert = this._alert.statusAlertMesssage(error.status);
-      }
-    });
-
     /* Status alerts setting */
     if (this._route.snapshot.paramMap.has('status')) {
       const status = this._route.snapshot.paramMap.get('status');
@@ -103,9 +89,10 @@ export class AuthenticationComponent implements OnInit {
             window.location.reload();
           });
         } else {
-          const returnUrlAddress: string = this._route.snapshot.paramMap.get('returnUrl') || '';
-          const urlBase: string = this._urlProc.base(returnUrlAddress);
-          let urlOptionalParams: {[key: string]: string} = this._urlProc.optParams(returnUrlAddress);
+          const returnUrlAddress: string = this._urlProc.unbracket(this._urlProc.decode(this._route.snapshot.paramMap.get('returnUrl') || ''));
+          const encodedInnerReturnUrl: string = this._urlProc.encodePart(returnUrlAddress); // inner returning url address must be encoded back
+          const urlBase: string = this._urlProc.base(encodedInnerReturnUrl);
+          let urlOptionalParams: {[key: string]: string} = this._urlProc.optParams(encodedInnerReturnUrl);
           urlOptionalParams['status'] = AlertMessage.SIGNED_IN.status;
 
           this._router.navigate([urlBase, urlOptionalParams]).then(() => {

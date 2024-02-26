@@ -12,6 +12,7 @@ import { XmlEditorData } from "src/app/models/utils/xml-editor-data";
 import { PipeModule } from "src/app/modules/pipe.module";
 import { FormValidationService } from "src/app/services/utils/form-validation.service";
 import { PersonService } from "src/app/services/admin-pannels/person.service";
+import { DirectiveModule } from "src/app/modules/directive.module";
 
 @Component({
   selector: 'xml-editor-dialog',
@@ -26,7 +27,8 @@ import { PersonService } from "src/app/services/admin-pannels/person.service";
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    PipeModule
+    PipeModule,
+    DirectiveModule
   ],
 })
 export class XMLEditorDialog implements OnInit {
@@ -62,6 +64,10 @@ export class XMLEditorDialog implements OnInit {
     this.form.patchValue({
         xml: this.data.field === EXmlField.PERSON_ACI? this.personDefaults.aciTemplate : this.personDefaults.demoTemplate
     });
+  }
+
+  cancel(): void {
+    this._dialogRef.close();
   }
 
   clear(): void {

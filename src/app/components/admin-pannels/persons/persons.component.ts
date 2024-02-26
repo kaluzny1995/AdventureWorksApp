@@ -28,6 +28,7 @@ import { DeletionConfirmationDialog } from '../../utils/deletion-confirmation-di
 import { EDeletionConfirmation } from 'src/app/models/utils/e-deletion-confirmation';
 import { DeletionConfirmationData } from 'src/app/models/utils/deletion-confirmation-data';
 import { AlertMessageService } from 'src/app/services/utils/alert-message.service';
+import { UrlProcessingService } from 'src/app/services/url/url-processing.service';
 
 @Component({
   selector: 'app-persons',
@@ -55,6 +56,7 @@ export class PersonsComponent implements OnInit {
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
+    private _urlProc: UrlProcessingService,
     private _auth: AuthenticationService,
     private _view: ViewParamsService,
     private _cols: ColumnDisplayingService,
@@ -123,7 +125,7 @@ export class PersonsComponent implements OnInit {
       if (error instanceof ColumnNotFoundError) {
         this.mainAlert = AlertMessage.COLUMN_NOT_FOUND;
       } else {
-        throw error;
+        this._redirect500(`${error}`);
       }
     }
 
@@ -141,7 +143,7 @@ export class PersonsComponent implements OnInit {
       } else if (error instanceof FilterValueError) {
         this.mainAlert = AlertMessage.WRONG_FILTER_VALUE;
       } else {
-        throw error;
+        this._redirect500(`${error}`);
       }
     }
 
@@ -208,8 +210,8 @@ export class PersonsComponent implements OnInit {
       position: {top: '200px'}
     });
 
-    dialogRef.afterClosed().subscribe((results?: string[] | string) => {
-      if (results !== undefined && typeof results !== 'string') {
+    dialogRef.afterClosed().subscribe((results?: string[]) => {
+      if (results !== undefined) {
         this.displayedColumns = results;
         this._setURL(false, false);
       }
@@ -236,8 +238,8 @@ export class PersonsComponent implements OnInit {
       position: {top: '200px'}
     });
 
-    dialogRef.afterClosed().subscribe((results?: PersonFilterParams | string) => {
-      if (results !== undefined && typeof results !== 'string') {
+    dialogRef.afterClosed().subscribe((results?: PersonFilterParams) => {
+      if (results !== undefined) {
         this.queryParams.filters = this._filterParams.minimized(results.toDict());
         this.queryParams.page = 1; // page must be reset to first one
         this._setURL();
@@ -290,17 +292,25 @@ export class PersonsComponent implements OnInit {
   }
 
   /**
+   * Redirects to 500 internal server error page
+  */
+  private _redirect500(message: string) {
+    console.error('Internal Error Occurred');
+    this._router.navigate(['500', {message: message, url: this._router.url}]);
+  }
+
+  /**
    * Redirects to person form view as ADD mode.
   */
   addPerson(): void {
-    this._router.navigate(['pannels', 'persons', 'new', {returnUrl: this._router.url}]);
+    this._router.navigate(['pannels', 'persons', 'new', {returnUrl: this._urlProc.bracket(this._router.url)}]);
   }
 
   /**
    * Redirects to person form view as EDIT mode.
   */
   editPerson(): void {
-    this._router.navigate(['pannels', 'persons', this.viewParams.selectedId, {returnUrl: this._router.url}]);
+    this._router.navigate(['pannels', 'persons', this.viewParams.selectedId, {returnUrl: this._urlProc.bracket(this._router.url)}]);
   }
 
   /**

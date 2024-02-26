@@ -3,13 +3,18 @@ import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from
 import { AlertMessage } from '../models/utils/alert-message';
 import { EAuthenticationStatus } from '../models/utils/e-authentication-status';
 import { AuthenticationService } from '../services/awfapi-user/authentication.service';
+import { UrlProcessingService } from '../services/url/url-processing.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationGuard implements CanActivate {
 
-  constructor(private _router: Router, private _auth: AuthenticationService) { }
+  constructor(
+    private _router: Router,
+    private _auth: AuthenticationService,
+    private _urlProc: UrlProcessingService
+  ) { }
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
     let isActivated: boolean = true;
@@ -25,7 +30,10 @@ export class AuthenticationGuard implements CanActivate {
           }
           case EAuthenticationStatus.UNAUTHENTICATED: {
             this._auth.removeToken();
-            this._router.navigate(['authenticate', {status: AlertMessage.AUTH_REQUIRED, returnUrl: state.url}]).then(() => {
+            this._router.navigate(['authenticate', {
+              status: AlertMessage.AUTH_REQUIRED,
+              returnUrl: this._urlProc.bracket(state.url)
+            }]).then(() => {
               window.location.reload();
             });
             isActivated = false;
@@ -33,7 +41,10 @@ export class AuthenticationGuard implements CanActivate {
           }
           case EAuthenticationStatus.EXPIRED: {
             this._auth.removeToken();
-            this._router.navigate(['authenticate', {status: AlertMessage.JWT_TOKEN_EXPIRED, returnUrl: state.url}]).then(() => {
+            this._router.navigate(['authenticate', {
+              status: AlertMessage.JWT_TOKEN_EXPIRED,
+              returnUrl: this._urlProc.bracket(state.url)
+            }]).then(() => {
               window.location.reload();
             });
             isActivated = false;
@@ -41,7 +52,10 @@ export class AuthenticationGuard implements CanActivate {
           }
           default: {
             this._auth.removeToken();
-            this._router.navigate(['authenticate', {status: AlertMessage.UNKNOWN_AUTH_STATUS, returnUrl: state.url}]).then(() => {
+            this._router.navigate(['authenticate', {
+              status: AlertMessage.UNKNOWN_AUTH_STATUS,
+              returnUrl: this._urlProc.bracket(state.url)
+            }]).then(() => {
               window.location.reload();
             });
             isActivated = true;

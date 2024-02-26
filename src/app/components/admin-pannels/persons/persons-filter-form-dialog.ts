@@ -7,6 +7,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
 import { PersonFilterParams } from "src/app/models/admin-pannels/common/filter-params";
+import { DirectiveModule } from "src/app/modules/directive.module";
 import { PersonService } from "src/app/services/admin-pannels/person.service";
 
 @Component({
@@ -21,7 +22,8 @@ import { PersonService } from "src/app/services/admin-pannels/person.service";
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatSelectModule
+    MatSelectModule,
+    DirectiveModule
   ],
 })
 export class PersonsFilterFormDialog implements OnInit {
@@ -63,8 +65,12 @@ export class PersonsFilterFormDialog implements OnInit {
   }
 
   filter(): void {
-    this._dialogRef.close(new PersonFilterParams(this.personType.value,
-      this.lastNamePhrase.value,
-      this.firstNamePhrase.value));
+    this._dialogRef.close(
+      new PersonFilterParams(
+        this.personType.value,
+        this.lastNamePhrase.value,
+        this.firstNamePhrase.value
+      )
+    );
   }
 }

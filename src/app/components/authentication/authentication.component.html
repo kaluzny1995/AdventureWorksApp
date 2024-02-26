@@ -16,14 +16,14 @@
             <div class="form-field-group">
                 <mat-form-field appearance="fill" class="form-field form-field-whole">
                     <mat-label>Username</mat-label>
-                    <input matInput formControlName="username" required>
+                    <input matInput formControlName="username" nullDefault required>
                     <mat-error *ngIf="this.username?.errors?.required">Username is required.</mat-error>
                 </mat-form-field>
             </div>
             <div class="form-field-group">
                 <mat-form-field appearance="fill" class="form-field form-field-whole">
                     <mat-label>Password</mat-label>
-                    <input matInput formControlName="password" type="password" required>
+                    <input matInput formControlName="password" type="password" nullDefault required>
                     <mat-error *ngIf="this.password?.errors?.required">Password is required.</mat-error>
                 </mat-form-field>
             </div>

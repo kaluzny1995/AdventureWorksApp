@@ -7,8 +7,8 @@
       <!--Person type-->
       <mat-form-field appearance="fill" class="form-field form-field-whole">
         <mat-label>Person type</mat-label>
-        <mat-select matInput formControlName="personType" type="text">
-          <mat-option value="">----</mat-option>
+        <mat-select matInput formControlName="personType" type="text" nullDefault>
+          <mat-option [value]="null">----</mat-option>
           <mat-option *ngFor="let pt of this.personTypes | keyvalue" [value]="pt.key">{{ pt.key }}&nbsp;&minus;&nbsp;{{ pt.value }}</mat-option>
         </mat-select>
       </mat-form-field>
@@ -16,7 +16,7 @@
       <!--Last name phrase-->
       <mat-form-field appearance="fill" class="form-field form-field-whole">
         <mat-label>Last name</mat-label>
-        <input matInput formControlName="lastNamePhrase" type="text">
+        <input matInput formControlName="lastNamePhrase" type="text" nullDefault>
         <mat-hint>case insensitive phrase</mat-hint>
         <mat-error *ngIf="this.lastNamePhrase?.errors?.pattern">Only characters are allowed.</mat-error>
       </mat-form-field>
@@ -24,13 +24,13 @@
       <!--First name phrase-->
       <mat-form-field appearance="fill" class="form-field form-field-whole">
         <mat-label>First name</mat-label>
-        <input matInput formControlName="firstNamePhrase" type="text">
+        <input matInput formControlName="firstNamePhrase" type="text" nullDefault>
         <mat-hint>case insensitive phrase</mat-hint>
         <mat-error *ngIf="this.firstNamePhrase?.errors?.pattern">Only characters are allowed.</mat-error>
       </mat-form-field>
 
       <div mat-dialog-actions>
-        <a mat-raised-button mat-dialog-close>Cancel</a>
+        <a mat-raised-button (click)="this.cancel()">Cancel</a>
         <div class="fill-remaining-space"></div>
         <a mat-raised-button color="warn" (click)="this.clear()">Clear</a>
         <button mat-raised-button type="submit" color="accent" [disabled]="!this.form.valid">Filter</button>

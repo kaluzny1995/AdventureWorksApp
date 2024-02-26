@@ -36,6 +36,9 @@ export class AppConfigService {
   get author(): any {
     return this._appConfig.app.author;
   }
+  get email(): string {
+    return this._appConfig.app.author.email.address;
+  }
   get emailUrl(): string {
     const email: string = this._appConfig.app.author.email.address;
     const subject: string = this._appConfig.app.author.email.to.subject;

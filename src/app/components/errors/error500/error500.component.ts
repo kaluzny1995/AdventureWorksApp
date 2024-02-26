@@ -1,13 +1,14 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params } from '@angular/router';
 import { AppConfigService } from 'src/app/services/utils/app-config.service';
 
 @Component({
-  selector: 'app-error404',
-  templateUrl: './error404.component.html',
-  styleUrls: ['./error404.component.scss']
+  selector: 'app-error500',
+  templateUrl: './error500.component.html',
+  styleUrls: ['./error500.component.scss']
 })
-export class Error404Component {
+export class Error500Component implements OnInit {
+  message: string;
   url: string;
   emailUrl: string;
 
@@ -16,6 +17,7 @@ export class Error404Component {
   ngOnInit(): void {
     /* View parameters parsing */
     this._route.params.subscribe((params: Params) => {
+      this.message = params['message'];
       this.url = params['url'];
     });
 

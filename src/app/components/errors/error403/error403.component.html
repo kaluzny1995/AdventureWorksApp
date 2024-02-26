@@ -1,1 +1,19 @@
-<div class="mat-h1">403 Forbidden</div>
+<mat-card class="card card-error">
+    <mat-card-header>
+        <mat-card-title>403 Forbidden</mat-card-title>
+    </mat-card-header>
+    <mat-divider class="horizontal-line"></mat-divider>
+    <mat-card-content>
+        <div class="number">403</div>
+        <div class="text">You do not have access to this view resource.</div>
+        <div class="details">
+            <div>URL address: {{ this.url }}</div>
+            <div>If you think you should have permissions to this, please contact author for support.</div>
+        </div>
+    </mat-card-content>
+    <mat-divider class="horizontal-line"></mat-divider>
+    <mat-card-actions>
+        <div class="fill-remaining-space"></div>
+        <a href="mailto:{{ this.emailUrl }}"><button mat-button><mat-icon>email</mat-icon> CONTACT SUPPORT</button></a>
+    </mat-card-actions>
+</mat-card>

@@ -23,6 +23,6 @@ import { ImageDisplayData } from "src/app/models/utils/image-display-data";
     }
 
     close(): void {
-        this._dialogRef.close();
+      this._dialogRef.close();
     }
 }

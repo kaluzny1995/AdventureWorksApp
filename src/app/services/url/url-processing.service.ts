@@ -8,31 +8,70 @@ export class UrlProcessingService {
   constructor() { }
 
   /**
-   * Returns the base path string of URL address
-   * @example 'some/thing/1;status=signed_in' => 'some/thing/1'
+   * Returns decoded URL string
   */
-  base(urlString: string): string {
-    const urlBase: string = decodeURIComponent(urlString);
-    if (urlBase.indexOf(';') > -1) {
-      return urlBase.split(';')[0];
-    }
-    return urlBase;
+  decode(urlString: string): string {
+    return decodeURIComponent(urlString);
   }
 
   /**
-   * Returns the optional parameters string of URL address
+   * Returns encoded URL string
+  */
+  encode(urlString: string): string {
+    return encodeURIComponent(urlString);
+  }
+
+  /**
+   * Returns partially encoded URL string only from between square brackets (decoded URLs only)
+  */
+  encodePart(urlString: string): string {
+    const regexp: RegExp = /\[(.*)\]/;
+    const occurrences: RegExpMatchArray | null  = urlString.match(regexp);
+    if (occurrences !== null) {
+      const occurrence: string  = encodeURIComponent(this.bracket(occurrences[1]));
+      return urlString.replace(regexp, occurrence)
+    }
+    return urlString;
+  }
+
+  /**
+   * Returns the URL address surrounded by square brackets
+  */
+  bracket(urlString: string): string {
+    return `[${urlString}]`;
+  }
+
+  /**
+   * Returns the URL address without surrounding square brackets (decoded URLs only)
+  */
+  unbracket(urlString: string): string {
+    return urlString.substring(1, urlString.length - 1);
+  }
+
+  /**
+   * Returns the base path string of URL address (decoded URLs only)
+   * @example 'some/thing/1;status=signed_in' => 'some/thing/1'
+  */
+  base(urlString: string): string {
+    if (urlString.indexOf(';') > -1) {
+      return urlString.split(';')[0];
+    }
+    return urlString;
+  }
+
+  /**
+   * Returns the optional parameters string of URL address (decoded URLs only)
    * @example 'some/thing/1;status=signed_in' => 'status=signed_in'
   */
   optParamString(urlString: string): string {
-    const paramString: string = decodeURIComponent(urlString);
-    if (paramString.indexOf(';') > -1) {
-      return paramString.split(';').slice(1).join(';');
+    if (urlString.indexOf(';') > -1) {
+      return urlString.split(';').slice(1).join(';');
     }
     return '';
   }
 
   /**
-   * Returns the optional parameters dictionary of URL address
+   * Returns the optional parameters dictionary of URL address (decoded URLs only)
    * @example 'some/thing/1;status=signed_in' => {status: 'signed_in'}
   */
   optParams(urlString: string): {[key: string]: string} {

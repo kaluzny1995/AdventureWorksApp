@@ -37,20 +37,20 @@
                 <!--First name-->
                 <mat-form-field appearance="fill" class="form-field form-field-medium">
                     <mat-label>First name</mat-label>
-                    <input matInput formControlName="firstName" required>
+                    <input matInput formControlName="firstName" nullDefault required>
                     <mat-error *ngIf="this.firstName?.errors?.required">First name is required.</mat-error>
                 </mat-form-field>
 
                 <!--Middle name-->
                 <mat-form-field appearance="fill" class="form-field form-field-medium">
                     <mat-label>Middle name</mat-label>
-                    <input matInput formControlName="middleName">
+                    <input matInput formControlName="middleName" nullDefault>
                 </mat-form-field>
 
                 <!--Last name-->
                 <mat-form-field appearance="fill" class="form-field form-field-medium">
                     <mat-label>Last name</mat-label>
-                    <input matInput formControlName="lastName" required>
+                    <input matInput formControlName="lastName" nullDefault required>
                     <mat-error *ngIf="this.lastName?.errors?.required">Last name is required.</mat-error>
                 </mat-form-field>
             </div>
@@ -60,7 +60,7 @@
                 <!-- Title -->
                 <mat-form-field appearance="fill" class="form-field form-field-shorter">
                     <mat-label>Title</mat-label>
-                    <input matInput formControlName="title" type="text" [matAutocomplete]="autoTitle">
+                    <input matInput formControlName="title" type="text" nullDefault [matAutocomplete]="autoTitle">
                     <mat-hint class="hint-tooltip" matTooltip="Example: Mr., Mrs., Ms.">[hint]</mat-hint>
                     <mat-autocomplete autoActiveFirstOption #autoTitle="matAutocomplete">
                         <mat-option *ngFor="let t of this.personDefaults.titles" [value]="t">{{ t }}</mat-option>
@@ -70,7 +70,7 @@
                 <!-- Suffix -->
                 <mat-form-field appearance="fill" class="form-field form-field-shorter">
                     <mat-label>Suffix</mat-label>
-                    <input matInput formControlName="suffix" type="text" [matAutocomplete]="autoSuffix">
+                    <input matInput formControlName="suffix" type="text" nullDefault [matAutocomplete]="autoSuffix">
                     <mat-hint class="hint-tooltip" matTooltip="Example: Jr., Sr.">[hint]</mat-hint>
                     <mat-autocomplete autoActiveFirstOption #autoSuffix="matAutocomplete">
                         <mat-option *ngFor="let s of this.personDefaults.suffixes" [value]="s">{{ s }}</mat-option>
@@ -80,8 +80,8 @@
                 <!--Name style-->
                 <mat-form-field appearance="fill" class="form-field form-field-longer" matTooltip="">
                     <mat-label>Name style</mat-label>
-                    <mat-select matInput formControlName="nameStyle" type="text">
-                        <mat-option value="">----</mat-option>
+                    <mat-select matInput formControlName="nameStyle" type="text" nullDefault>
+                        <mat-option [value]="null">----</mat-option>
                         <mat-option *ngFor="let ns of this.personDefaults.nameStyles | keyvalue" [value]="ns.key">{{ ns.value }}</mat-option>
                     </mat-select>
                     <mat-error *ngIf="this.nameStyle?.errors?.required">Name style is required.</mat-error>
@@ -93,8 +93,8 @@
                 <!--Person type-->
                 <mat-form-field appearance="fill" class="form-field form-field-whole">
                     <mat-label>Person type</mat-label>
-                    <mat-select matInput formControlName="personType" type="text">
-                        <mat-option value="">----</mat-option>
+                    <mat-select matInput formControlName="personType" type="text" nullDefault>
+                        <mat-option [value]="null">----</mat-option>
                         <mat-option *ngFor="let pt of this.personDefaults.types | keyvalue" [value]="pt.key">{{ pt.key }}&nbsp;&minus;&nbsp;{{ pt.value }}</mat-option>
                     </mat-select>
                     <mat-error *ngIf="this.personType?.errors?.required">Person type is required.</mat-error>
@@ -103,8 +103,8 @@
                 <!--Email promotion-->
                 <mat-form-field appearance="fill" class="form-field form-field-whole">
                     <mat-label>Email promotion</mat-label>
-                    <mat-select matInput formControlName="emailPromotion" type="number">
-                        <mat-option value="">----</mat-option>
+                    <mat-select matInput formControlName="emailPromotion" type="number" nullDefault>
+                        <mat-option [value]="null">----</mat-option>
                         <mat-option *ngFor="let ep of this.personDefaults.emailPromotions | keyvalue" [value]="+ep.key">{{ ep.key }}&nbsp;&minus;&nbsp;{{ ep.value }}</mat-option>
                     </mat-select>
                     <mat-error *ngIf="this.emailPromotion?.errors?.required">Email promotion is required.</mat-error>
@@ -118,7 +118,7 @@
                 <mat-form-field appearance="fill" class="form-field form-field-whole"
                 (click)="this.openXMLEditor(EXMLField.PERSON_ACI)" (keyup.enter)="this.openXMLEditor(EXMLField.PERSON_ACI)">
                     <mat-label>Additional contact info</mat-label>
-                    <textarea matInput formControlName="additionalContactInfo" readonly></textarea>
+                    <textarea matInput formControlName="additionalContactInfo" nullDefault readonly></textarea>
                     <mat-hint class="hint-tooltip" matTooltip="Click on the field to open XML editor dialog.">[hint]</mat-hint>
                 </mat-form-field>
 
@@ -126,7 +126,7 @@
                 <mat-form-field appearance="fill" class="form-field form-field-whole"
                 (click)="this.openXMLEditor(EXMLField.PERSON_DEMO)" (keyup.enter)="this.openXMLEditor(EXMLField.PERSON_DEMO)">
                     <mat-label>Demographics</mat-label>
-                    <textarea matInput formControlName="demographics" readonly></textarea>
+                    <textarea matInput formControlName="demographics" nullDefault readonly></textarea>
                     <mat-hint class="hint-tooltip" matTooltip="Click on the field to open XML editor dialog.">[hint]</mat-hint>
                 </mat-form-field>
             </div>

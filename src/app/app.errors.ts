@@ -1,4 +1,14 @@
 /**
+ * Raised when unknown internal application server error occurs
+*/
+export class InternalServerError extends Error {
+    constructor(message: string) {
+        super(message);
+        Object.setPrototypeOf(this, InternalServerError.prototype);
+    }
+}
+
+/**
  * Raised when user provided wrong optional parameter name in the searchbar
  */
 export class OptionalParamError extends Error {

@@ -13,6 +13,7 @@ import { AlertMessage } from 'src/app/models/utils/alert-message';
 import { HttpErrorResponse } from '@angular/common/http';
 import { XmlEditorData } from 'src/app/models/utils/xml-editor-data';
 import { AlertMessageService } from 'src/app/services/utils/alert-message.service';
+import { UrlProcessingService } from 'src/app/services/url/url-processing.service';
 
 @Component({
   selector: 'app-person-form',
@@ -46,6 +47,7 @@ export class PersonFormComponent implements OnInit {
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
+    private _urlProc: UrlProcessingService,
     private _fb: FormBuilder,
     private _xmlEditorDialog: MatDialog,
     private _person: PersonService,
@@ -66,8 +68,7 @@ export class PersonFormComponent implements OnInit {
       }
 
       /* Optional parameter - returning URL address */
-      this.returnUrl = decodeURIComponent(this._route.snapshot.paramMap.get('returnUrl') || '');
-      console.log('Return:', this.returnUrl)
+      this.returnUrl = this._urlProc.unbracket(decodeURIComponent(this._route.snapshot.paramMap.get('returnUrl') || ''));
     });
 
     /* Person defaults */
@@ -139,8 +140,8 @@ export class PersonFormComponent implements OnInit {
       position: {top: '200px'}
     });
 
-    dialogRef.afterClosed().subscribe((results?: any | string) => {
-      if (results !== undefined && typeof results !== 'string') {
+    dialogRef.afterClosed().subscribe((results?: any) => {
+      if (results !== undefined) {
         if (xmlField === EXmlField.PERSON_ACI) {
           this.form.patchValue({
             additionalContactInfo: results.xml

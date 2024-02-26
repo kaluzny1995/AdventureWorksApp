@@ -1,13 +1,14 @@
 <mat-card class="card card-error">
     <mat-card-header>
-        <mat-card-title>404 Not found</mat-card-title>
+        <mat-card-title>500 Internal Server Error</mat-card-title>
     </mat-card-header>
     <mat-divider class="horizontal-line"></mat-divider>
     <mat-card-content>
-        <div class="number">404</div>
-        <div class="text">The view resource you are looking for does not exist or was transfered to another address.</div>
+        <div class="number">500</div>
+        <div class="text">An internal server error occurred. Please contact author for support.</div>
         <div class="details">
-            <div>If you think the view should exist, please contact author for support.</div>
+            <div>URL address: {{ this.url }}</div>
+            <div>Error message: {{ this.message }}</div>
         </div>
     </mat-card-content>
     <mat-divider class="horizontal-line"></mat-divider>

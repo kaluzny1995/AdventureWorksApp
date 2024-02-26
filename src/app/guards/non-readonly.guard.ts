@@ -17,7 +17,7 @@ constructor(private _router: Router, private _auth: AuthenticationService) {}
         if (!Boolean(result.is_readonly)) /*current user had non-readonly access*/ {
           isActivated = true;
         } else {
-          this._router.navigate(['403', {returnUrl: state.url}]);
+          this._router.navigate(['403', {url: state.url}]);
           isActivated = false;
         }
       },

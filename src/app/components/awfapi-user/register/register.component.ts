@@ -38,20 +38,6 @@ export class RegisterComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    /* Checking authentication status, if signed in then redirect */
-    this._auth.testAuthentication().subscribe({
-      next: (response: any) => {
-        if (response.title === EAuthenticationStatus.AUTHENTICATED) {
-          console.log('Signed up. Sign out before continuing. Redirecting home.');
-          this._router.navigate(['home', {status: AlertMessage.SIGNOUT_REQUIRED}]);
-        }
-      },
-      error: (error: HttpErrorResponse) => {
-        console.error('Error while checking authentication status.', error);
-        this.mainAlert = this._alert.statusAlertMesssage(error.status);
-      }
-    });
-
     /* Form initialization */
     this.username = new FormControl(null, [Validators.required, this._fv.ForbiddenValueValidator(this._appConfig.forbiddenUsernames)]);
     this.password = new FormControl(null, Validators.required);

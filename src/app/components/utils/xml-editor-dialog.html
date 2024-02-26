@@ -11,7 +11,7 @@
                 <!--XML field-->
                 <mat-form-field appearance="fill" class="form-field form-field-whole">
                     <mat-label>XML</mat-label>
-                    <textarea matInput rows="6" formControlName="xml"></textarea>
+                    <textarea matInput rows="6" formControlName="xml" nullDefault></textarea>
                     <mat-error *ngIf="this.xml?.errors?.xml">Invalid XML document.</mat-error>
                 </mat-form-field>
 
@@ -21,7 +21,7 @@
       </div>
     </div>
     <div mat-dialog-actions>
-        <a mat-raised-button mat-dialog-close>Cancel</a>
+        <a mat-raised-button (click)="this.cancel()">Cancel</a>
         <a mat-raised-button color="primary" [disabled]="!!this.xml.value" (click)="this.loadTemplate()">Use template</a>
         <div class="fill-remaining-space"></div>
         <button mat-raised-button color="warn" type="reset">Clear</button>
