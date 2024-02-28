@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { ViewParams } from 'src/app/models/admin-pannels/common/view-params';
 import { AppConfigService } from '../utils/app-config.service';
 import { UrlProcessingService } from './url-processing.service';
+import { LocalStorageService } from '../local-storage/local-storage.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ export class ViewParamsService {
 
   constructor(
     private _appConfig: AppConfigService,
-    private _urlProc: UrlProcessingService
+    private _urlProc: UrlProcessingService,
+    private _local: LocalStorageService
     ) { }
 
   /**
@@ -21,42 +23,72 @@ export class ViewParamsService {
   }
 
   /**
-   * Returns specific view values from optional params from URL string or default values if not provided
+   * Returns specific view values from optional parameters from URL string or default values if not provided
   */
   fromOptParamString(urlString: string): ViewParams {
     const optParams: {[key: string]: string} = this._urlProc.optParams(urlString);
-    const vP = this.defaults();
+    return this._viewValues(optParams);
+  }
+
+  /**
+   * Returns specific view values from optional parameters from local storage memory or default values if not provided
+  */
+  fromLocalStorage(prefix: string): ViewParams {
+    const lsParams: {[key: string]: string} = this._local.getAllWithPrefix(prefix);
+    return this._viewValues(lsParams, prefix);
+  }
+
+  /**
+   * Returns view values from local storage or URL string or sets default value if some not provided
+  */
+  private _viewValues(dict: {[key: string]: string}, prefix?: string): ViewParams {
+    const pre: string = prefix !== undefined ? `${prefix}-` : '';
+    const vP: ViewParams = this.defaults();
     let colSet: boolean = vP.isColumnSetOn;
     let filSet: boolean = vP.isFilterSetOn;
     let selId: number | null = vP.selectedId;
     let newId: number | null = vP.newId;
     let chId: number | null = vP.changedId;
 
-    if (optParams['colSet'] !== undefined && Boolean(optParams['colSet']) !== vP.isColumnSetOn) {
-      colSet = Boolean(optParams['colSet']);
+    if (dict[`${pre}colSet`] !== undefined && Boolean(dict[`${pre}colSet`]) !== vP.isColumnSetOn) {
+      colSet = Boolean(dict[`${pre}colSet`]);
     }
-    if (optParams['filSet'] !== undefined && Boolean(optParams['filSet']) !== vP.isFilterSetOn) {
-      filSet = Boolean(optParams['filSet']);
+    if (dict[`${pre}filSet`] !== undefined && Boolean(dict[`${pre}filSet`]) !== vP.isFilterSetOn) {
+      filSet = Boolean(dict[`${pre}filSet`]);
     }
     // perPageOptions not displayed in URL string
-    if (optParams['selId'] !== undefined && +optParams['selId'] !== vP.selectedId) {
-      selId = +optParams['selId'];
+    if (dict[`${pre}selId`] !== undefined && +dict[`${pre}selId`] !== vP.selectedId) {
+      selId = +dict[`${pre}selId`];
     }
-    if (optParams['newId'] !== undefined && +optParams['newId'] !== vP.newId) {
-      newId = +optParams['newId'];
+    if (dict[`${pre}newId`] !== undefined && +dict[`${pre}newId`] !== vP.newId) {
+      newId = +dict[`${pre}newId`];
     }
-    if (optParams['chId'] !== undefined && +optParams['chId'] !== vP.changedId) {
-      chId = +optParams['chId'];
+    if (dict[`${pre}chId`] !== undefined && +dict[`${pre}chId`] !== vP.changedId) {
+      chId = +dict[`${pre}chId`];
     }
 
     return new ViewParams(colSet, filSet, vP.perPageOptions, selId, newId, chId);
   }
 
   /**
+   * Returns the all optional parameters dictionary
+  */
+  allOptParams(viewParams: ViewParams): {[key: string]: any} {
+    const params: {[key: string]: any} = {
+      colSet: viewParams.isColumnSetOn,
+      filSet: viewParams.isFilterSetOn,
+      selId: viewParams.selectedId,
+      newId: viewParams.newId,
+      chId: viewParams.changedId
+    };
+    return params;
+  }
+
+  /**
    * Returns the optional parameters dictionary with only these parameters whose values are different from defaults
   */
   necessaryOptParams(viewParams: ViewParams): {[key: string]: any} {
-    const vP = this.defaults();
+    const vP: ViewParams = this.defaults();
     let params: {[key: string]: any} = {};
 
     if (viewParams.isColumnSetOn !== vP.isColumnSetOn) {
@@ -77,5 +109,14 @@ export class ViewParamsService {
     }
 
     return params;
+  }
+
+  /**
+   * Stores the view parameters in local storage memory
+   * @param isCleared: if true then all entries starting with @param prefix are removed
+  */
+  toLocalStorage(viewParams: ViewParams, prefix: string, isCleared: boolean): void {
+    const dict: {[key: string]: any} = this.necessaryOptParams(viewParams);
+    this._local.setAllWithPrefix(dict, prefix, isCleared);
   }
 }

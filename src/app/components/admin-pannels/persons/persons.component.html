@@ -2,13 +2,13 @@
 <div class="header-actions">
   <div class="mat-h1">Persons</div>
   <div class="fill-remaining-space"></div>
-  <button class="action" color="primary" mat-button (click)="this.viewParams.isColumnSetOn=!this.viewParams.isColumnSetOn"
+  <button class="action" color="primary" mat-button (click)="this.toggleColumnsPannel()"
   [ngClass]="this.viewParams.isColumnSetOn? 'mat-mdc-button mat-mdc-raised-button' : 'mdc-button--outlined mat-mdc-outlined-button'"
   [matTooltip]="this.viewParams.isColumnSetOn? 'Hide column display settings' : 'Show column display settings'">
     <span *ngIf="!this.viewParams.isColumnSetOn"><mat-icon>expand_more</mat-icon><mat-icon>view_column</mat-icon></span>
     <span *ngIf="this.viewParams.isColumnSetOn"><mat-icon>expand_less</mat-icon><mat-icon>view_column</mat-icon></span>
   </button>
-  <button class="action" color="primary" mat-button (click)="this.viewParams.isFilterSetOn=!this.viewParams.isFilterSetOn"
+  <button class="action" color="primary" mat-button (click)="this.toggleFiltersPannel()"
   [ngClass]="this.viewParams.isFilterSetOn? 'mat-mdc-button mat-mdc-raised-button' : 'mdc-button--outlined mat-mdc-outlined-button'"
   [matTooltip]="this.viewParams.isFilterSetOn? 'Hide filter settings' : 'Show filter settings'">
     <span *ngIf="!this.viewParams.isFilterSetOn"><mat-icon>expand_more</mat-icon><mat-icon>filter_list</mat-icon></span>
@@ -154,7 +154,7 @@
         [class.highlighted]="row.personId === this.viewParams.selectedId"
         [class.new]="row.personId === this.viewParams.newId"
         [class.changed]="row.personId === this.viewParams.changedId"
-        (click)="this.viewParams.selectedId = row.personId"></tr>
+        (click)="this.setSelectedId(row.personId)"></tr>
       </table>
     </div>
   </div>

@@ -9,6 +9,7 @@ export class UrlProcessingService {
 
   /**
    * Returns decoded URL string
+   * @example '%2Fsome%2Fthing%3Bstatus%3Dsigned_in' => '/some/thing;status=signed_in'
   */
   decode(urlString: string): string {
     return decodeURIComponent(urlString);
@@ -16,6 +17,7 @@ export class UrlProcessingService {
 
   /**
    * Returns encoded URL string
+   * @example '/some/thing;status=signed_in' => '%2Fsome%2Fthing%3Bstatus%3Dsigned_in'
   */
   encode(urlString: string): string {
     return encodeURIComponent(urlString);
@@ -23,6 +25,8 @@ export class UrlProcessingService {
 
   /**
    * Returns partially encoded URL string only from between square brackets (decoded URLs only)
+   * @example '/some/thing;status=signed_in;returnUrl=[/some/thing;status=signed_in]' => 
+   * '/some/thing;status=signed_in;returnUrl=%5B%2Fsome%2Fthing%3Bstatus%3Dsigned_in%5D'
   */
   encodePart(urlString: string): string {
     const regexp: RegExp = /\[(.*)\]/;
@@ -36,6 +40,7 @@ export class UrlProcessingService {
 
   /**
    * Returns the URL address surrounded by square brackets
+   * @example 'some/thing/1;status=signed_in' => '[some/thing/1;status=signed_in]'
   */
   bracket(urlString: string): string {
     return `[${urlString}]`;
@@ -43,6 +48,7 @@ export class UrlProcessingService {
 
   /**
    * Returns the URL address without surrounding square brackets (decoded URLs only)
+   * @example '[some/thing/1;status=signed_in]' => 'some/thing/1;status=signed_in'
   */
   unbracket(urlString: string): string {
     return urlString.substring(1, urlString.length - 1);

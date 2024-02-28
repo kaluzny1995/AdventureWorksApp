@@ -14,6 +14,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { XmlEditorData } from 'src/app/models/utils/xml-editor-data';
 import { AlertMessageService } from 'src/app/services/utils/alert-message.service';
 import { UrlProcessingService } from 'src/app/services/url/url-processing.service';
+import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
+
+const LS_PREFIX = 'person';
 
 @Component({
   selector: 'app-person-form',
@@ -48,6 +51,7 @@ export class PersonFormComponent implements OnInit {
     private _router: Router,
     private _route: ActivatedRoute,
     private _urlProc: UrlProcessingService,
+    private _local: LocalStorageService,
     private _fb: FormBuilder,
     private _xmlEditorDialog: MatDialog,
     private _person: PersonService,
@@ -167,10 +171,11 @@ export class PersonFormComponent implements OnInit {
         next: (result: any) => {
           console.log('Person registered successfully.', result);
           const newPerson: Person = Person.fromAPIStructure(result);
+          this._local.setItem('newId', `${newPerson.personId}`, LS_PREFIX);
           if (this.returnUrl !== null) {
-            this._router.navigateByUrl(`${this.returnUrl};newId=${newPerson.personId}`);
+            this._router.navigateByUrl(this.returnUrl);
           } else {
-            this._router.navigate(['pannels', 'persons', {newId: newPerson.personId}]);
+            this._router.navigate(['pannels', 'persons']);
           }
         },
         error: (error: HttpErrorResponse) => {
@@ -183,10 +188,11 @@ export class PersonFormComponent implements OnInit {
         next: (result: any) => {
           console.log('Persons data changed successfully.', result);
           const updatedPerson: Person = Person.fromAPIStructure(result);
+          this._local.setItem('chId', `${updatedPerson.personId}`, LS_PREFIX);
           if (this.returnUrl !== null) {
-            this._router.navigateByUrl(`${this.returnUrl};chId=${updatedPerson.personId}`);
+            this._router.navigateByUrl(this.returnUrl);
           } else {
-            this._router.navigate(['pannels', 'persons', {chId: updatedPerson.personId}]);
+            this._router.navigate(['pannels', 'persons']);
           }
         },
         error: (error: HttpErrorResponse) => {

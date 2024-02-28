@@ -3,24 +3,29 @@ import { Injectable } from '@angular/core';
 import { AppConfigService } from '../utils/app-config.service';
 import { Observable } from 'rxjs';
 import jwtDecode from 'jwt-decode';
+import { LocalStorageService } from '../local-storage/local-storage.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthenticationService {
 
-  constructor(private _appConfig: AppConfigService, private _http: HttpClient) { }
+  constructor(
+    private _appConfig: AppConfigService,
+    private _local: LocalStorageService,
+    private _http: HttpClient
+  ) { }
 
   authenticate(credentials: FormData): Observable<any> {
     return this._http.post<any>(this._appConfig.apiUrl + 'token', credentials);
   }
 
   setToken(token: string): void {
-    localStorage.setItem('token', token);
+    this._local.setItem('token', token);
   }
 
   getToken(): string {
-    return localStorage.getItem('token') || '';
+    return this._local.getItem('token') || '';
   }
 
   getUsernameFromToken(): string {
@@ -28,9 +33,9 @@ export class AuthenticationService {
     return tokenData.sub;
   }
 
-  getExpirationMilisFromToken(): number {
+  getExpirationDateFromToken(): Date {
     const tokenData: any = jwtDecode(this.getToken());
-    return parseInt(tokenData.exp) * 1000;
+    return new Date(+tokenData.exp);
   }
 
   isAuthenticated(): boolean {
@@ -50,6 +55,6 @@ export class AuthenticationService {
   }
 
   removeToken(): void {
-    localStorage.removeItem('token');
+    this._local.removeItem('token');
   }
 }

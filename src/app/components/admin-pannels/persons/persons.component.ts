@@ -30,6 +30,8 @@ import { DeletionConfirmationData } from 'src/app/models/utils/deletion-confirma
 import { AlertMessageService } from 'src/app/services/utils/alert-message.service';
 import { UrlProcessingService } from 'src/app/services/url/url-processing.service';
 
+const LS_PREFIX = 'person';
+
 @Component({
   selector: 'app-persons',
   templateUrl: './persons.component.html',
@@ -109,11 +111,11 @@ export class PersonsComponent implements OnInit {
 
     /* View and object defaults */
     try {
-      this.viewParams = this._view.fromOptParamString(this._router.url);
+      this.viewParams = this._view.fromLocalStorage(LS_PREFIX);
       this.personDefaults = this._person.defaults();
 
       this.displayedColumns = this._cols.displayedColumns(
-        this._cols.fromOptParamString(this._router.url, this.personDefaults.displayedIndices),
+        this._cols.fromLocalStorage(LS_PREFIX, this.personDefaults.displayedIndices),
         this.personDefaults.availableColumns);
       this.columnNameMapping = this._utils.dictFromArrays(
         this.personDefaults.availableColumns, this.personDefaults.availableColumnNames);
@@ -176,7 +178,8 @@ export class PersonsComponent implements OnInit {
       this._person.getPerson(this.viewParams.newId).subscribe({
         next: (result: any) => {
           const newPerson: Person = Person.fromAPIStructure(result);
-          if (this.dataSource.filter((person: Person) => person.personId === this.viewParams.newId).length === 0) {
+          const existingPersons = this.dataSource.filter((person: Person) => person.personId === this.viewParams.newId);
+          if (existingPersons.length === 0) {
             this.dataSource = this._utils.prepend(newPerson, this.dataSource);
           }
         },
@@ -194,10 +197,19 @@ export class PersonsComponent implements OnInit {
   }
 
   /**
+   * Toggles visibility of column display pannel
+  */
+  toggleColumnsPannel(): void {
+    this.viewParams.isColumnSetOn=!this.viewParams.isColumnSetOn;
+    this._setLocalStorage();
+  }
+
+  /**
    * Restores displayed columns to default settings
   */
   restoreColumns(): void {
     this.displayedColumns = this._cols.displayedColumns(this.personDefaults.displayedIndices, this.personDefaults.availableColumns);
+    this._setLocalStorage()
   }
 
   /**
@@ -213,9 +225,17 @@ export class PersonsComponent implements OnInit {
     dialogRef.afterClosed().subscribe((results?: string[]) => {
       if (results !== undefined) {
         this.displayedColumns = results;
-        this._setURL(false, false);
+        this._setLocalStorage()
       }
     });
+  }
+
+  /**
+   * Toggles visibility of filters pannel
+  */
+  toggleFiltersPannel(): void {
+    this.viewParams.isFilterSetOn=!this.viewParams.isFilterSetOn;
+    this._setLocalStorage();
   }
 
   /**
@@ -271,18 +291,24 @@ export class PersonsComponent implements OnInit {
   }
 
   /**
-   * Sets up the page URL with proper optional parameters
+   * Sets up the local storage entries with proper view parameters
   */
-  private _setURL(isReloaded: boolean = true, isIdCleared: boolean = true): void {
+  private _setLocalStorage(isIdCleared: boolean = false): void {
     if (isIdCleared) {
       this.viewParams.newId = null;
       this.viewParams.changedId = null;
     }
+    this._view.toLocalStorage(this.viewParams, LS_PREFIX, true);
+    this._cols.toLocalStorage(this.displayedColumns, this.personDefaults.availableColumns,
+                              this.personDefaults.displayedIndices, LS_PREFIX, false);
+  }
 
+  /**
+   * Sets up the page URL with proper optional parameters
+  */
+  private _setURL(isReloaded: boolean = true): void {
     this._router.navigate(['pannels', 'persons', {
-      ...this._queryParams.necessaryOptParams(this.queryParams),
-      ...this._cols.necessaryOptParam(this.displayedColumns, this.personDefaults.availableColumns, this.personDefaults.displayedIndices),
-      ...this._view.necessaryOptParams(this.viewParams)
+      ...this._queryParams.necessaryOptParams(this.queryParams)
     }]).then(() => {
       if (isReloaded) {
         window.location.reload();
@@ -297,6 +323,14 @@ export class PersonsComponent implements OnInit {
   private _redirect500(message: string) {
     console.error('Internal Error Occurred');
     this._router.navigate(['500', {message: message, url: this._router.url}]);
+  }
+
+  /**
+   * Sets the selected person id
+  */
+  setSelectedId(personId: number): void {
+    this.viewParams.selectedId = personId;
+    this._setLocalStorage();
   }
 
   /**
@@ -317,7 +351,7 @@ export class PersonsComponent implements OnInit {
    * Deletes person & removes from view table
   */
   deletePerson(): void {
-    const deletionConfirmationData = new DeletionConfirmationData(
+    const deletionConfirmationData: DeletionConfirmationData = new DeletionConfirmationData(
       'Person dropping',
       `Are you sure, you wanna drop person with id '${this.viewParams.selectedId}'?`,
       'Cannot drop person.'
@@ -340,7 +374,7 @@ export class PersonsComponent implements OnInit {
               /* Removing person from view table */
               this.dataSource = this.dataSource.filter((person: Person) => person.personId !== this.viewParams.selectedId);
               this.viewParams.selectedId = null;
-              this._setURL(false, true);
+              this._setLocalStorage(true);
             },
             error: (error: HttpErrorResponse) => {
               console.error('Error while deleting person.', error);

@@ -25,29 +25,60 @@ export class QueryParamsService {
   }
 
   /**
-   * Returns optional parameter string from QueryParams object
+   * Returns QueryParams object based of given optional parameters string
   */
-  optParamString(params: QueryParams): string {
+  fromOptParamString(urlString: string, availableFilters?: string[]): QueryParams {
     const defaultQP: QueryParams = this._appConfig.defaultQueryParams;
-    let strings: string[] = [];
-    if (params.page != defaultQP.page) {
-      strings.push(`page=${params.page}`);
+    let page: number = defaultQP.page;
+    let perPage: number = defaultQP.perPage;
+    let filters: {[key: string]: string} | null = defaultQP.filters;
+    let orderBy: string | null = defaultQP.orderBy;
+    let type: EOrderType = defaultQP.type;
+
+    const dict: {[key: string]: string} = this._urlProc.optParams(urlString);
+    if (Object.keys(dict).length === 0) {
+      return new QueryParams(page, perPage, filters, orderBy, type);
     }
-    if (params.perPage != defaultQP.perPage) {
-      strings.push(`perPage=${params.perPage}`);
-    }
-    if (params.filters != defaultQP.filters) {
-      const filterString: string = this._filterParam.filterString(params.filters);
-      strings.push(`filters=${filterString}`);
-    }
-    if (params.orderBy != defaultQP.orderBy) {
-      strings.push(`orderBy=${params.orderBy}`);
-    }
-    if (params.type != defaultQP.type) {
-      strings.push(`type=${params.type}`);
+    
+    for (const k in dict) {
+      const v: string = dict[k];
+      switch (k) {
+        case 'page':
+          page = +v;
+          break;
+        case 'perPage':
+          perPage = +v;
+          break;
+        case 'filters':
+          if (typeof availableFilters !== 'undefined') {
+            for (const fp of this._filterParam.names(v)) {
+              if (availableFilters.indexOf(fp) === -1) {
+                console.error(`Unknown filter parameter '${fp}' in filter string.`);
+                throw new FilterNameError(`Unknown filter parameter '${fp}' in filter string.`);
+              }
+            }
+          }
+          filters = this._filterParam.fromFilterString(v);
+          break;
+        case 'orderBy':
+          orderBy = v === ''? null : v;
+          break;
+        case 'type':
+          type = EOrderType[v.toUpperCase() as keyof typeof EOrderType]
+          if (type === undefined) {
+            console.error(`Unknown order type: '${v}'.`);
+            throw new FilterValueError(`Unknown order type: '${v}'.`);
+          }
+          break;
+        case 'status':
+          break;
+        default:
+          console.error(`Unknown optional parameter '${k}' in URL string.`);
+          throw new OptionalParamError(`Unknown optional parameter '${k}' in URL string.`);
+      }
     }
 
-    return strings.join('&');
+    return new QueryParams(page, perPage, filters, orderBy, type);
   }
 
   /**
@@ -74,63 +105,6 @@ export class QueryParamsService {
     }
     
     return paramsDict;
-  }
-
-  /**
-   * Returns QueryParams object based of given optional parameters string
-  */
-  fromOptParamString(urlString: string, availableFilters?: string[]): QueryParams {
-    const defaultQP: QueryParams = this._appConfig.defaultQueryParams;
-    let page: number = defaultQP.page;
-    let perPage: number = defaultQP.perPage;
-    let filters: {[key: string]: string} | null = defaultQP.filters;
-    let orderBy: string | null = defaultQP.orderBy;
-    let type: EOrderType = defaultQP.type;
-
-    const strings: string[] = this._urlProc.optParamString(urlString).split(';');
-    if (strings[0] === '') {
-      return new QueryParams(page, perPage, filters, orderBy, type);
-    }
-    
-    for (const s of strings) {
-      const kv: string[] = s.split('=');
-      switch (kv[0]) {
-        case 'page':
-          page = +kv[1];
-          break;
-        case 'perPage':
-          perPage = +kv[1];
-          break;
-        case 'filters':
-          if (typeof availableFilters !== 'undefined') {
-            for (const fp of this._filterParam.names(kv[1])) {
-              if (availableFilters.indexOf(fp) === -1) {
-                console.error(`Unknown filter parameter '${fp}' in filter string.`);
-                throw new FilterNameError(`Unknown filter parameter '${fp}' in filter string.`);
-              }
-            }
-          }
-          filters = this._filterParam.fromFilterString(kv[1]);
-          break;
-        case 'orderBy':
-          orderBy = kv[1] === ''? null : kv[1];
-          break;
-        case 'type':
-          type = EOrderType[kv[1].toUpperCase() as keyof typeof EOrderType]
-          if (type === undefined) {
-            console.error(`Unknown order type: '${kv[1]}'.`);
-            throw new FilterValueError(`Unknown order type: '${kv[1]}'.`);
-          }
-          break;
-        case 'status': case 'displayedCols': case 'colSet': case 'filSet': case 'selId': case 'newId': case 'chId':
-          break;
-        default:
-          console.error(`Unknown optional parameter '${kv[0]}' in URL string.`);
-          throw new OptionalParamError(`Unknown optional parameter '${kv[0]}' in URL string.`);
-      }
-    }
-
-    return new QueryParams(page, perPage, filters, orderBy, type);
   }
 
   /**
