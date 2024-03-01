@@ -1,0 +1,64 @@
+<form [formGroup]="this.form" (submit)="this.renewSession()">
+    <div class="mat-h1"
+        [class.text-danger]="this.bootstrapClass === EBootstrapColor.DANGER"
+        mat-dialog-title
+        [matTooltip]="this.title">
+        {{ this.title }}
+    </div>
+    <div mat-dialog-content class="countdown-timer-content">
+
+        <!-- Progress spinner -->
+        <mat-progress-spinner
+            class="timer-spinner"
+            [class]="'progress-' + this.bootstrapClass"
+            [mode]="'determinate'"
+            [diameter]="this.data.spinnerDiameter"
+            [strokeWidth]="this.data.spinnerStrokeWidth"
+            [value]="this.percentage">
+        </mat-progress-spinner>
+
+        <!-- Countdown timer -->
+        <countdown
+            class="timer"
+            [class.password-on]="this.showPassword"
+            [config]="config"
+            (event)="handleCountdown($event)"
+            #countdownSpinnerTimer />
+        <div *ngIf="this.isSessionOver"
+            class="session-expired text-danger"
+            [class.password-on]="this.showPassword">
+            Session expired!
+        </div>
+        <div class="form-field-group-above">
+
+            <!--Confirmation password-->
+            <mat-form-field *ngIf="this.showPassword" appearance="fill" class="form-field form-field-whole">
+                <mat-label>Password</mat-label>
+                <input matInput formControlName="confirmationPassword" type="password" required (input)="this.clearError()">
+                <mat-hint>Type in your password to confirm.</mat-hint>
+                <mat-error *ngIf="this.confirmationPassword?.errors?.required">Type in your password.</mat-error>
+                <mat-error *ngIf="this.confirmationPassword?.errors?.password">Cannot renew. Wrong password provided.</mat-error>
+            </mat-form-field>
+
+        </div>
+    </div>
+    <div mat-dialog-actions>
+        <a mat-raised-button (click)="this.cancel()">Cancel</a>
+        <div class="fill-remaining-space"></div>
+        <span matTooltip="Cannot renew. Token has expired. Please resign in." [matTooltipDisabled]="!this.isSessionOver">
+            <a *ngIf="!this.showPassword"
+                mat-raised-button color="accent"
+                [disabled]="this.bootstrapClass !== EBootstrapColor.DANGER || this.isSessionOver"
+                (click)="this.showPassword = true;">
+                Renew session
+            </a>
+            <button *ngIf="this.showPassword"
+                mat-raised-button
+                type="submit"
+                color="accent"
+                [disabled]="!this.form.valid || this.isSessionOver">
+                Renew session
+            </button>
+        </span>
+    </div>
+</form>

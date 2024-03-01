@@ -35,6 +35,19 @@
         "forbiddenUsernames": ["admin", "user", "username", "password", "P@ssw0rd"]
     },
     "defaults": {
+        "countdownTimer": {
+            "timeMins": 30,
+            "notifyGreenAt": 0.8000,
+            "notifyYellowAt": 0.4000,
+            "notifyRedAt": 0.2000,
+            "timeFormat": "mm:ss",
+            "tooltipText": "Time till the end of session. Click to view the details.",
+            "tooltipFinishText": "Session will soon end. Click to open the dialogue to renew.",
+            "spinnerDiameter": 300,
+            "spinnerStrokeWidth": 20,
+            "titleText": "Time left till the end of session",
+            "titleTextFinish": "Session will soon expire. Renew."
+        },
         "queryParams": {
             "page": 1,
             "perPage": 10,
@@ -80,6 +93,7 @@
             },
             "aciTemplate": "<address><street>?</street><number>?</number><postalcode>?</postalcode><city>?</city><country>?</country></address>",
             "demoTemplate": "<demographics><gender>?</gender><age>?</age><maritalStatus>?</maritalStatus><race>?</race><ethnicity>?</ethnicity></demographics>"
-        }
+        },
+        "prefixes": ["person"]
     }
 }

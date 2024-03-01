@@ -57,6 +57,23 @@
         ], "steps": [
             {"name": "Toolbar menu", "title": "Left top corner personal menu.", "description": "To sign out you must click on the left hand side top corner menu."},
             {"name": "Signout", "title": "Bottom signout option.", "description": "Then click on \"Sign out\" option at the very bottom of menu dropdown."}
-          ]}
+        ]},
+        {"name": "Renewing session", "value": "renew", "btnIcon": "refresh", "images": [
+            {"name": "Countdown timer buttons", "src": "renew_buttons", "label": "Countdown timer (CT)", "isHalf": false},
+            {"name": "Countdown timer spinner - more than 80% time left", "src": "renew_spinner_primary", "label": "CT > 80%", "isHalf": true},
+            {"name": "Countdown timer spinner - less than 80% time left", "src": "renew_spinner_success", "label": "CT <= 80%", "isHalf": true},
+            {"name": "Countdown timer spinner - less than 40% time left", "src": "renew_spinner_warning", "label": "CT <= 40%", "isHalf": true},
+            {"name": "Countdown timer spinner - less than 20% time left", "src": "renew_spinner_danger", "label": "CT <= 20%", "isHalf": true},
+            {"name": "Countdown timer spinner - session expired", "src": "renew_spinner_exp", "label": "CT expired", "isHalf": true},
+            {"name": "Countdown timer spinner - password check", "src": "renew_spinner_check", "label": "CT password check", "isHalf": true},
+            {"name": "Countdown timer spinner - password check filled in", "src": "renew_spinner_check_filled_in", "label": "CT filled in", "isHalf": true},
+            {"name": "Countdown timer spinner - password check, session expired", "src": "renew_spinner_check_exp", "label": "CT check expired", "isHalf": true}
+        ], "steps": [
+            {"name": "Countdown timer (CT)", "title": "Multi color countdown timer buttons.", "description": "In the top right corner beside the users menu dropdown list there is a countdown timer with the time which is left until the session expires. Dark blue color means more than 80% of time is left, green - less than 80%, yellow - less than 40% and red - less than 20%. Clicking the button will show countdown timer modal dialog. If the button goes red the dialog will open automatically."},
+            {"name": "Countdown timer dialog", "title": "Modal dialog with countdown timer and spinner", "description": "The opened modal dialog contains not only precise countdown time left untill the end of current session, but also displays it via clock-like spinner. The standard session lasts 30 minutes. For testing purposes it was shortenedonly to 5 minutes. This could be visible on spinner screenshots above."},
+            {"name": "Spinner colors", "title": "Four colors of countdown timer spinner", "description": "The spinner could be displayed in four colors: dark blue (primary), green (success), yellow (warning) and red (danger). At the session start the spinner take 'primary' color. While the timer goes under 80% the spinner becomes 'success', while under 40% - 'warning' and under 20% - 'danger'. While going red (danger) the dialog enables renewing session by clicking 'Renew session'."},
+            {"name": "Renewing session", "title": "Renewing the sesion", "description": "When the session countdown timer goes under 20% of total sesion time, the dialog with spinner will be automatically opened. User could then renew sesion by clicking 'Renew session' button. After clicking the password check field will appear. After correctly provided password verification the countdown timer and spinner will be reset to maximum session time and session will be renewed."},
+            {"name": "Session expired", "title": "Session expired. Countdown timer reached zero.", "description": "When the session countdown timer reaches zero that means the session has expired. User after that moment cannot renew the session, because the current user access token is no longer valid to do such action. The only way is to start another session by signing out and resigning in."}
+        ]}
       ]
 }

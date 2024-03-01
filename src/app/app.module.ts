@@ -29,6 +29,7 @@ import { PersonFormComponent } from './components/admin-pannels/person-form/pers
 import { PipeModule } from './modules/pipe.module';
 import { DirectiveModule } from './modules/directive.module';
 import { Error500Component } from './components/errors/error500/error500.component';
+import { CountdownTimerComponent } from './components/countdown-timer/countdown-timer.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { Error500Component } from './components/errors/error500/error500.compone
     AdminPannelsComponent,
     PersonsComponent,
     PersonFormComponent,
-    Error500Component
+    Error500Component,
+    CountdownTimerComponent
   ],
   imports: [
     BrowserModule,

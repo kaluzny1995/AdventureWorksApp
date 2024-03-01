@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { QueryParams } from '../../models/admin-pannels/common/query-params';
 import { PersonDefaults } from '../../models/admin-pannels/persons/person-defaults';
 import { ViewParams } from '../../models/admin-pannels/common/view-params';
+import { CountdownTimerSettings } from 'src/app/models/utils/countdown-timer-settings';
 
 @Injectable({
   providedIn: 'root'
@@ -61,38 +62,66 @@ export class AppConfigService {
     return this._appConfig.api.forbiddenUsernames;
   }
 
+  /*Countdown timer config*/
+  get countdownTimerSettings(): CountdownTimerSettings {
+    return new CountdownTimerSettings(
+      this._appConfig.defaults.countdownTimer.timeMins,
+      this._appConfig.defaults.countdownTimer.notifyGreenAt,
+      this._appConfig.defaults.countdownTimer.notifyYellowAt,
+      this._appConfig.defaults.countdownTimer.notifyRedAt,
+      this._appConfig.defaults.countdownTimer.timeFormat,
+      this._appConfig.defaults.countdownTimer.tooltipText,
+      this._appConfig.defaults.countdownTimer.tooltipFinishText,
+      this._appConfig.defaults.countdownTimer.spinnerDiameter,
+      this._appConfig.defaults.countdownTimer.spinnerStrokeWidth,
+      this._appConfig.defaults.countdownTimer.titleText,
+      this._appConfig.defaults.countdownTimer.titleTextFinish
+    );
+  }
+
   /*Query parameters config*/
   get defaultQueryParams(): QueryParams {
-    return new QueryParams(this._appConfig.defaults.queryParams.page,
-                           this._appConfig.defaults.queryParams.perPage,
-                           this._appConfig.defaults.queryParams.filters,
-                           this._appConfig.defaults.queryParams.orderBy,
-                           this._appConfig.defaults.queryParams.type)
+    return new QueryParams(
+      this._appConfig.defaults.queryParams.page,
+      this._appConfig.defaults.queryParams.perPage,
+      this._appConfig.defaults.queryParams.filters,
+      this._appConfig.defaults.queryParams.orderBy,
+      this._appConfig.defaults.queryParams.type
+    );
   }
 
   /* View params config */
   get defaultViewParams(): ViewParams {
-    return new ViewParams(this._appConfig.defaults.view.isColumnSetOn,
-                          this._appConfig.defaults.view.isFilterSetOn,
-                          this._appConfig.defaults.view.perPageOptions,
-                          this._appConfig.defaults.view.selectedId,
-                          this._appConfig.defaults.view.newId,
-                          this._appConfig.defaults.view.changedId,)
+    return new ViewParams(
+      this._appConfig.defaults.view.isColumnSetOn,
+      this._appConfig.defaults.view.isFilterSetOn,
+      this._appConfig.defaults.view.perPageOptions,
+      this._appConfig.defaults.view.selectedId,
+      this._appConfig.defaults.view.newId,
+      this._appConfig.defaults.view.changedId
+    );
   }
 
   /*Person defaults config*/
   get personDefaults(): PersonDefaults {
-    return new PersonDefaults(this._appConfig.defaults.person.availableColumns,
-                              this._appConfig.defaults.person.availableColumnNames,
-                              this._appConfig.defaults.person.displayedIndices,
-                              this._appConfig.defaults.person.availableFilters,
-                              this._appConfig.defaults.person.availableFilterNames,
-                              this._appConfig.defaults.person.types,
-                              this._appConfig.defaults.person.nameStyles,
-                              this._appConfig.defaults.person.titles,
-                              this._appConfig.defaults.person.suffixes,
-                              this._appConfig.defaults.person.emailPromotions,
-                              this._appConfig.defaults.person.aciTemplate,
-                              this._appConfig.defaults.person.demoTemplate)
+    return new PersonDefaults(
+      this._appConfig.defaults.person.availableColumns,
+      this._appConfig.defaults.person.availableColumnNames,
+      this._appConfig.defaults.person.displayedIndices,
+      this._appConfig.defaults.person.availableFilters,
+      this._appConfig.defaults.person.availableFilterNames,
+      this._appConfig.defaults.person.types,
+      this._appConfig.defaults.person.nameStyles,
+      this._appConfig.defaults.person.titles,
+      this._appConfig.defaults.person.suffixes,
+      this._appConfig.defaults.person.emailPromotions,
+      this._appConfig.defaults.person.aciTemplate,
+      this._appConfig.defaults.person.demoTemplate
+    );
+  }
+
+  /*Prefixes*/
+  get prefixes(): string[] {
+    return this._appConfig.defaults.prefixes;
   }
 }

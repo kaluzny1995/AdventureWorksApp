@@ -1,0 +1,8 @@
+<button
+    *ngIf="this.isAuthenticated"
+    mat-raised-button
+    class="btn" [class]="'btn-' + this.bootstrapClass"
+    (click)="this.displayDialog()"
+    [matTooltip]="this.tooltipText">
+    <countdown [config]="this.config" (event)="handleCountdown($event)" #countdownTimer />
+</button>

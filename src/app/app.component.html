@@ -18,9 +18,11 @@
 
   <mat-drawer-content>
     <mat-toolbar class="right-side-navbar">
-      <mat-icon aria-hidden="false" aria-label="Example home icon" (click)="drawer.toggle()">reorder</mat-icon>
+      <mat-icon class="icon-toolbar" aria-hidden="false" aria-label="Example home icon" (click)="drawer.toggle()">reorder</mat-icon>
       <h1>{{ this.title }}</h1>
       <span class="fill-remaining-space"></span>
+      <!-- Countdown timer -->
+      <app-countdown-timer class="countdown-timer"></app-countdown-timer>
       <!-- Horizontal navigation bar dropdown menu -->
       <app-nav-menu></app-nav-menu>
     </mat-toolbar>

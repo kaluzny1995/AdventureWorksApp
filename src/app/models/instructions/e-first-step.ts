@@ -5,5 +5,6 @@ export enum EFirstStep {
   CHANGING_DATA = "changing_data",
   CHANGING_CREDENTIALS = "changing_cred",
   REMOVING_ACCOUNT = "removing",
-  SIGNING_OUT = "signing_out"
+  SIGNING_OUT = "signing_out",
+  RENEWING_SESSION = "renew"
 }

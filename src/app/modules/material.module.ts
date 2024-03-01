@@ -33,7 +33,9 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
-import { NgScrollbarModule } from 'ngx-scrollbar'
+import { CountdownModule } from 'ngx-countdown';
+import { NgScrollbarModule } from 'ngx-scrollbar';
+import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
 
 
 const MaterialComponents = [
@@ -67,7 +69,9 @@ const MaterialComponents = [
   MatProgressBarModule,
   MatProgressSpinnerModule,
 
+  CountdownModule,
   NgScrollbarModule,
+  NgxMatSelectSearchModule,
   
   MatRippleModule,
   MatTableModule,

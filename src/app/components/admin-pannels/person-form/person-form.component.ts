@@ -29,6 +29,7 @@ export class PersonFormComponent implements OnInit {
 
   viewId: number | null;
   EFormMode = EFormMode;
+  personsFullName: string;
   formMode: EFormMode;
   returnUrl: string | null;
 
@@ -107,6 +108,7 @@ export class PersonFormComponent implements OnInit {
       this._person.getPerson(this.viewId || -1).subscribe({
         next: (result: any) => {
           const changedPerson: Person = Person.fromAPIStructure(result);
+          this.personsFullName = `${changedPerson.lastName} ${changedPerson.firstName} ${!changedPerson.middleName? '' : changedPerson.middleName + ' '}`;
           this.form.setValue(changedPerson.toFormStructure());
         },
         error: (error: HttpErrorResponse) => {

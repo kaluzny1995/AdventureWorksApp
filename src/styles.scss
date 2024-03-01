@@ -48,6 +48,27 @@ $row-highlighted: #dcdcdc;
     background-color: $bootstrap-danger;
 }
 
+.btn-primary {
+    background-color: $bootstrap-primary !important;
+    color: white !important;
+}
+.btn-success {
+    background-color: $bootstrap-success !important;
+    color: black !important;
+}
+.btn-info {
+    background-color: $bootstrap-info !important;
+    color: black !important;
+}
+.btn-warning {
+    background-color: $bootstrap-warning !important;
+    color: black !important;
+}
+.btn-danger {
+    background-color: $bootstrap-danger !important;
+    color: black !important;
+}
+
 .text-primary {
     color: $bootstrap-primary;
 }
@@ -117,12 +138,12 @@ $row-highlighted: #dcdcdc;
     background-color: $theme-color;
 }
 
-.mat-icon,
+.icon-toolbar,
 .mat-drawer h1,
 .mat-drawer span,
 .mat-toolbar h1 {
     cursor: pointer !important;
-    color: white !important;
+    color: white;
 }
 
 .side-bar {
@@ -202,6 +223,70 @@ $row-highlighted: #dcdcdc;
 .nav-menu {
     background-color: $theme-color;
     color: white;
+
+    .mat-icon {
+        color: white;
+    }
+}
+
+/* Countdown timer */
+.countdown-timer {
+    margin-right: 10px;
+
+    .btn {
+        font-size: large;
+        min-width: 120px;
+    }
+}
+.cdk-overlay-pane.countdown-timer-dialog {
+    position: relative !important;
+
+    .text-danger {
+        color: $bootstrap-danger !important;
+    }
+}
+.countdown-timer-content {
+    .timer-spinner {
+        margin: 10px auto;
+
+        &.progress-primary circle {
+            stroke: $bootstrap-primary !important;
+        }
+        &.progress-info circle {
+            stroke: $bootstrap-info !important;
+        }
+        &.progress-success circle {
+            stroke: $bootstrap-success !important;
+        }
+        &.progress-warning circle {
+            stroke: $bootstrap-warning !important;
+        }
+        &.progress-danger circle {
+            stroke: $bootstrap-danger !important;
+        }
+
+    }
+
+    .timer {
+        position: absolute;
+        top: calc(50% + 18px);
+        left: calc(50% - 60px);
+        font-size: xxx-large;
+
+        &.password-on {
+            top: calc(50% - 21px);
+        }
+    }
+    .session-expired {
+        position: absolute;
+        top: calc(50% - 62px);
+        left: calc(50% - 89px);
+        font-size: x-large;
+
+        &.password-on {
+            top: calc(50% - 101px);
+        }
+    }
 }
 
 /*Main container*/
@@ -239,14 +324,6 @@ div.right-side-main-container {
     }
     mat-card-content {
         margin-bottom: 10px;
-    }
-
-    button[color='warn'] mat-icon {
-        color: white !important;
-    }
-
-    mat-icon {
-        color: black !important;
     }
 
     img {
@@ -289,7 +366,7 @@ div.right-side-main-container {
         margin-left: 10px;
     }
 
-    mat-icon {
+    .mat-icon {
         font-size: 24px !important;
         position: relative !important;
         width: unset !important;
@@ -360,7 +437,6 @@ div.right-side-main-container {
     margin-bottom: 40px;
 
     .mat-icon {
-        color: black !important;
         margin-right: 10px;
     }
 
@@ -413,27 +489,10 @@ mat-list {
 
             button {
                 margin-right: 0;
-
-                &:not([color]) {
-                    color: black !important;
-                    mat-icon {
-                        color: black !important;
-                    }
-
-                    &:disabled {
-                        color: rgba(0, 0, 0, 0.38) !important;
-                    }
-                }
-                &:disabled mat-icon {
-                    color: rgba(0, 0, 0, 0.38) !important;
-                }
-                &[color='warn'] mat-icon {
-                    color: white !important;
-                }
             }
         }
 
-        mat-icon {
+        .mat-icon {
             font-size: 24px !important;
             position: relative !important;
             width: unset !important;
@@ -535,19 +594,6 @@ div[role=listbox] {
 
     .action {
         margin-left: 10px;
-
-        &.mat-mdc-raised-button .mat-icon {
-            color: white !important;
-        }
-        &.mat-mdc-outlined-button .mat-icon {
-            color: $material-primary !important;
-        }
-        &[color=basic] .mat-icon {
-            color: black !important;
-        }
-        &[color=basic][disabled] .mat-icon {
-            color: white !important;
-        }
     }
 
     .mdc-button__label, .label {
@@ -605,17 +651,6 @@ div[role=listbox] {
                 right: 5px;
                 top: 5px;
             }
-        }
-        
-        .mat-icon {
-            color: black !important;
-        }
-    }
-}
-.filter-dialog, .column-dialog {
-    .chip-remove {
-        .mat-icon {
-            color: black !important;
         }
     }
 }
