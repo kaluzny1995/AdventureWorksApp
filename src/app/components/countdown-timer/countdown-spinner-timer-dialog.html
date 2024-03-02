@@ -16,6 +16,15 @@
             [strokeWidth]="this.data.spinnerStrokeWidth"
             [value]="this.percentage">
         </mat-progress-spinner>
+        <!-- Faded static progress spinner -->
+        <mat-progress-spinner
+            class="faded-spinner"
+            [class]="'faded-' + this.bootstrapClass"
+            [mode]="'determinate'"
+            [diameter]="this.data.spinnerDiameter"
+            [strokeWidth]="this.data.spinnerStrokeWidth"
+            [value]="100">
+        </mat-progress-spinner>
 
         <!-- Countdown timer -->
         <countdown

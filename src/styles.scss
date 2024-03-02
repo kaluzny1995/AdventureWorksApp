@@ -28,6 +28,13 @@ $bootstrap-info: #5bc0de;
 $bootstrap-warning: #f0ad4e;
 $bootstrap-danger: #d9534f;
 
+/*Bootstrap lightened colors*/
+$bootstrap-light-primary: #77bffe;
+$bootstrap-light-success: #a3d7a3;
+$bootstrap-light-info: #afe0ef;
+$bootstrap-light-warning: #f8d8ab;
+$bootstrap-light-danger: #eba5a3;
+
 /*Custom colors*/
 $row-hovered: #f3f3f7;
 $row-highlighted: #dcdcdc;
@@ -248,6 +255,7 @@ $row-highlighted: #dcdcdc;
 .countdown-timer-content {
     .timer-spinner {
         margin: 10px auto;
+        z-index: 1;
 
         &.progress-primary circle {
             stroke: $bootstrap-primary !important;
@@ -264,7 +272,29 @@ $row-highlighted: #dcdcdc;
         &.progress-danger circle {
             stroke: $bootstrap-danger !important;
         }
+    }
 
+    .faded-spinner {
+        position: absolute;
+        top: 74px;
+        left: 25px;
+        z-index: 0;
+
+        &.faded-primary circle {
+            stroke: $bootstrap-light-primary !important;
+        }
+        &.faded-info circle {
+            stroke: $bootstrap-light-info !important;
+        }
+        &.faded-success circle {
+            stroke: $bootstrap-light-success !important;
+        }
+        &.faded-warning circle {
+            stroke: $bootstrap-light-warning !important;
+        }
+        &.faded-danger circle {
+            stroke: $bootstrap-light-danger !important;
+        }
     }
 
     .timer {

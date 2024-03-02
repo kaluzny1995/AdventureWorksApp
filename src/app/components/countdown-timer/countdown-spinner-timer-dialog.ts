@@ -128,7 +128,7 @@ import { CountdownSpinnerTimerData } from "src/app/models/utils/countdown-spinne
         this.percentage = Math.floor(((this.data.totalTimeSecs - (event.left/1000)) / this.data.totalTimeSecs) * 100);
 
         if (event.action === 'notify') {
-            const current: number = event.left / 1000;
+            const current: number = Math.ceil(event.left / 1000);
             
             if (current === this.data.notifications[0]) {
               this.bootstrapClass = EBootstrapColor.SUCCESS;
@@ -138,7 +138,6 @@ import { CountdownSpinnerTimerData } from "src/app/models/utils/countdown-spinne
               this.bootstrapClass = EBootstrapColor.DANGER;
               this.title = this.data.titleTextFinish;
             } else if (current === 1) {
-              console.log('Dialog - Session ended.') //TODO: remove after tests
               this.isSessionOver = true;
             }
           }
@@ -159,14 +158,11 @@ import { CountdownSpinnerTimerData } from "src/app/models/utils/countdown-spinne
     renewSession(): void {
       this._auth.verifyPassword(this.confirmationPassword.value).subscribe({
         next: (result: any) => {
-            console.log('Password verified with result:', result);
             switch (result.title) {
                 case EPasswordVerificationStatus.UNVERIFIED:
                 this.confirmationPassword.setErrors({'password': true});
                 break;
                 case EPasswordVerificationStatus.VERIFIED:
-                console.log('Session renewal confirmed.');
-
                 /* Getting new token via API */
                 const credentialsData: FormData = new FormData();
                 credentialsData.append('username', this._auth.getUsernameFromToken());
@@ -185,7 +181,6 @@ import { CountdownSpinnerTimerData } from "src/app/models/utils/countdown-spinne
                     this.setCountdownTimer(this.getCountdownTimeSecs(true));
                     this.bootstrapClass = EBootstrapColor.PRIMARY;
                     this.title = this.data.titleText;
-                    console.log('Dialog - Session renewed.') //TODO: remove after tests
 
                     /* prompting parent countdown timer to change */
                     this.onSessionRenewal.emit();

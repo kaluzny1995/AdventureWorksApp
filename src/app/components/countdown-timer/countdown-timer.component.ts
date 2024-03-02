@@ -114,7 +114,7 @@ export class CountdownTimerComponent implements OnInit {
    */
   handleCountdown(event: CountdownEvent): void {
     if (event.action === 'notify') {
-      const current: number = event.left / 1000;
+      const current: number = Math.ceil(event.left / 1000);
       
       if (current === this.notifications[0]) {
         this.bootstrapClass = EBootstrapColor.SUCCESS;
@@ -126,11 +126,7 @@ export class CountdownTimerComponent implements OnInit {
         if (!this.isDialogOpened) {
           this.displayDialog()
         }
-      } else {
-        console.log('Page - Session ended.') //TODO: remove after tests
       }
-    } else if (event.action == 'restart') {
-      console.log('Counter restarted')
     }
   }
 
@@ -156,7 +152,6 @@ export class CountdownTimerComponent implements OnInit {
     });
 
     dialogRef.componentInstance.onSessionRenewal.subscribe((result: any) => {
-      console.log('Page - Session renewed.'); //TODO: remove after tests
       /* setting countdown timer & button appearance */
       this.setCountdownTimer(this.getCountdownTimeSecs());
       this.bootstrapClass = EBootstrapColor.PRIMARY;
