@@ -1,0 +1,128 @@
+<!-- Title and actions -->
+<div class="header-actions">
+    <div class="mat-h1">Phone number types</div>
+    <div class="fill-remaining-space"></div>
+    <div>
+        <form [formGroup]="this.namePhraseForm" (submit)="this.filter()">
+
+            <!--Phone number type name phrase-->
+            <mat-form-field class="form-field-searchbar" appearance="fill" matTooltip="Type in and hit Enter to filter.">
+                <mat-label>Filter by name...</mat-label>
+                <input matInput formControlName="namePhrase" type="text" nullDefault>
+                <mat-icon class="clear-icon" *ngIf="!this.namePhrase.value">filter_list</mat-icon>
+                <mat-icon class="clear-icon" matTooltip="Clear" *ngIf="!!this.namePhrase.value" (click)="this.clearFilter()">close</mat-icon>
+            </mat-form-field>
+            
+        </form>
+    </div>
+</div>
+
+<mat-divider class="horizontal-line"></mat-divider>
+  
+<!-- Alert -->
+<div class="alert" *ngIf="this.mainAlert" [ngClass]="this.mainAlert.type ? 'alert-' + this.mainAlert.type : ''">
+    <span>{{ this.mainAlert.message }}</span>
+    <span class="fill-remaining-space"></span>
+    <button mat-raised-button (click)="this.mainAlert = null">&times;</button>
+</div>
+
+<!-- Loading spinner -->
+<div class="spinner-container" *ngIf="this.isLoaderUp">
+    <mat-spinner></mat-spinner>
+</div>
+
+<div class="list-admin mat-elevation-z8" *ngIf="this.dataSource.length > 0">
+    <!-- Data list -->
+    <mat-list matSort 
+    [matSortActive]="this.queryParams.orderBy === null? '' : this.queryParams.orderBy"
+    [matSortDirection]="this.queryParams.type"
+    (matSortChange)="this.order($event)">
+        <mat-list-item class="item-header">
+            <div class="item">
+                <div class="item-middle item-id" mat-sort-header="phoneNumberTypeId" arrowPosition="before">Id</div>
+                <div class="item-middle item-gap"></div>
+                <div class="item-middle item-content" mat-sort-header="name">Name</div>
+                <div class="item-middle fill-remaining-space"></div>
+                <div class="item-middle item-mdate" mat-sort-header="modifiedDate" arrowPosition="before">Last modified</div>
+            </div>
+        </mat-list-item>
+
+        <mat-list-item class="item-new item-background">
+            <div class="item">
+                <div class="item-middle item-id">#</div>
+                <div class="item-middle item-gap"></div>
+                <div 
+                class="item-middle item-content" 
+                matTooltip="Create new name"
+                [matTooltipDisabled]="this.viewParams.selectedId === this.phoneNumberTypeDefaults.newId"
+                (click)="this.setSelected()">
+                    <span class="list-item-name" *ngIf="this.viewParams.selectedId !== this.phoneNumberTypeDefaults.newId">[new phone number type]</span>
+                    <form 
+                    *ngIf="this.viewParams.selectedId === this.phoneNumberTypeDefaults.newId" 
+                    [formGroup]="this.nameForm" (submit)="this.addOrEditPhoneNumberType(this.phoneNumberTypeDefaults.newId)">
+
+                        <!--Phone number type name-->
+                        <mat-form-field appearance="fill" class="form-field-list-item">
+                            <input matInput formControlName="name" type="text" nullDefault>
+                            <span class="floating-error-message" *ngIf="this.name?.errors?.required && (this.name.dirty || this.name.touched)">
+                                Required <mat-icon class="error-icon">error</mat-icon>
+                            </span>
+                            <mat-icon class="cancel-icon" matTooltip="Cancel" 
+                            *ngIf="!this.name?.errors || (this.name.pristine && this.name.untouched)" (click)="this.unsetSelected(true)">cancel</mat-icon>
+                        </mat-form-field>
+                        
+                    </form>
+                </div>
+
+                <div class="item-middle fill-remaining-space"></div>
+                <div class="item-middle item-mdate">[#]</div>
+            </div>
+        </mat-list-item>
+
+        <mat-list-item 
+        class="item-background"
+        *ngFor="let element of this.dataSource"  
+        [class.highlighted]="element.phoneNumberTypeId === this.viewParams.selectedId"
+        [class.new]="element.phoneNumberTypeId === this.viewParams.newId"
+        [class.changed]="element.phoneNumberTypeId === this.viewParams.changedId">
+            <div class="item">
+                <div class="item-middle item-id">{{ element.phoneNumberTypeId }}</div>
+                <div class="item-middle item-gap"></div>
+                <div 
+                class="item-middle item-content" 
+                matTooltip="Change the name" 
+                [matTooltipDisabled]="this.viewParams.selectedId === element.phoneNumberTypeId"
+                (click)="this.setSelected(element)">
+                    <span class="list-item-name" *ngIf="this.viewParams.selectedId !== element.phoneNumberTypeId">{{ element.name }}</span>
+                    <form 
+                    *ngIf="this.viewParams.selectedId === element.phoneNumberTypeId" 
+                    [formGroup]="this.nameForm" (submit)="this.addOrEditPhoneNumberType(element.phoneNumberTypeId)">
+
+                        <!--Phone number type name-->
+                        <mat-form-field appearance="fill" class="form-field-list-item">
+                            <input matInput formControlName="name" type="text" nullDefault>
+                            <span class="floating-error-message" *ngIf="this.name?.errors?.required">
+                                Required <mat-icon class="error-icon">error</mat-icon>
+                            </span>
+                            <mat-icon class="cancel-icon" matTooltip="Cancel" *ngIf="!this.name?.errors" (click)="this.unsetSelected(true)">cancel</mat-icon>
+                        </mat-form-field>
+                        
+                    </form>
+                </div>
+
+                <div class="item-middle fill-remaining-space"></div>
+                <div class="item-middle item-delete" matTooltip="Drop the name">
+                    <mat-icon (click)="this.deletePhoneNumberType(element)">delete</mat-icon>
+                </div>
+                <div class="item-middle item-mdate">[{{ element.modifiedDate | date:'dd.MM.yyyy HH:mm:ss' }}]</div>
+            </div>
+        </mat-list-item>
+      </mat-list>
+</div>
+
+<!-- Alert if no results -->
+<div class="mat-elevation-z8 no-results" *ngIf="this.dataSource.length === 0">
+    <div class="alert alert-danger">
+        <span>No results satisfying given filter criteria or data source is empty.</span>
+    </div>
+</div>

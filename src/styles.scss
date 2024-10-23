@@ -36,8 +36,11 @@ $bootstrap-light-warning: #f8d8ab;
 $bootstrap-light-danger: #eba5a3;
 
 /*Custom colors*/
-$row-hovered: #f3f3f7;
-$row-highlighted: #dcdcdc;
+$hovered: #f3f3f7;
+$highlighted: #dcdcdc;
+$invisible: rgba(0,0,0,.0);
+$hovered-icon: rgba(0,0,0,.4);
+$highlighted-icon: rgba(0,0,0,.6);
 
 .bg-primary {
     background-color: $bootstrap-primary;
@@ -603,6 +606,37 @@ mat-list {
     width: 100%;
 }
 
+.form-field-list-item {
+    width: 100%;
+
+    .mat-mdc-text-field-wrapper {
+        height: 40px;
+        background-color: unset;
+
+        .mat-mdc-form-field-infix {
+            padding-top: 8px !important;
+            padding-bottom: 8px !important;
+        }
+    }
+    .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+    }
+}
+.form-field-searchbar {
+    width: 300px;
+    position: relative;
+
+    .clear-icon {
+        position: fixed;
+        right: 8px;
+        top: 24px;
+    }
+
+    .mat-mdc-form-field-subscript-wrapper {
+        display: none;
+    }
+}
+
 .label-checkable {
     margin-right: 6px;
 }
@@ -619,7 +653,7 @@ div[role=listbox] {
     display: flex;
 
     .mat-h1 {
-        margin-bottom: 0;
+        margin: auto 0;
     }
 
     .action {
@@ -630,7 +664,7 @@ div[role=listbox] {
         top: -4px;
     }
 
-    .mat-icon {
+    .mat-icon:not(.clear-icon) {
         position: relative;
         top: 6px;
         right: 6px;
@@ -661,16 +695,16 @@ div[role=listbox] {
     }
 
     .hint {
-        margin: auto 10px auto 10px;
+        margin: auto 10px;
         font-style: italic;
     }
 
     .action {
         &.set {
-            margin: auto 12px auto 12px;
+            margin: auto 12px;
         }
         &.clear, &.reset {
-            margin: auto 0 auto 0;
+            margin: auto 0;
         }
 
         .action-title {
@@ -685,7 +719,7 @@ div[role=listbox] {
     }
 }
 
-/* admin pannel - table */
+/* admin pannel - table and list */
 .table-admin {
     overflow: auto;
     max-height: calc(100vh - 270px);
@@ -715,10 +749,10 @@ div[role=listbox] {
         cursor: pointer;
 
         &:not(.highlighted):hover {
-            background-color: $row-hovered;
+            background-color: $hovered;
         }
         &.highlighted {
-            background-color: $row-highlighted !important;
+            background-color: $highlighted !important;
         }
         &.new {
             background-color: $bootstrap-success !important;
@@ -726,6 +760,122 @@ div[role=listbox] {
         &.changed {
             background-color: $bootstrap-warning !important;
         }
+    }
+}
+.list-admin {
+    overflow: auto;
+    max-height: calc(100vh - 270px);
+    max-width: 80%;
+    margin: 0 auto;
+
+    .item-header {
+        border-bottom: 1px solid black;
+
+        .item-content {
+            padding: 0 16px;
+        }
+    }
+    .item-background {
+        cursor: pointer;
+
+        &:not(.highlighted):hover {
+            background-color: $hovered;
+
+            .item-delete {
+                color: $hovered-icon;
+            }
+        }
+        &.highlighted {
+            background-color: $highlighted !important;
+        }
+        &.new {
+            background-color: $bootstrap-success !important;
+        }
+        &.changed {
+            background-color: $bootstrap-warning !important;
+        }
+        &.highlighted, &.new, &.changed {
+            .item-delete {
+                color: $highlighted-icon;
+            }
+        }
+        &:not(.highlighted):hover, &.highlighted, &.new, &.changed {
+            .item-delete {
+                cursor: pointer;
+            }
+        }
+
+        &.item-new {
+            border-bottom: 1px dashed black;
+            font-style: italic;
+        }
+
+        .item-content {
+            cursor: pointer;
+        }
+    }
+    .item {
+        display: flex;
+
+        .item-middle {
+            margin: auto 10px;
+        }
+        .item-id {
+            margin-left: 0;
+            min-width: 40px;
+            font-weight: bold;
+            text-align: right;
+        }
+        .item-gap {
+            padding-left: 1%;
+        }
+        .item-content {
+            margin-left: 5px;
+            min-width: 300px;
+        }
+        .item-delete {
+            color: $invisible;
+            position: relative;
+
+            .mat-icon {
+                position: absolute;
+                top: -14px;
+                right: 0px;
+            }
+        }
+        .item-mdate {
+            text-align: right;
+            font-size: smaller;
+            font-style: italic;
+            opacity: 0.5;
+        }
+
+        .mat-mdc-form-field-infix {
+            position: relative;
+
+            .floating-error-message {
+                position: fixed;
+                right: 25px;
+                bottom: 7px;
+                color: $material-warn;
+                font-size: small;
+
+                .error-icon {
+                    position: fixed;
+                    right: -2px;
+                    bottom: 4px;
+                    font-size: medium;
+                }
+            }
+            .cancel-icon {
+                position: fixed;
+                right: 4px;
+                bottom: 8px;
+            }
+        }
+    }
+    .list-item-name {
+        padding: 0 16px;
     }
 }
 .no-results {

@@ -4,6 +4,7 @@ import { QueryParams } from '../../models/admin-pannels/common/query-params';
 import { PersonDefaults } from '../../models/admin-pannels/persons/person-defaults';
 import { ViewParams } from '../../models/admin-pannels/common/view-params';
 import { CountdownTimerSettings } from 'src/app/models/utils/countdown-timer-settings';
+import { PhoneNumberTypeDefaults } from 'src/app/models/admin-pannels/phone-number-types/phone-number-type-defaults';
 
 @Injectable({
   providedIn: 'root'
@@ -117,6 +118,16 @@ export class AppConfigService {
       this._appConfig.defaults.person.emailPromotions,
       this._appConfig.defaults.person.aciTemplate,
       this._appConfig.defaults.person.demoTemplate
+    );
+  }
+
+  /*Phone number type defaults config*/
+  get phoneNumberTypeDefaults(): PhoneNumberTypeDefaults {
+    return new PhoneNumberTypeDefaults(
+      this._appConfig.defaults.phoneNumberType.availableFilters,
+      this._appConfig.defaults.phoneNumberType.availableFilterNames,
+      this._appConfig.defaults.phoneNumberType.newId,
+      this._appConfig.defaults.phoneNumberType.perPage
     );
   }
 

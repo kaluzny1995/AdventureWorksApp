@@ -30,6 +30,7 @@ import { PipeModule } from './modules/pipe.module';
 import { DirectiveModule } from './modules/directive.module';
 import { Error500Component } from './components/errors/error500/error500.component';
 import { CountdownTimerComponent } from './components/countdown-timer/countdown-timer.component';
+import { PhoneNumberTypesComponent } from './components/admin-pannels/phone-number-types/phone-number-types.component';
 
 @NgModule({
   declarations: [
@@ -51,7 +52,8 @@ import { CountdownTimerComponent } from './components/countdown-timer/countdown-
     PersonsComponent,
     PersonFormComponent,
     Error500Component,
-    CountdownTimerComponent
+    CountdownTimerComponent,
+    PhoneNumberTypesComponent
   ],
   imports: [
     BrowserModule,

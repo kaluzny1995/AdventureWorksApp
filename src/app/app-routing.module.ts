@@ -19,6 +19,7 @@ import { NonReadonlyGuard } from './guards/non-readonly.guard';
 import { Error403Component } from './components/errors/error403/error403.component';
 import { NotSignedInGuard } from './guards/not-signed-in.guard';
 import { Error500Component } from './components/errors/error500/error500.component';
+import { PhoneNumberTypesComponent } from './components/admin-pannels/phone-number-types/phone-number-types.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -37,6 +38,7 @@ const routes: Routes = [
   {path: 'pannels', redirectTo: '/pannels/persons', pathMatch: 'full'},
   {path: 'pannels/persons', component: PersonsComponent, canActivate: [AuthenticationGuard]},
   {path: 'pannels/persons/:id', component: PersonFormComponent, canActivate: [AuthenticationGuard, NonReadonlyGuard]},
+  {path: 'pannels/phone-number-types', component: PhoneNumberTypesComponent, canActivate: [AuthenticationGuard]},
   {path: '403', component: Error403Component},
   {path: '500', component: Error500Component},
   {path: '**', component: Error404Component}
