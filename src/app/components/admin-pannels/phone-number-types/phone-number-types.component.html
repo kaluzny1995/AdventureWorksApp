@@ -53,13 +53,15 @@
                 <div class="item-middle item-gap"></div>
                 <div 
                 class="item-middle item-content" 
-                matTooltip="Create new name"
+                matTooltip="Create new phone number type"
                 [matTooltipDisabled]="this.viewParams.selectedId === this.phoneNumberTypeDefaults.newId"
+                *ngIf="!this.isReadonly"
                 (click)="this.setSelected()">
                     <span class="list-item-name" *ngIf="this.viewParams.selectedId !== this.phoneNumberTypeDefaults.newId">[new phone number type]</span>
                     <form 
                     *ngIf="this.viewParams.selectedId === this.phoneNumberTypeDefaults.newId" 
-                    [formGroup]="this.nameForm" (submit)="this.addOrEditPhoneNumberType(this.phoneNumberTypeDefaults.newId)">
+                    [formGroup]="this.nameForm" 
+                    (submit)="this.addOrEditPhoneNumberType(this.phoneNumberTypeDefaults.newId)">
 
                         <!--Phone number type name-->
                         <mat-form-field appearance="fill" class="form-field-list-item">
@@ -72,6 +74,12 @@
                         </mat-form-field>
                         
                     </form>
+                </div>
+                <div 
+                class="item-middle item-content"
+                matTooltip="Cannot create new phone number type by users with readonly access."
+                *ngIf="this.isReadonly">
+                    <span class="list-item-name">[not available while in readonly access]</span>
                 </div>
 
                 <div class="item-middle fill-remaining-space"></div>
@@ -90,8 +98,9 @@
                 <div class="item-middle item-gap"></div>
                 <div 
                 class="item-middle item-content" 
-                matTooltip="Change the name" 
+                matTooltip="Change phone number type name" 
                 [matTooltipDisabled]="this.viewParams.selectedId === element.phoneNumberTypeId"
+                *ngIf="!this.isReadonly"
                 (click)="this.setSelected(element)">
                     <span class="list-item-name" *ngIf="this.viewParams.selectedId !== element.phoneNumberTypeId">{{ element.name }}</span>
                     <form 
@@ -109,10 +118,19 @@
                         
                     </form>
                 </div>
+                <div
+                class="item-middle item-content"
+                matTooltip="Cannot change phone number type by users with readonly access."
+                *ngIf="this.isReadonly">
+                    <span class="list-item-name">{{ element.name }}</span>
+                </div>
 
                 <div class="item-middle fill-remaining-space"></div>
-                <div class="item-middle item-delete" matTooltip="Drop the name">
+                <div class="item-middle item-delete" matTooltip="Drop phone number type" *ngIf="!this.isReadonly">
                     <mat-icon (click)="this.deletePhoneNumberType(element)">delete</mat-icon>
+                </div>
+                <div class="item-middle item-delete" matTooltip="Cannot change phone number type by users with readonly access." *ngIf="this.isReadonly">
+                    <mat-icon>delete</mat-icon>
                 </div>
                 <div class="item-middle item-mdate">[{{ element.modifiedDate | date:'dd.MM.yyyy HH:mm:ss' }}]</div>
             </div>

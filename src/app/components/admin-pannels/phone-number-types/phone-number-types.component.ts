@@ -19,7 +19,6 @@ import { PhoneNumberTypeService } from 'src/app/services/admin-pannels/phone-num
 import { AuthenticationService } from 'src/app/services/awfapi-user/authentication.service';
 import { FilterParamsService } from 'src/app/services/url/filter-params.service';
 import { QueryParamsService } from 'src/app/services/url/query-params.service';
-import { UrlProcessingService } from 'src/app/services/url/url-processing.service';
 import { ViewParamsService } from 'src/app/services/url/view-params.service';
 import { AlertMessageService } from 'src/app/services/utils/alert-message.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
@@ -61,7 +60,6 @@ export class PhoneNumberTypesComponent implements OnInit {
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
-    private _urlProc: UrlProcessingService,
     private _local: LocalStorageService,
     private _auth: AuthenticationService,
     private _view: ViewParamsService,
