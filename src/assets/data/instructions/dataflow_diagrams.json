@@ -1,7 +1,8 @@
 {
     "imagePathTemplate": "/assets/images/dataflow_diagrams/${}.png",
+    "selectedInstruction": "app",
     "instructions": [
-        {"name": "Application frontend", "value": "", "btnIcon": "", "images": [
+        {"name": "Application frontend", "value": "app", "btnIcon": "", "images": [
             {"title": "Application frontend dataflow diagram", "src": "awma_frontend", "label": "", "isHalf": false}
         ], "steps": [
             {"name": "Form/admin pannel view", "title": "User opens form, admin pannel or other view.", "description": "User may open the view with available controls. If the view contains form, then user may fill it. Application tells user whether form is valid and unless it is, it tells which fields have errors with appropriate description."},
@@ -12,7 +13,7 @@
             {"name": "Endpoint response", "title": "Responses received from API endpoints and passed to the view.", "description": "Application services may receive responses from API endpoints and pass the received data into views."},
             {"name": "Data display", "title": "Data received and displayed in view.", "description": "User may receive the data from application services and see appropriately disaplyed informations in view."}
         ]},
-        {"name": "API backend", "value": "", "btnIcon": "", "images": [
+        {"name": "API backend", "value": "api", "btnIcon": "", "images": [
             {"title": "API backend dataflow diagram", "src": "awma_backend", "label": "", "isHalf": false}
         ], "steps": [
             {"name": "HTTP request", "title": "HTTP request to API endpoint.", "description": "API may receive HTTP requests from frontend application to appropriate endpoints."},

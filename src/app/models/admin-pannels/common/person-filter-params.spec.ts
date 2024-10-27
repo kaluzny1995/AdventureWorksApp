@@ -1,6 +1,6 @@
-import { PersonFilterParams } from './filter-params';
+import { PersonFilterParams } from './person-filter-params';
 
-describe('FilterParams', () => {
+describe('PersonFilterParams', () => {
   it('should create an instance', () => {
     expect(new PersonFilterParams('', '', '')).toBeTruthy();
   });

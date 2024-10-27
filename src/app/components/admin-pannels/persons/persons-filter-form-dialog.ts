@@ -6,7 +6,7 @@ import { MAT_DIALOG_DATA, MatDialogModule, MatDialogRef } from "@angular/materia
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectModule } from "@angular/material/select";
-import { PersonFilterParams } from "src/app/models/admin-pannels/common/filter-params";
+import { PersonFilterParams } from "src/app/models/admin-pannels/common/person-filter-params";
 import { DirectiveModule } from "src/app/modules/directive.module";
 import { PersonService } from "src/app/services/admin-pannels/person.service";
 

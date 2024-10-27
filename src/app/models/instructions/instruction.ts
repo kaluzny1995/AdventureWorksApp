@@ -1,18 +1,19 @@
 import { EAdminPannelStep } from "./e-admin-pannel-step";
+import { EDataflowDiagram } from "./e-dataflow-diagram";
 import { EFirstStep } from "./e-first-step";
 import { Image } from "./image";
 import { Step } from "./step";
 
 export class Instruction {
     public readonly name: string;
-    public readonly value: EFirstStep | EAdminPannelStep;
+    public readonly value: EFirstStep | EDataflowDiagram | EAdminPannelStep;
     public readonly btnIcon: string;
     public readonly images: Image[];
     public readonly steps: Step[];
 
     constructor(
         name: string,
-        value: EFirstStep | EAdminPannelStep,
+        value: EFirstStep | EDataflowDiagram | EAdminPannelStep,
         btnIcon: string,
         images: Image[],
         steps: Step[]
@@ -28,9 +29,12 @@ export class Instruction {
      * Returns instruction object with data from JSON object
     */
     public static fromJson(json: any, imagePathTemplate: string): Instruction {
-        let value: EFirstStep | EAdminPannelStep = EFirstStep[json.value.toUpperCase() as keyof typeof EFirstStep];
+        let value: EFirstStep | EDataflowDiagram | EAdminPannelStep = EFirstStep[json.value.toUpperCase() as keyof typeof EFirstStep];
         if (value === undefined) {
-            value = EAdminPannelStep[json.value.toUpperCase() as keyof typeof EAdminPannelStep];
+            value = EDataflowDiagram[json.value.toUpperCase() as keyof typeof EDataflowDiagram];
+            if (value === undefined) {
+                value = EAdminPannelStep[json.value.toUpperCase() as keyof typeof EAdminPannelStep];
+            }
         }
 
         return new Instruction(
