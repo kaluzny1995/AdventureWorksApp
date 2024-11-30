@@ -4,7 +4,7 @@
 <div class="card-container">
     <mat-card class="card card-instruction">
         <mat-card-content>
-            <mat-tab-group>
+            <mat-tab-group [selectedIndex]="this.selectedInstruction">
                 <mat-tab *ngFor="let instr of this.instructions" [label]="instr.name">
                     <img [src]="instr.images[0].src" (click)="this.displayImage(instr.images[0].title, instr.images[0].src)">
 
