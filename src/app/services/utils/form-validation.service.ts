@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { AbstractControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
+import { AbstractControl, FormControl, FormGroup, ValidationErrors, ValidatorFn } from '@angular/forms';
 import xmlFormat from 'xml-formatter';
 
 @Injectable({
@@ -9,6 +9,23 @@ export class FormValidationService {
 
   constructor() { }
 
+  /**
+   * Validates given form group
+  */
+  validateFormGroup(formGroup: FormGroup): void {
+    Object.keys(formGroup.controls).forEach(field => {
+      const control = formGroup.get(field);
+      if (control instanceof FormControl) {
+        control.markAsTouched({onlySelf: true});
+      } else if (control instanceof FormGroup) {
+        this.validateFormGroup(control);
+      }
+    });
+  }
+
+  /**
+   * Validates if the assigned control has not got any of the provided values
+  */
   ForbiddenValueValidator(forbiddenNames: string[]): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       const regExps = forbiddenNames.map(fn => new RegExp(`^${fn}$`));
@@ -17,6 +34,9 @@ export class FormValidationService {
     };
   }
 
+  /**
+   * Validates if the two password controls have the same value
+  */
   PasswordsMatchingValidator(controlName: string, matchingControlName: string): ValidationErrors {
     return (formGroup: FormGroup): { [key: string]: any } | null => {
       const control = formGroup.controls[controlName];
@@ -31,6 +51,9 @@ export class FormValidationService {
     };
   }
 
+  /**
+   * Validates if the assigned control has got appropriate XML string
+  */
   XMLValidator(): ValidatorFn {
     return (control: AbstractControl): { [key: string]: any } | null => {
       try {

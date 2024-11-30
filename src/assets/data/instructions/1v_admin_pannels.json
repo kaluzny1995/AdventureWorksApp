@@ -1,0 +1,44 @@
+{
+    "imagePathTemplate": "/assets/images/1v_admin_pannels/${}.png",
+    "selectedInstruction": "view",
+    "instructions": [
+        {"name": "View", "value": "view", "btnIcon": "view_list", "images": [
+            {"title": "Data view on start", "src": "view", "label": null, "isHalf": false}
+        ], "steps": [
+            {"name": "Overview", "title": "One-value admin pannel overview.", "description": "Every one-value (1v) admin pannel in the application includes two main components: the list and a searchbar at the top. Each of 1v admin pannel views has got its 3 basic parameters: filters, ordering and ordering type. They haven't got however page numbe and number of items displayed per page, because due to relatively small total count of items it's not needed."},
+            {"name": "Searchbar", "title": "Searchbar.", "description": "Every one-value (1v) admin pannel has got in its top right corner a searchbar. This component is used to filter the data list by value. See more clicking 'Value filter' tab."},
+            {"name": "List", "title": "List with values.", "description": "Every data list in one-value (1v) admin pannels includes three headers: id, name and last-modified date. Id respresents the entry identification number, name - the value of the entry and last-modified date - a datetime of recent value changing."}
+        ]},
+        {"name": "Ordering", "value": "order", "btnIcon": "sort_by_alpha", "images": [
+            {"title": "Ordering", "src": "order", "label": null, "isHalf": false}
+        ], "steps": [
+            {"name": "Headers", "title": "Clickable list headers.", "description": "Each of three list headers (id, name and last-modified date) could be clicked in order to order the list by the clicked header ascending. If clicked again the list will be ordered descending. Clicking again erases ordering. Clicking another header orders the list by this header and erases the previous ordering."},
+            {"name": "Top/bottom arrows", "title": "Headers ordering arrows.", "description": "Every time the header is clicked to order the list, the top or bottom arrow appears beside. If ordered ascending, the top arrow appears and if descending - the bottom arrow. The ordering header as well as type name is persisted in URL string if other than nothing and ascending by default."}
+        ]},
+        {"name": "Value filter", "value": "filter", "btnIcon": "filter_list", "images": [
+            {"title": "Filter searchbar", "src": "filter", "label": null, "isHalf": false}
+        ], "steps": [
+            {"name": "Filtering", "title": "Filtering by name value.", "description": "The items displaying is restricted by so called value filter. This is the predicate (condition) concerning the data stored in the source database, which is used for restricting the loaded list items only into these satysfying the mentioned condition. Example: (name like '%ho%') --> only the items with name phrase 'ho'."},
+            {"name": "Actions", "title": "Filtering actions.", "description": "Typing the name phrase in the searchbar and then hitting Enter key filters the list items by theirs name values. There are displayed only these items which name value includes the provided phrase (case insensitive). Clicking the 'Clear' icon on the searchbars right hand side clears the filtering phrase."}
+        ]},
+        {"name": "Value registration", "value": "add", "btnIcon": "add", "images": [
+            {"title": "New name", "src": "add", "label": null, "isHalf": false}
+        ], "steps": [
+            {"name": "New name field", "title": "New name field overview.", "description": "Every one-value (1v) admin pannel for users with non-readonly access has a functionality of adding new items by providing theirs values. Clicking the italicized '[new <name entity>]' text (below the headers) shows the new name field. Now the new name value must be typed in."},
+            {"name": "Submission", "title": "Submit button and other actions.", "description": "Clicking 'Clear' icon on the left hides the field and clears its value. Hitting Enter key validates if field is not empty and if so the new name will be inserted into the database table, the list will be updated with highlighted on green item with newly added name value."}
+        ]},
+        {"name": "Value changing", "value": "edit", "btnIcon": "edit", "images": [
+            {"title": "Change the name", "src": "edit", "label": null, "isHalf": false}
+        ], "steps": [
+            {"name": "Changing name field", "title": "Changing name field overview.", "description": "Each of the names for users with non-readonly access could be changed. Clicking the name text (in each of the rows) makes is editable, ie. shows the text inside the shown changing value field. Now the name value could be changed."},
+            {"name": "Submission", "title": "Submit button and other actions.", "description": "Clicking 'Clear' icon on the left hides the field leaving the text displayed as label. Hitting Enter key validates if field is not empty and if so the name value will be updated in the database table (and the last-modified date set to present), the list will be updated with highlighted on yellow item with recently changed name value."}
+        ]},
+        {"name": "Value deletion", "value": "delete", "btnIcon": "delete_forever", "images": [
+            {"title": "Value deletion", "src": "delete", "label": null, "isHalf": true}
+        ], "steps": [
+            {"name": "Deletion icon", "title": "Drop name icon.", "description": "To drop certain name, it must be first hovered in the list. Then the deletion (trash bin) icon will appear on the right hand side. Clicking the icon shows up the deletion confirmation dialog. For users with readonly access mode this button won't be shown as they cannot drop any names."},
+            {"name": "Confirmation dialog", "title": "Modal dialog with deletion confirmation.", "description": "The modal dialog with Yes/No options and message 'This action cannot be undone.' will be displayed after clicking the drop item button. Clicking 'No' option hides the pannel and 'Yes' - shows up the field with password."},
+            {"name": "Password checking", "title": "Mandatory password checking.", "description": "Before deletion of every item user has to provide his own account password for safety. After correctly typed password and clicking 'Confirm', the certain name entry will be physically removed from the database table and visually from the main list in 1v admin pannel."}
+        ]}
+    ]
+}

@@ -19,6 +19,8 @@ import { NonReadonlyGuard } from './guards/non-readonly.guard';
 import { Error403Component } from './components/errors/error403/error403.component';
 import { NotSignedInGuard } from './guards/not-signed-in.guard';
 import { Error500Component } from './components/errors/error500/error500.component';
+import { PhoneNumberTypesComponent } from './components/admin-pannels/phone-number-types/phone-number-types.component';
+import { OnevalueAdminPannelsComponent } from './components/instructions/onevalue-admin-pannels/onevalue-admin-pannels.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -29,6 +31,7 @@ const routes: Routes = [
   {path: 'instructions/dataflow-diagrams', component: DataflowDiagramsComponent},
   {path: 'instructions/entities', component: EntitiesComponent},
   {path: 'instructions/admin-pannels', component: AdminPannelsComponent, canActivate: [AuthenticationGuard]},
+  {path: 'instructions/1v-admin-pannels', component: OnevalueAdminPannelsComponent, canActivate: [AuthenticationGuard]},
   {path: 'authenticate', component: AuthenticationComponent, canActivate: [NotSignedInGuard]},
   {path: 'profile', component: ProfileComponent, canActivate: [AuthenticationGuard]},
   {path: 'register', component: RegisterComponent, canActivate: [NotSignedInGuard]},
@@ -37,6 +40,7 @@ const routes: Routes = [
   {path: 'pannels', redirectTo: '/pannels/persons', pathMatch: 'full'},
   {path: 'pannels/persons', component: PersonsComponent, canActivate: [AuthenticationGuard]},
   {path: 'pannels/persons/:id', component: PersonFormComponent, canActivate: [AuthenticationGuard, NonReadonlyGuard]},
+  {path: 'pannels/phone-number-types', component: PhoneNumberTypesComponent, canActivate: [AuthenticationGuard]},
   {path: '403', component: Error403Component},
   {path: '500', component: Error500Component},
   {path: '**', component: Error404Component}

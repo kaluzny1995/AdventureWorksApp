@@ -20,6 +20,7 @@ export class AppComponent implements OnInit {
       {name: 'Dataflow diagrams', url: 'instructions/dataflow-diagrams'},
       {name: 'Entities', url: 'instructions/entities'},
       {name: 'Admin pannels', url: 'instructions/admin-pannels', isAuthRequired: true},
+      {name: 'One-value admin pannels', url: 'instructions/1v-admin-pannels', isAuthRequired: true}
     ]},
     {name: 'Admin pannels', subLinks: [
       {name: 'Persons', url: 'pannels/persons'},
