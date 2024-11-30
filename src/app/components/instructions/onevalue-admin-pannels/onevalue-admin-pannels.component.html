@@ -1,0 +1,42 @@
+<div class="mat-h1">One-value admin pannels instructions</div>
+<mat-divider class="horizontal-line"></mat-divider>
+<div class="mat-h4">Switch between instructions by clicking the icons below.</div>
+
+<div class="card-container">
+    <mat-card class="card card-instruction">
+        <mat-card-header>
+            <mat-button-toggle-group [(ngModel)]="this.selectedInstruction">
+                <mat-button-toggle *ngFor="let instr of this.instructions" [value]="instr.value"
+                [matTooltip]="instr.name" matTooltipPosition="above">
+                    <mat-icon>{{ instr.btnIcon }}</mat-icon>
+                </mat-button-toggle>
+            </mat-button-toggle-group>
+        </mat-card-header>
+        <mat-divider class="horizontal-line"></mat-divider>
+    
+        <span *ngFor="let instr of this.instructions">
+            <mat-card-content *ngIf="this.selectedInstruction === instr.value">
+                <div class="mat-h2 card-title">{{ instr.name }}</div>
+                <img *ngIf="instr.images.length <= 1" [class.img-half]="instr.images[0].isHalf" [src]="instr.images[0].src"
+                (click)="this.displayImage(instr.images[0].title, instr.images[0].src)">
+                <mat-tab-group *ngIf="instr.images.length > 1">
+                    <mat-tab *ngFor="let img of instr.images" [label]="img.label || ''">
+                        <img [class.img-half]="img.isHalf" [src]="img.src"
+                        (click)="this.displayImage(img.title, img.src)">
+                    </mat-tab>
+                </mat-tab-group>
+        
+                <mat-accordion>
+                    <mat-expansion-panel *ngFor="let step of instr.steps; let i = index;">
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>&nbsp;{{ i+1 }}.&nbsp;{{ step.name }}</mat-panel-title>
+                          <mat-panel-description>{{ step.title }}</mat-panel-description>
+                        </mat-expansion-panel-header>
+                        {{ step.description }}
+                    </mat-expansion-panel>
+                </mat-accordion>
+        </mat-card-content>
+        </span>
+    
+    </mat-card>
+</div>
