@@ -32,6 +32,7 @@ import { Error500Component } from './components/errors/error500/error500.compone
 import { CountdownTimerComponent } from './components/countdown-timer/countdown-timer.component';
 import { PhoneNumberTypesComponent } from './components/admin-pannels/phone-number-types/phone-number-types.component';
 import { OnevalueAdminPannelsComponent } from './components/instructions/onevalue-admin-pannels/onevalue-admin-pannels.component';
+import { PersonPhonesComponent } from './components/admin-pannels/person-phones/person-phones.component';
 
 @NgModule({
   declarations: [
@@ -55,7 +56,8 @@ import { OnevalueAdminPannelsComponent } from './components/instructions/onevalu
     Error500Component,
     CountdownTimerComponent,
     PhoneNumberTypesComponent,
-    OnevalueAdminPannelsComponent
+    OnevalueAdminPannelsComponent,
+    PersonPhonesComponent
   ],
   imports: [
     BrowserModule,

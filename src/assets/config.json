@@ -101,6 +101,13 @@
             "newId": -1,
             "perPage": 100
         },
-        "prefixes": ["person", "phone-number-type"]
+        "personPhone": {
+            "availableColumns": ["person", "phoneNumber", "phoneNumberType", "modifiedDate"],
+            "availableColumnNames": ["Person [ID]", "Phone\u00a0number", "Phone\u00a0number\u00a0type", "Last\u00a0modified"],
+            "displayedIndices": [0, 1, 2],
+            "availableFilters": ["personIds", "phoneNumberTypeIds"],
+            "availableFilterNames": ["Persons", "Phone\u00a0number\u00a0types"]
+        },
+        "prefixes": ["person", "phone-number-type", "person-phone"]
     }
 }

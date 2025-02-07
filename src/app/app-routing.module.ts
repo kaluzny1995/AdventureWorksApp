@@ -21,6 +21,7 @@ import { NotSignedInGuard } from './guards/not-signed-in.guard';
 import { Error500Component } from './components/errors/error500/error500.component';
 import { PhoneNumberTypesComponent } from './components/admin-pannels/phone-number-types/phone-number-types.component';
 import { OnevalueAdminPannelsComponent } from './components/instructions/onevalue-admin-pannels/onevalue-admin-pannels.component';
+import { PersonPhonesComponent } from './components/admin-pannels/person-phones/person-phones.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -41,6 +42,7 @@ const routes: Routes = [
   {path: 'pannels/persons', component: PersonsComponent, canActivate: [AuthenticationGuard]},
   {path: 'pannels/persons/:id', component: PersonFormComponent, canActivate: [AuthenticationGuard, NonReadonlyGuard]},
   {path: 'pannels/phone-number-types', component: PhoneNumberTypesComponent, canActivate: [AuthenticationGuard]},
+  {path: 'pannels/person-phones', component: PersonPhonesComponent, canActivate: [AuthenticationGuard]},
   {path: '403', component: Error403Component},
   {path: '500', component: Error500Component},
   {path: '**', component: Error404Component}

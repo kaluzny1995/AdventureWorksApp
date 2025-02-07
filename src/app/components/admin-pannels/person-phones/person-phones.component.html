@@ -1,0 +1,144 @@
+<!-- Title and actions -->
+<div class="header-actions">
+    <div class="mat-h1">Person phones</div>
+    <div class="fill-remaining-space"></div>
+    <!--<button class="action" color="primary" mat-button (click)="this.toggleColumnsPannel()"
+    [ngClass]="this.viewParams.isColumnSetOn? 'mat-mdc-button mat-mdc-raised-button' : 'mdc-button--outlined mat-mdc-outlined-button'"
+    [matTooltip]="this.viewParams.isColumnSetOn? 'Hide column display settings' : 'Show column display settings'">
+      <span *ngIf="!this.viewParams.isColumnSetOn"><mat-icon>expand_more</mat-icon><mat-icon>view_column</mat-icon></span>
+      <span *ngIf="this.viewParams.isColumnSetOn"><mat-icon>expand_less</mat-icon><mat-icon>view_column</mat-icon></span>
+    </button>-->
+    <!--<button class="action" color="primary" mat-button (click)="this.toggleFiltersPannel()"
+    [ngClass]="this.viewParams.isFilterSetOn? 'mat-mdc-button mat-mdc-raised-button' : 'mdc-button--outlined mat-mdc-outlined-button'"
+    [matTooltip]="this.viewParams.isFilterSetOn? 'Hide filter settings' : 'Show filter settings'">
+      <span *ngIf="!this.viewParams.isFilterSetOn"><mat-icon>expand_more</mat-icon><mat-icon>filter_list</mat-icon></span>
+      <span *ngIf="this.viewParams.isFilterSetOn"><mat-icon>expand_less</mat-icon><mat-icon>filter_list</mat-icon></span>
+    </button>-->
+    <!--<div [matTooltip]="this.isReadonly? 'Create new person (N/A for readonly access mode)' : 'Create new person'">
+      <button class="action" color="basic" mat-raised-button
+      [disabled]="this.isReadonly" (click)="this.addPerson()">
+        <span class="label"><mat-icon>add</mat-icon><mat-icon>person</mat-icon></span>
+      </button>
+    </div>-->
+    <!--<div [matTooltip]="this.isReadonly? 'Change selected persons data (N/A for readonly access mode)' : !this.viewParams.selectedId? 'Change selected persons data (Select person by clicking the table row first)' : 'Change selected persons data'">
+      <button class="action" color="accent" mat-raised-button
+      [disabled]="this.isReadonly || !this.viewParams.selectedId" (click)="this.editPerson()">
+        <span class="label"><mat-icon>edit</mat-icon><mat-icon>person</mat-icon></span>
+      </button>
+    </div>-->
+    <!--<div [matTooltip]="this.isReadonly? 'Drop selected person (N/A for readonly access mode)' : !this.viewParams.selectedId? 'Drop selected person (Select person by clicking the table row first)' : 'Drop selected person'">
+      <button class="action" color="warn" mat-raised-button
+      [disabled]="this.isReadonly || !this.viewParams.selectedId" (click)="this.deletePerson()">
+        <span class="label"><mat-icon>delete</mat-icon><mat-icon>person</mat-icon></span>
+      </button>
+    </div>-->
+  </div>
+  <mat-divider class="horizontal-line"></mat-divider>
+  
+  <!-- Alert -->
+  <div class="alert" *ngIf="this.mainAlert" [ngClass]="this.mainAlert.type ? 'alert-' + this.mainAlert.type : ''">
+      <span>{{ this.mainAlert.message }}</span>
+      <span class="fill-remaining-space"></span>
+      <button mat-raised-button (click)="this.mainAlert = null">&times;</button>
+  </div>
+  
+  
+  <!-- Setting columns -->
+  <!--<div *ngIf="this.viewParams.isColumnSetOn" class="mat-elevation-z4 columns">
+    <mat-chip-set class="container">
+      <button class="action set" mat-raised-button matTooltip="Set displayed columns" (click)="this.openColumnSettingsDialog()">
+        <div class="mat-h2 action-title"><mat-icon>view_column</mat-icon>Set columns</div>
+      </button>
+      <span *ngIf="!this.displayedColumns" class="hint">(click the right icon to open column display settings dialog)</span>
+      <mat-chip *ngFor="let dc of this.displayedColumns">{{ this.columnNameMapping[dc] }}</mat-chip>
+      <span class="fill-remaining-space"></span>
+      <button class="action reset" mat-icon-button matTooltip="Restore to default columns" (click)="this.restoreColumns()"><mat-icon>refresh</mat-icon></button>
+    </mat-chip-set>
+  </div>-->
+  
+  <!-- Setting filters -->
+  <!--<div *ngIf="this.viewParams.isFilterSetOn" class="mat-elevation-z4 filters">
+    <mat-chip-set class="container">
+      <button class="action set" mat-raised-button matTooltip="Filter persons" (click)="this.openFilterFormDialog()">
+        <div class="mat-h2 action-title"><mat-icon>filter_list</mat-icon>Set filters</div>
+      </button>
+      <span *ngIf="!this.queryParams.filters" class="hint">(click the right icon to open filter dialog)</span>
+      <mat-chip *ngFor="let f of this.queryParams.filters | keyvalue">
+        {{ this.filterNameMapping[f.key] }}&nbsp;=&nbsp;'{{ f.value }}'
+      </mat-chip>
+      <span class="fill-remaining-space"></span>
+      <button *ngIf="this.queryParams.filters" class="action clear" mat-icon-button matTooltip="Clear filters" (click)="this.clearFilters()"><mat-icon>clear</mat-icon></button>
+    </mat-chip-set>
+  </div>-->
+  
+  <!-- Loading spinner -->
+  <div class="spinner-container" *ngIf="this.isLoaderUp">
+    <mat-spinner></mat-spinner>
+  </div>
+  
+  <div class="mat-elevation-z8">
+  
+    <!-- Data table -->
+    <div class="table-admin" *ngIf="this.dataSource.length > 0" 
+    [class.table-alert-on]="!!this.mainAlert"
+    [class.table-column-on]="this.viewParams.isColumnSetOn"
+    [class.table-filter-on]="this.viewParams.isFilterSetOn">
+      <div class="table-area">
+        <table mat-table matSort
+        [matSortActive]="this.queryParams.orderBy === null? '' : this.queryParams.orderBy"
+        [matSortDirection]="this.queryParams.type"
+
+        [dataSource]="this.dataSource"><!--(matSortChange)="this.order($event)"-->
+      
+          <!-- Person Column -->
+          <ng-container matColumnDef="person">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ this.columnNameMapping['person'] }}</th>
+            <td mat-cell *matCellDef="let element">{{ element[1].lastName }} {{ element[1].firstName }} {{ element[1].middleName }} {{ element[1].suffix }} <span *ngIf="element[1].title">({{ element[1].title }}) </span>[{{ element[1].personId }}]</td>
+          </ng-container>
+  
+          <!-- Phone Number Column -->
+          <ng-container matColumnDef="phoneNumber">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ this.columnNameMapping['phoneNumber'] }}</th>
+            <td mat-cell *matCellDef="let element">{{ element[0].phoneNumber }}</td>
+          </ng-container>
+  
+          <!-- Phone Number Type Column -->
+          <ng-container matColumnDef="phoneNumberType">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ this.columnNameMapping['phoneNumberType'] }}</th>
+            <td mat-cell *matCellDef="let element">{{ element[2].name }}</td>
+          </ng-container>
+  
+          <!-- Modified Date Column -->
+          <ng-container matColumnDef="modifiedDate">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ this.columnNameMapping['modifiedDate'] }}</th>
+            <td mat-cell *matCellDef="let element">{{ element[0].modifiedDate | date:'dd.MM.yyyy HH:mm:ss' }}</td>
+          </ng-container>
+      
+          <tr mat-header-row *matHeaderRowDef="this.displayedColumns; sticky: true"></tr>
+          <tr mat-row *matRowDef="let row; columns: this.displayedColumns;"
+          class="row"
+          [class.highlighted]="row.personId === this.viewParams.selectedId"
+          [class.new]="row.personId === this.viewParams.newId"
+          [class.changed]="row.personId === this.viewParams.changedId"
+          (click)="this.setSelectedId(row.personId)"></tr>
+        </table>
+      </div>
+    </div>
+  
+    <!-- Pagination -->
+    <!--<mat-paginator #paginator
+                  (page)="this.paginate($event)"
+                  [length]="this.totalCount"
+                  [pageSize]="this.queryParams.perPage"
+                  [pageSizeOptions]="this.viewParams.perPageOptions"
+                  [pageIndex]="this.queryParams.page - 1">
+    </mat-paginator>-->
+  </div>
+  
+  <!-- Alert if no results -->
+  <div class="mat-elevation-z8 no-results" *ngIf="this.dataSource.length === 0">
+    <div class="alert alert-danger">
+      <span>No results satisfying given filter criteria or data source is empty.</span>
+    </div>
+  </div>
+  

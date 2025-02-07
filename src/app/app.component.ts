@@ -25,7 +25,8 @@ export class AppComponent implements OnInit {
     {name: 'Admin pannels', subLinks: [
       {name: 'Persons', url: 'pannels/persons'},
       {name: 'Person phones', url: 'pannels/person-phones'},
-      {name: 'Phone number types', url: 'pannels/phone-number-types'}
+      {name: 'Phone number types', url: 'pannels/phone-number-types'},
+      {name: 'Person phones', url: 'pannels/person-phones'}
     ], isAuthRequired: true}
   ];
   isAuthenticated: boolean;
