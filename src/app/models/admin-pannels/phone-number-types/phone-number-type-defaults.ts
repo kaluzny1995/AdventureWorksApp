@@ -10,4 +10,8 @@ export class PhoneNumberTypeDefaults {
         this.newId = newId;
         this.perPage = perPage;
     }
+
+    public get newIdString(): string {
+        return String(this.newId);
+    }
 }

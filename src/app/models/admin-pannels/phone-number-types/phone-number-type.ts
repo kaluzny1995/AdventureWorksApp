@@ -9,6 +9,10 @@ export class PhoneNumberType {
         this.modifiedDate = modifiedDate;
     }
 
+    public get phoneNumberTypeIdString(): string {
+        return String(this.phoneNumberTypeId);
+    }
+
     public static fromAPIStructure(data: any): PhoneNumberType {
         return new PhoneNumberType(data.phone_number_type_id, data.name, new Date(data.modified_date));
     }

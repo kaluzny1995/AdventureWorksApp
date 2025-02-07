@@ -3,12 +3,22 @@ export class PersonPhone {
     public readonly phoneNumber: string;
     public readonly phoneNumberTypeId: number;
     public readonly modifiedDate: Date;
+    public readonly separator: string;
 
-    constructor(personId: number, phoneNumber: string, phoneNumberTypeId: number, modifiedDate: Date) {
+    constructor(personId: number, phoneNumber: string, phoneNumberTypeId: number, modifiedDate: Date, separator: string = "|") {
         this.personId = personId;
         this.phoneNumber = phoneNumber;
         this.phoneNumberTypeId = phoneNumberTypeId;
         this.modifiedDate = modifiedDate;
+        this.separator = separator;
+    }
+
+    public get personPhoneId(): [number, string, number] {
+        return [this.personId, this.phoneNumber, this.phoneNumberTypeId];
+    }
+
+    public get personPhoneIdString(): string {
+        return `${this.personId}${this.separator}${this.phoneNumber}${this.separator}${this.phoneNumberTypeId}`;
     }
 
     public static fromAPIStructure(data: any): PersonPhone {

@@ -105,7 +105,7 @@
           <!-- Phone Number Type Column -->
           <ng-container matColumnDef="phoneNumberType">
             <th mat-header-cell *matHeaderCellDef mat-sort-header>{{ this.columnNameMapping['phoneNumberType'] }}</th>
-            <td mat-cell *matCellDef="let element">{{ element[2].name }}</td>
+            <td mat-cell *matCellDef="let element">{{ element[2].name }} - {{ element[0].personPhoneIdString }}</td>
           </ng-container>
   
           <!-- Modified Date Column -->
@@ -117,10 +117,10 @@
           <tr mat-header-row *matHeaderRowDef="this.displayedColumns; sticky: true"></tr>
           <tr mat-row *matRowDef="let row; columns: this.displayedColumns;"
           class="row"
-          [class.highlighted]="row.personId === this.viewParams.selectedId"
-          [class.new]="row.personId === this.viewParams.newId"
-          [class.changed]="row.personId === this.viewParams.changedId"
-          (click)="this.setSelectedId(row.personId)"></tr>
+          [class.highlighted]="row[0].personPhoneIdString === this.viewParams.selectedId"
+          [class.new]="row[0].personPhoneIdString === this.viewParams.newId"
+          [class.changed]="row[0].personPhoneIdString === this.viewParams.changedId"
+          (click)="this.setSelectedId([row[0].personId, row[0].phoneNumber, row[0].phoneNumberTypeId])"></tr>
         </table>
       </div>
     </div>

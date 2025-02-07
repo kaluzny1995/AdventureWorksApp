@@ -33,6 +33,10 @@ export class Person {
                     this.rowguid = rowguid;
                     this.modifiedDate = modifiedDate;
                 }
+    
+    public get personIdString(): string {
+        return String(this.personId);
+    }
 
     public static fromAPIStructure(data: any): Person {
         return new Person(data.business_entity_id, EPersonType[data.person_type.toUpperCase() as keyof typeof EPersonType],

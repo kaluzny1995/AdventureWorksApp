@@ -151,9 +151,9 @@
         <tr mat-header-row *matHeaderRowDef="this.displayedColumns; sticky: true"></tr>
         <tr mat-row *matRowDef="let row; columns: this.displayedColumns;"
         class="row"
-        [class.highlighted]="row.personId === this.viewParams.selectedId"
-        [class.new]="row.personId === this.viewParams.newId"
-        [class.changed]="row.personId === this.viewParams.changedId"
+        [class.highlighted]="row.personIdString === this.viewParams.selectedId"
+        [class.new]="row.personIdString === this.viewParams.newId"
+        [class.changed]="row.personIdString === this.viewParams.changedId"
         (click)="this.setSelectedId(row.personId)"></tr>
       </table>
     </div>

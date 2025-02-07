@@ -175,10 +175,11 @@ export class PersonsComponent implements OnInit {
     if (this.viewParams.newId !== null) {
       this.mainAlert = new AlertMessage(EAlertType.SUCCESS, '', `New person with id: '${this.viewParams.newId}' registered successfully.`);
 
-      this._person.getPerson(this.viewParams.newId).subscribe({
+      const newId: number = this._view.str2Num(this.viewParams.newId);
+      this._person.getPerson(newId).subscribe({
         next: (result: any) => {
           const newPerson: Person = Person.fromAPIStructure(result);
-          const existingPersons = this.dataSource.filter((person: Person) => person.personId === this.viewParams.newId);
+          const existingPersons = this.dataSource.filter((person: Person) => person.personId === newId);
           if (existingPersons.length === 0) {
             this.dataSource = this._utils.prepend(newPerson, this.dataSource);
           }
@@ -329,7 +330,7 @@ export class PersonsComponent implements OnInit {
    * Sets the selected person id
   */
   setSelectedId(personId: number): void {
-    this.viewParams.selectedId = personId;
+    this.viewParams.selectedId = this._view.num2Str(personId);
     this._setLocalStorage();
   }
 
@@ -366,13 +367,14 @@ export class PersonsComponent implements OnInit {
       switch (result) {
         case EDeletionConfirmation.OK:
           /* Deleting person via API */
-          this._person.deletePerson(this.viewParams.selectedId || -1).subscribe({
+          const selId: number = this._view.str2Num(this.viewParams.selectedId);
+          this._person.deletePerson(selId).subscribe({
             next: (result: any) => {
               console.log('Person dropped successfully.', result);
-              this.mainAlert = new AlertMessage(EAlertType.SUCCESS, '', `Person with id: '${this.viewParams.selectedId}' dropped successfully.`);
+              this.mainAlert = new AlertMessage(EAlertType.SUCCESS, '', `Person with id: '${selId}' dropped successfully.`);
 
               /* Removing person from view table */
-              this.dataSource = this.dataSource.filter((person: Person) => person.personId !== this.viewParams.selectedId);
+              this.dataSource = this.dataSource.filter((person: Person) => person.personId !== selId);
               this.viewParams.selectedId = null;
               this._setLocalStorage(true);
             },

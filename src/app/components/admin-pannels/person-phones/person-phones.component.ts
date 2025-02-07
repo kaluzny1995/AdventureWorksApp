@@ -322,8 +322,8 @@ export class PersonPhonesComponent implements OnInit {
   /**
    * Sets the selected person phone id
   */
-  setSelectedId(personId: number): void {
-    this.viewParams.selectedId = personId;
+  setSelectedId(personPhoneId: [number, string, number]): void {
+    this.viewParams.selectedId = this._view.nsnTuple2Str(personPhoneId);
     this._setLocalStorage();
   }
 

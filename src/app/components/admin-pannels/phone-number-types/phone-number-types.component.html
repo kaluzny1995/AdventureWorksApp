@@ -54,12 +54,12 @@
                 <div 
                 class="item-middle item-content" 
                 matTooltip="Create new phone number type"
-                [matTooltipDisabled]="this.viewParams.selectedId === this.phoneNumberTypeDefaults.newId"
+                [matTooltipDisabled]="this.viewParams.selectedId === this.phoneNumberTypeDefaults.newIdString"
                 *ngIf="!this.isReadonly"
                 (click)="this.setSelected()">
-                    <span class="list-item-name" *ngIf="this.viewParams.selectedId !== this.phoneNumberTypeDefaults.newId">[new phone number type]</span>
+                    <span class="list-item-name" *ngIf="this.viewParams.selectedId !== this.phoneNumberTypeDefaults.newIdString">[new phone number type]</span>
                     <form 
-                    *ngIf="this.viewParams.selectedId === this.phoneNumberTypeDefaults.newId" 
+                    *ngIf="this.viewParams.selectedId === this.phoneNumberTypeDefaults.newIdString" 
                     [formGroup]="this.nameForm" 
                     (submit)="this.addOrEditPhoneNumberType(this.phoneNumberTypeDefaults.newId)">
 
@@ -90,21 +90,21 @@
         <mat-list-item 
         class="item-background"
         *ngFor="let element of this.dataSource"  
-        [class.highlighted]="element.phoneNumberTypeId === this.viewParams.selectedId"
-        [class.new]="element.phoneNumberTypeId === this.viewParams.newId"
-        [class.changed]="element.phoneNumberTypeId === this.viewParams.changedId">
+        [class.highlighted]="element.phoneNumberTypeIdString === this.viewParams.selectedId"
+        [class.new]="element.phoneNumberTypeIdString === this.viewParams.newId"
+        [class.changed]="element.phoneNumberTypeIdString === this.viewParams.changedId">
             <div class="item">
                 <div class="item-middle item-id">{{ element.phoneNumberTypeId }}</div>
                 <div class="item-middle item-gap"></div>
                 <div 
                 class="item-middle item-content" 
                 matTooltip="Change phone number type name" 
-                [matTooltipDisabled]="this.viewParams.selectedId === element.phoneNumberTypeId"
+                [matTooltipDisabled]="this.viewParams.selectedId === element.phoneNumberTypeIdString"
                 *ngIf="!this.isReadonly"
                 (click)="this.setSelected(element)">
-                    <span class="list-item-name" *ngIf="this.viewParams.selectedId !== element.phoneNumberTypeId">{{ element.name }}</span>
+                    <span class="list-item-name" *ngIf="this.viewParams.selectedId !== element.phoneNumberTypeIdString">{{ element.name }}</span>
                     <form 
-                    *ngIf="this.viewParams.selectedId === element.phoneNumberTypeId" 
+                    *ngIf="this.viewParams.selectedId === element.phoneNumberTypeIdString" 
                     [formGroup]="this.nameForm" (submit)="this.addOrEditPhoneNumberType(element.phoneNumberTypeId)">
 
                         <!--Phone number type name-->
