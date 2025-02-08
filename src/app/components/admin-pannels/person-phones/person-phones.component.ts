@@ -23,6 +23,7 @@ import { AlertMessageService } from 'src/app/services/utils/alert-message.servic
 import { UtilsService } from 'src/app/services/utils/utils.service';
 import { ColumnSettingsDialog } from '../../utils/column-settings-dialog';
 import { ColumnSettingsData } from 'src/app/models/utils/column-settings-data';
+import { AppConfigService } from 'src/app/services/utils/app-config.service';
 
 const LS_PREFIX = 'person-phone';
 
@@ -52,6 +53,7 @@ export class PersonPhonesComponent implements OnInit {
   constructor(
     private _router: Router,
     private _route: ActivatedRoute,
+    private _appConfig: AppConfigService,
     private _urlProc: UrlProcessingService,
     private _auth: AuthenticationService,
     private _view: ViewParamsService,
@@ -331,7 +333,7 @@ export class PersonPhonesComponent implements OnInit {
    * Sets the selected person phone id
   */
   setSelectedId(personPhoneId: [number, string, number]): void {
-    this.viewParams.selectedId = this._view.nsnTuple2Str(personPhoneId);
+    this.viewParams.selectedId = this._view.nsnTuple2Str(personPhoneId, this._appConfig.personPhoneDefaults.idSeparator);
     this._setLocalStorage();
   }
 
@@ -403,52 +405,52 @@ export class PersonPhonesComponent implements OnInit {
 /* For view testing purposes only */
 const TEST_DATA: [PersonPhone, Person, PhoneNumberType][] = [
   [
-    new PersonPhone(0, '000 000 000', 0, new Date('2020-01-01 00:00:00.000')),
+    new PersonPhone(0, '000 000 000', 0, new Date('2020-01-01 00:00:00.000'), '|'),
     new Person(0, EPersonType.GC, '0', null, 'Roberto', 'Murray', 'Tamburello', null, 1, '<address><street>24th Avenue</street><city>NYC</city><postalcode>34256-311</postalcode></address>', null, 'e1a2555e-0828-434b-a33b-6f38136a37de', new Date('2007-11-04 00:00:00.000')), 
     new PhoneNumberType(0, 'Home', new Date('2007-11-04 00:00:00.000'))
   ],
   [
-    new PersonPhone(1, '000 111 000', 1, new Date('2020-01-01 00:00:00.000')),
+    new PersonPhone(1, '000 111 000', 1, new Date('2020-01-01 00:00:00.000'), '|'),
     new Person(1, EPersonType.GC, '1', null, 'Rob', null, 'Walters', null, 0, null, null, 'f2d7ce06-38b3-4357-805b-f4b6b71c01ff', new Date('2007-11-28 00:00:00.000')),
     new PhoneNumberType(1, 'Flat', new Date('2002-05-24 00:00:00.000'))
   ],
   [
-    new PersonPhone(2, '123 000 789', 2, new Date('2020-01-01 00:00:00.000')),
+    new PersonPhone(2, '123 000 789', 2, new Date('2020-01-01 00:00:00.000'), '|'),
     new Person(2, EPersonType.VC, '0', null, 'Gail', null, 'Erickson', 'Ov.', 0, null, null, 'f3a3f6b4-ae3b-430c-a754-9f2231ba6fef', new Date('2007-12-30 00:00:00.000')),
     new PhoneNumberType(2, 'Office', new Date('2003-03-01 00:00:00.000'))
   ],
   [
-    new PersonPhone(3, '000 456 000', 3, new Date('2020-01-01 00:00:00.000')),
+    new PersonPhone(3, '000 456 000', 3, new Date('2020-01-01 00:00:00.000'), '|'),
     new Person(3, EPersonType.SC, '0', 'Mr.', 'Jossef', null, 'Goldberg', null, 0, '<address><street>5th Avenue</street><city>Chigaco</city><postalcode>00110-012</postalcode></address>', '<demographics><gender>male</gender><age>29</age></demographics>', '0dea28fd-effe-482a-afd3-b7e8f199d56f', new Date('2013-12-16 00:00:00.000')),
     new PhoneNumberType(3, 'Office - emergency', new Date('2005-07-01 00:00:00.000'))
   ],
   [
-    new PersonPhone(4, '21 332 09 02', 4, new Date('2020-01-01 00:00:00.000')),
+    new PersonPhone(4, '21 332 09 02', 4, new Date('2020-01-01 00:00:00.000'), '|'),
     new Person(4, EPersonType.GC, '2', null, 'Dylan', 'J.', 'Miller', null, 1, null, null, 'c45e8ab8-01be-4b76-b215-820c8368181a', new Date('2009-02-01 00:00:00.000')),
     new PhoneNumberType(4, 'Mobile', new Date('2007-12-20 00:00:00.000'))
   ],
   [
-    new PersonPhone(5, '634982102', 5, new Date('2020-01-01 00:00:00.000')),
+    new PersonPhone(5, '634982102', 5, new Date('2020-01-01 00:00:00.000'), '|'),
     new Person(5, EPersonType.SC, '1', 'Ms.', 'Diane', 'Alice', 'Margheim', null, 0, null, '<demographics><gender>female</gender><age>24</age></demographics>', 'a948e590-4a56-45a9-bc9a-160a1cc9d990', new Date('2008-12-22 00:00:00.000')),
     new PhoneNumberType(5, 'Mobile - service', new Date('2010-07-01 00:00:00.000'))
   ],
   [
-    new PersonPhone(6, '634982102', 6, new Date('2020-01-01 00:00:00.000')),
+    new PersonPhone(6, '634982102', 6, new Date('2020-01-01 00:00:00.000'), '|'),
     new Person(6, EPersonType.SP, '1', null, 'Gigi', null, 'Matthew', null, 1, null, null, '5fc28c0e-6d36-4252-9846-05caa0b1f6c5', new Date('2009-01-09 00:00:00.000')),
     new PhoneNumberType(6, 'Mobile - emergency', new Date('2009-01-01 00:00:00.000'))
   ],
   [
-    new PersonPhone(7, '634982102', 7, new Date('2020-01-01 00:00:00.000')),
+    new PersonPhone(7, '634982102', 7, new Date('2020-01-01 00:00:00.000'), '|'),
     new Person(7, EPersonType.IN, '1', 'Mr.', 'Michael', 'Jr.', 'Raheem', 'ex.', 0, null, null, 'ca2c740e-75b2-420c-9d4b-e3cbc6609604', new Date('2009-04-26 00:00:00.000')),
     new PhoneNumberType(7, 'Travel - car, bluetooth', new Date('2021-03-01 00:00:00.000'))
   ],
   [
-    new PersonPhone(8, '000 000 000', 8, new Date('2020-01-01 00:00:00.000')),
+    new PersonPhone(8, '000 000 000', 8, new Date('2020-01-01 00:00:00.000'), '|'),
     new Person(8, EPersonType.GC, '2', null, 'Ovidiu', 'M.', 'Cracium', null, 2, null, null, 'd2cc2577-ef6b-4408-bd8c-747337fe5645', new Date('2010-11-28 00:00:00.000')),
     new PhoneNumberType(8, 'Emergency 2', new Date('2020-03-04 00:00:00.000'))
   ],
   [
-    new PersonPhone(9, '999 999 999', 9, new Date('2020-01-01 00:00:00.000')),
+    new PersonPhone(9, '999 999 999', 9, new Date('2020-01-01 00:00:00.000'), '|'),
     new Person(9, EPersonType.SC, '0', null, 'Thierry', null, 'D\'Hers', null, 1, null, null, 'fa263c7f-600d-4e89-8dcd-0978f3530f5f', new Date('2007-12-04 00:00:00.000')),
     new PhoneNumberType(9, 'Emergency 3', new Date('2020-10-04 00:00:00.000'))
   ],

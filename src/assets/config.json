@@ -102,6 +102,7 @@
             "perPage": 100
         },
         "personPhone": {
+            "idSeparator": "|",
             "availableColumns": ["person", "phoneNumber", "phoneNumberType", "modifiedDate"],
             "availableColumnNames": ["Person [ID]", "Phone\u00a0number", "Phone\u00a0number\u00a0type", "Last\u00a0modified"],
             "displayedIndices": [0, 1, 2],

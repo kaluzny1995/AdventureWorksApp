@@ -135,6 +135,7 @@ export class AppConfigService {
   /*Person phone defaults config*/
   get personPhoneDefaults(): PersonPhoneDefaults {
     return new PersonPhoneDefaults(
+      this._appConfig.defaults.personPhone.idSeparator,
       this._appConfig.defaults.personPhone.availableColumns,
       this._appConfig.defaults.personPhone.availableColumnNames,
       this._appConfig.defaults.personPhone.displayedIndices,

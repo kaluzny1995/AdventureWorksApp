@@ -5,7 +5,7 @@ export class PersonPhone {
     public readonly modifiedDate: Date;
     public readonly separator: string;
 
-    constructor(personId: number, phoneNumber: string, phoneNumberTypeId: number, modifiedDate: Date, separator: string = "|") {
+    constructor(personId: number, phoneNumber: string, phoneNumberTypeId: number, modifiedDate: Date, separator: string) {
         this.personId = personId;
         this.phoneNumber = phoneNumber;
         this.phoneNumberTypeId = phoneNumberTypeId;
@@ -21,8 +21,8 @@ export class PersonPhone {
         return `${this.personId}${this.separator}${this.phoneNumber}${this.separator}${this.phoneNumberTypeId}`;
     }
 
-    public static fromAPIStructure(data: any): PersonPhone {
-        return new PersonPhone(data.business_entity_id, data.phone_number, data.phone_number_type_id, new Date(data.modified_date))
+    public static fromAPIStructure(data: any, separator: string): PersonPhone {
+        return new PersonPhone(data.business_entity_id, data.phone_number, data.phone_number_type_id, new Date(data.modified_date), separator)
     }
 
     public toFormStructure(): any {

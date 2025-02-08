@@ -140,7 +140,7 @@ export class ViewParamsService {
    * Converts string parameter value to [number, string, number] tuple
    * Applicable for: person phones
   */
-  str2NSNTuple(param: string | null, separator: string = "|"): [number, string, number] {
+  str2NSNTuple(param: string | null, separator: string): [number, string, number] {
     const params: string[] = param !== null? param.split(separator) : ['-1', ' ', '-1'];
     return [+params[0], params[1], +params[2]];
   }
@@ -149,7 +149,7 @@ export class ViewParamsService {
    * Converts [number, string, number] tuple parameter value to string
    * Applicable for: person phones
   */
-  nsnTuple2Str(param: [number, string, number], separator: string = "|"): string {
+  nsnTuple2Str(param: [number, string, number], separator: string): string {
     return `${param[0]}${separator}${param[1]}${separator}${param[2]}`;
   }
 }
