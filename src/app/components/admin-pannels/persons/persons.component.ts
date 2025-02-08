@@ -15,7 +15,6 @@ import { ColumnDisplayingService } from 'src/app/services/url/column-displaying.
 import { FilterParamsService } from 'src/app/services/url/filter-params.service';
 import { QueryParamsService } from 'src/app/services/url/query-params.service';
 import { PersonsFilterFormDialog } from './persons-filter-form-dialog';
-import { PersonsColumnSettingsDialog } from './persons-column-settings-dialog';
 import { AuthenticationService } from 'src/app/services/awfapi-user/authentication.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UtilsService } from 'src/app/services/utils/utils.service';
@@ -29,6 +28,8 @@ import { EDeletionConfirmation } from 'src/app/models/utils/e-deletion-confirmat
 import { DeletionConfirmationData } from 'src/app/models/utils/deletion-confirmation-data';
 import { AlertMessageService } from 'src/app/services/utils/alert-message.service';
 import { UrlProcessingService } from 'src/app/services/url/url-processing.service';
+import { ColumnSettingsDialog } from '../../utils/column-settings-dialog';
+import { ColumnSettingsData } from 'src/app/models/utils/column-settings-data';
 
 const LS_PREFIX = 'person';
 
@@ -217,8 +218,14 @@ export class PersonsComponent implements OnInit {
    * Opens column display setting-up dialog
   */
   openColumnSettingsDialog(): void {
-    const dialogRef = this._columnDialog.open(PersonsColumnSettingsDialog, {
-      data: this.displayedColumns.slice(),
+    const dialogRef = this._columnDialog.open(ColumnSettingsDialog, {
+      data: new ColumnSettingsData(
+        'Person',
+        this.displayedColumns.slice(),
+        this.personDefaults.availableColumns,
+        this._utils.dictFromArrays(this.personDefaults.availableColumns, this.personDefaults.availableColumnNames),
+        this.personDefaults.displayedIndices
+      ),
       width: '80%',
       position: {top: '200px'}
     });

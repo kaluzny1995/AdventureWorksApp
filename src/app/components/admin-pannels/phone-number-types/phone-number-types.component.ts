@@ -9,7 +9,7 @@ import { FilterNameError, FilterValueError, OptionalParamError } from 'src/app/a
 import { EOrderType } from 'src/app/models/admin-pannels/common/e-order-type';
 import { QueryParams } from 'src/app/models/admin-pannels/common/query-params';
 import { ViewParams } from 'src/app/models/admin-pannels/common/view-params';
-import { NameFilterParam } from 'src/app/models/admin-pannels/phone-number-types/name-filter-param';
+import { NameFilterParam } from 'src/app/models/admin-pannels/common/name-filter-param';
 import { PhoneNumberType, PhoneNumberTypeInput } from 'src/app/models/admin-pannels/phone-number-types/phone-number-type';
 import { PhoneNumberTypeDefaults } from 'src/app/models/admin-pannels/phone-number-types/phone-number-type-defaults';
 import { AlertMessage } from 'src/app/models/utils/alert-message';

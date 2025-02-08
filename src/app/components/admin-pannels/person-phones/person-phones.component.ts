@@ -21,6 +21,8 @@ import { UrlProcessingService } from 'src/app/services/url/url-processing.servic
 import { ViewParamsService } from 'src/app/services/url/view-params.service';
 import { AlertMessageService } from 'src/app/services/utils/alert-message.service';
 import { UtilsService } from 'src/app/services/utils/utils.service';
+import { ColumnSettingsDialog } from '../../utils/column-settings-dialog';
+import { ColumnSettingsData } from 'src/app/models/utils/column-settings-data';
 
 const LS_PREFIX = 'person-phone';
 
@@ -193,25 +195,31 @@ export class PersonPhonesComponent implements OnInit {
   /**
    * Toggles visibility of column display pannel
   */
-  /*toggleColumnsPannel(): void {
-    this.viewParams.isColumnSetOn=!this.viewParams.isColumnSetOn;
+  toggleColumnsPannel(): void {
+    this.viewParams.isColumnSetOn = !this.viewParams.isColumnSetOn;
     this._setLocalStorage();
-  }*/
+  }
 
   /**
    * Restores displayed columns to default settings
   */
-  /*restoreColumns(): void {
-    this.displayedColumns = this._cols.displayedColumns(this.personDefaults.displayedIndices, this.personDefaults.availableColumns);
+  restoreColumns(): void {
+    this.displayedColumns = this._cols.displayedColumns(this.personPhoneDefaults.displayedIndices, this.personPhoneDefaults.availableColumns);
     this._setLocalStorage()
-  }*/
+  }
 
   /**
    * Opens column display setting-up dialog
   */
-  /*openColumnSettingsDialog(): void {
-    const dialogRef = this._columnDialog.open(PersonsColumnSettingsDialog, {
-      data: this.displayedColumns.slice(),
+  openColumnSettingsDialog(): void {
+    const dialogRef = this._columnDialog.open(ColumnSettingsDialog, {
+      data: new ColumnSettingsData(
+        'Person phone',
+        this.displayedColumns.slice(),
+        this.personPhoneDefaults.availableColumns,
+        this._utils.dictFromArrays(this.personPhoneDefaults.availableColumns, this.personPhoneDefaults.availableColumnNames),
+        this.personPhoneDefaults.displayedIndices
+      ),
       width: '80%',
       position: {top: '200px'}
     });
@@ -222,7 +230,7 @@ export class PersonPhonesComponent implements OnInit {
         this._setLocalStorage()
       }
     });
-  }/*
+  }
 
   /**
    * Toggles visibility of filters pannel
