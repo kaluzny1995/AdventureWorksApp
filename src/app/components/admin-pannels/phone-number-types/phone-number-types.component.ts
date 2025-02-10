@@ -9,7 +9,7 @@ import { FilterNameError, FilterValueError, OptionalParamError } from 'src/app/a
 import { EOrderType } from 'src/app/models/admin-pannels/common/e-order-type';
 import { QueryParams } from 'src/app/models/admin-pannels/common/query-params';
 import { ViewParams } from 'src/app/models/admin-pannels/common/view-params';
-import { NameFilterParam } from 'src/app/models/admin-pannels/phone-number-types/name-filter-param';
+import { NameFilterParam } from 'src/app/models/admin-pannels/common/name-filter-param';
 import { PhoneNumberType, PhoneNumberTypeInput } from 'src/app/models/admin-pannels/phone-number-types/phone-number-type';
 import { PhoneNumberTypeDefaults } from 'src/app/models/admin-pannels/phone-number-types/phone-number-type-defaults';
 import { AlertMessage } from 'src/app/models/utils/alert-message';
@@ -219,20 +219,21 @@ export class PhoneNumberTypesComponent implements OnInit {
   setSelected(phoneNumberType?: PhoneNumberType): void {
     /* Set up the name form value */
     if (!this._unsetFlag) { // prevent from setting id again after unsetting
+      const selId: number = this._view.str2Num(this.viewParams.selectedId);
       if (phoneNumberType === undefined) {
-        if (this.viewParams.selectedId !== this.phoneNumberTypeDefaults.newId) { // add phone number type mode
+        if (selId !== this.phoneNumberTypeDefaults.newId) { // add phone number type mode
           this.nameForm.patchValue({
             name: ''
           });
         }
-        this.viewParams.selectedId = this.phoneNumberTypeDefaults.newId;
+        this.viewParams.selectedId = this._view.num2Str(this.phoneNumberTypeDefaults.newId);
       } else {
-        if (phoneNumberType.phoneNumberTypeId !== this.viewParams.selectedId) { // edit phone number type mode
+        if (phoneNumberType.phoneNumberTypeId !== selId) { // edit phone number type mode
           this.nameForm.patchValue({
             name: phoneNumberType.name
           });
         }
-        this.viewParams.selectedId = phoneNumberType.phoneNumberTypeId;
+        this.viewParams.selectedId = this._view.num2Str(phoneNumberType.phoneNumberTypeId);
       }
       this._setLocalStorage();
     } else {
@@ -299,8 +300,8 @@ export class PhoneNumberTypesComponent implements OnInit {
           next: (result: any) => {
             console.log('Phone number type registered successfully.', result);
             const newPhoneNumerType: PhoneNumberType = PhoneNumberType.fromAPIStructure(result);
-            this._local.setItem('newId', `${newPhoneNumerType.phoneNumberTypeId}`, LS_PREFIX);
-            this.viewParams.newId = newPhoneNumerType.phoneNumberTypeId;
+            this._local.setItem('newId', this._view.num2Str(newPhoneNumerType.phoneNumberTypeId), LS_PREFIX);
+            this.viewParams.newId = this._view.num2Str(newPhoneNumerType.phoneNumberTypeId);
             this.dataSource = this._utils.prepend(newPhoneNumerType, this.dataSource);
             this.totalCount += 1;
 
@@ -319,8 +320,8 @@ export class PhoneNumberTypesComponent implements OnInit {
           next: (result: any) => {
             console.log('Phone number types data changed successfully.', result);
             const updatedPhoneNumberType: PhoneNumberType = PhoneNumberType.fromAPIStructure(result);
-            this._local.setItem('chId', `${updatedPhoneNumberType.phoneNumberTypeId}`, LS_PREFIX);
-            this.viewParams.changedId = updatedPhoneNumberType.phoneNumberTypeId;
+            this._local.setItem('chId', this._view.num2Str(updatedPhoneNumberType.phoneNumberTypeId), LS_PREFIX);
+            this.viewParams.changedId = this._view.num2Str(updatedPhoneNumberType.phoneNumberTypeId);
             this.dataSource = this.dataSource.map(pnt => {
               return pnt.phoneNumberTypeId === updatedPhoneNumberType.phoneNumberTypeId ? updatedPhoneNumberType : pnt;
             });
@@ -370,8 +371,17 @@ export class PhoneNumberTypesComponent implements OnInit {
               this._setLocalStorage();
             },
             error: (error: HttpErrorResponse) => {
-              console.error('Error while deleting phone number type.', error);
-              this.mainAlert = this._alert.statusAlertMesssage(error.status);
+              switch (error.status) {
+                case 400:
+                  const errorMessage: string = error.error.detail.title = 'Cannot drop phone number type. Existing person phone dependent on current phone number type.';
+                  console.log(errorMessage);
+                  this.mainAlert = new AlertMessage(EAlertType.INFO, 'info', errorMessage);
+                  break;
+                default:
+                  console.error('Error while deleting phone number type.', error);
+                  this.mainAlert = this._alert.statusAlertMesssage(error.status);
+                  break;
+                }
             }
           });
           break;

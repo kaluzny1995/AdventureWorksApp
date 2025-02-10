@@ -36,6 +36,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CountdownModule } from 'ngx-countdown';
 import { NgScrollbarModule } from 'ngx-scrollbar';
 import { NgxMatSelectSearchModule } from 'ngx-mat-select-search';
+import { NgxMaskModule } from 'ngx-mask';
 
 
 const MaterialComponents = [
@@ -56,6 +57,11 @@ const MaterialComponents = [
   MatSidenavModule,
   MatFormFieldModule,
   MatInputModule,
+
+  NgxMaskModule.forRoot({
+    showMaskTyped: true
+  }),
+  
   MatAutocompleteModule,
   MatSelectModule,
   MatDatepickerModule,

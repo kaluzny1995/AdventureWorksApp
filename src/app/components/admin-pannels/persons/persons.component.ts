@@ -8,14 +8,13 @@ import { EPersonType } from 'src/app/models/admin-pannels/persons/e-person-type'
 import { Person } from 'src/app/models/admin-pannels/persons/person';
 import { PersonDefaults } from 'src/app/models/admin-pannels/persons/person-defaults';
 import { AlertMessage } from 'src/app/models/utils/alert-message';
-import { PersonFilterParams } from 'src/app/models/admin-pannels/common/person-filter-params';
+import { PersonFilterParams } from 'src/app/models/admin-pannels/persons/person-filter-params';
 import { QueryParams } from 'src/app/models/admin-pannels/common/query-params';
 import { PersonService } from 'src/app/services/admin-pannels/person.service';
 import { ColumnDisplayingService } from 'src/app/services/url/column-displaying.service';
 import { FilterParamsService } from 'src/app/services/url/filter-params.service';
 import { QueryParamsService } from 'src/app/services/url/query-params.service';
 import { PersonsFilterFormDialog } from './persons-filter-form-dialog';
-import { PersonsColumnSettingsDialog } from './persons-column-settings-dialog';
 import { AuthenticationService } from 'src/app/services/awfapi-user/authentication.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { UtilsService } from 'src/app/services/utils/utils.service';
@@ -29,6 +28,8 @@ import { EDeletionConfirmation } from 'src/app/models/utils/e-deletion-confirmat
 import { DeletionConfirmationData } from 'src/app/models/utils/deletion-confirmation-data';
 import { AlertMessageService } from 'src/app/services/utils/alert-message.service';
 import { UrlProcessingService } from 'src/app/services/url/url-processing.service';
+import { ColumnSettingsDialog } from '../../utils/column-settings-dialog';
+import { ColumnSettingsData } from 'src/app/models/utils/column-settings-data';
 
 const LS_PREFIX = 'person';
 
@@ -175,10 +176,11 @@ export class PersonsComponent implements OnInit {
     if (this.viewParams.newId !== null) {
       this.mainAlert = new AlertMessage(EAlertType.SUCCESS, '', `New person with id: '${this.viewParams.newId}' registered successfully.`);
 
-      this._person.getPerson(this.viewParams.newId).subscribe({
+      const newId: number = this._view.str2Num(this.viewParams.newId);
+      this._person.getPerson(newId).subscribe({
         next: (result: any) => {
           const newPerson: Person = Person.fromAPIStructure(result);
-          const existingPersons = this.dataSource.filter((person: Person) => person.personId === this.viewParams.newId);
+          const existingPersons = this.dataSource.filter((person: Person) => person.personId === newId);
           if (existingPersons.length === 0) {
             this.dataSource = this._utils.prepend(newPerson, this.dataSource);
           }
@@ -216,8 +218,14 @@ export class PersonsComponent implements OnInit {
    * Opens column display setting-up dialog
   */
   openColumnSettingsDialog(): void {
-    const dialogRef = this._columnDialog.open(PersonsColumnSettingsDialog, {
-      data: this.displayedColumns.slice(),
+    const dialogRef = this._columnDialog.open(ColumnSettingsDialog, {
+      data: new ColumnSettingsData(
+        'Person',
+        this.displayedColumns.slice(),
+        this.personDefaults.availableColumns,
+        this._utils.dictFromArrays(this.personDefaults.availableColumns, this.personDefaults.availableColumnNames),
+        this.personDefaults.displayedIndices
+      ),
       width: '80%',
       position: {top: '200px'}
     });
@@ -329,7 +337,7 @@ export class PersonsComponent implements OnInit {
    * Sets the selected person id
   */
   setSelectedId(personId: number): void {
-    this.viewParams.selectedId = personId;
+    this.viewParams.selectedId = this._view.num2Str(personId);
     this._setLocalStorage();
   }
 
@@ -366,19 +374,29 @@ export class PersonsComponent implements OnInit {
       switch (result) {
         case EDeletionConfirmation.OK:
           /* Deleting person via API */
-          this._person.deletePerson(this.viewParams.selectedId || -1).subscribe({
+          const selId: number = this._view.str2Num(this.viewParams.selectedId);
+          this._person.deletePerson(selId).subscribe({
             next: (result: any) => {
               console.log('Person dropped successfully.', result);
-              this.mainAlert = new AlertMessage(EAlertType.SUCCESS, '', `Person with id: '${this.viewParams.selectedId}' dropped successfully.`);
+              this.mainAlert = new AlertMessage(EAlertType.SUCCESS, '', `Person with id: '${selId}' dropped successfully.`);
 
               /* Removing person from view table */
-              this.dataSource = this.dataSource.filter((person: Person) => person.personId !== this.viewParams.selectedId);
+              this.dataSource = this.dataSource.filter((person: Person) => person.personId !== selId);
               this.viewParams.selectedId = null;
               this._setLocalStorage(true);
             },
             error: (error: HttpErrorResponse) => {
-              console.error('Error while deleting person.', error);
-              this.mainAlert = this._alert.statusAlertMesssage(error.status);
+              switch (error.status) {
+              case 400:
+                const errorMessage: string = error.error.detail.title = 'Cannot drop person. Existing person phone dependent on current person.';
+                console.log(errorMessage);
+                this.mainAlert = new AlertMessage(EAlertType.INFO, 'info', errorMessage);
+                break;
+              default:
+                console.error('Error while deleting person.', error);
+                this.mainAlert = this._alert.statusAlertMesssage(error.status);
+                break;
+              }
             }
           });
           break;

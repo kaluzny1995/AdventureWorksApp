@@ -1,5 +1,5 @@
 <form [formGroup]="this.form" (submit)="this.setUp()">
-    <div class="mat-h1" mat-dialog-title>Person columns display settings</div>
+    <div class="mat-h1" mat-dialog-title>{{ this.entityName }} columns display settings</div>
     <div mat-dialog-content class="column-dialog">
       <div class="mat-body-strong">Set up the column displaying order</div>
       <mat-chip-set cdkDropList cdkDropListOrientation="horizontal" (cdkDropListDropped)="this.move($event)">

@@ -5,6 +5,7 @@ import { PersonDefaults } from '../../models/admin-pannels/persons/person-defaul
 import { ViewParams } from '../../models/admin-pannels/common/view-params';
 import { CountdownTimerSettings } from 'src/app/models/utils/countdown-timer-settings';
 import { PhoneNumberTypeDefaults } from 'src/app/models/admin-pannels/phone-number-types/phone-number-type-defaults';
+import { PersonPhoneDefaults } from 'src/app/models/admin-pannels/person-phones/person-phone-defaults';
 
 @Injectable({
   providedIn: 'root'
@@ -129,6 +130,18 @@ export class AppConfigService {
       this._appConfig.defaults.phoneNumberType.newId,
       this._appConfig.defaults.phoneNumberType.perPage
     );
+  }
+
+  /*Person phone defaults config*/
+  get personPhoneDefaults(): PersonPhoneDefaults {
+    return new PersonPhoneDefaults(
+      this._appConfig.defaults.personPhone.idSeparator,
+      this._appConfig.defaults.personPhone.availableColumns,
+      this._appConfig.defaults.personPhone.availableColumnNames,
+      this._appConfig.defaults.personPhone.displayedIndices,
+      this._appConfig.defaults.personPhone.availableFilters,
+      this._appConfig.defaults.personPhone.availableFilterNames
+    )
   }
 
   /*Prefixes*/

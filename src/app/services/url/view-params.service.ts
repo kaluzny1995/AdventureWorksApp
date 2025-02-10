@@ -46,9 +46,9 @@ export class ViewParamsService {
     const vP: ViewParams = this.defaults();
     let colSet: boolean = vP.isColumnSetOn;
     let filSet: boolean = vP.isFilterSetOn;
-    let selId: number | null = vP.selectedId;
-    let newId: number | null = vP.newId;
-    let chId: number | null = vP.changedId;
+    let selId: string | null = vP.selectedId;
+    let newId: string | null = vP.newId;
+    let chId: string | null = vP.changedId;
 
     if (dict[`${pre}colSet`] !== undefined && Boolean(dict[`${pre}colSet`]) !== vP.isColumnSetOn) {
       colSet = Boolean(dict[`${pre}colSet`]);
@@ -57,14 +57,14 @@ export class ViewParamsService {
       filSet = Boolean(dict[`${pre}filSet`]);
     }
     // perPageOptions not displayed in URL string
-    if (dict[`${pre}selId`] !== undefined && +dict[`${pre}selId`] !== vP.selectedId) {
-      selId = +dict[`${pre}selId`];
+    if (dict[`${pre}selId`] !== undefined && dict[`${pre}selId`] !== vP.selectedId) {
+      selId = dict[`${pre}selId`];
     }
-    if (dict[`${pre}newId`] !== undefined && +dict[`${pre}newId`] !== vP.newId) {
-      newId = +dict[`${pre}newId`];
+    if (dict[`${pre}newId`] !== undefined && dict[`${pre}newId`] !== vP.newId) {
+      newId = dict[`${pre}newId`];
     }
-    if (dict[`${pre}chId`] !== undefined && +dict[`${pre}chId`] !== vP.changedId) {
-      chId = +dict[`${pre}chId`];
+    if (dict[`${pre}chId`] !== undefined && dict[`${pre}chId`] !== vP.changedId) {
+      chId = dict[`${pre}chId`];
     }
 
     return new ViewParams(colSet, filSet, vP.perPageOptions, selId, newId, chId);
@@ -118,5 +118,38 @@ export class ViewParamsService {
   toLocalStorage(viewParams: ViewParams, prefix: string, isCleared: boolean): void {
     const dict: {[key: string]: any} = this.necessaryOptParams(viewParams);
     this._local.setAllWithPrefix(dict, prefix, isCleared);
+  }
+
+  /**
+   * Converts string parameter value to number
+   * Applicable for: persons, phone number types
+  */
+  str2Num(param: string | null): number {
+    return param !== null? +param : -1;
+  }
+
+  /**
+   * Converts number parameter value to string
+   * Applicable for: persons, phone number types
+  */
+  num2Str(param: number): string {
+    return String(param);
+  }
+
+  /**
+   * Converts string parameter value to [number, string, number] tuple
+   * Applicable for: person phones
+  */
+  str2NSNTuple(param: string | null, separator: string): [number, string, number] {
+    const params: string[] = param !== null? param.split(separator) : ['-1', ' ', '-1'];
+    return [+params[0], params[1], +params[2]];
+  }
+
+  /**
+   * Converts [number, string, number] tuple parameter value to string
+   * Applicable for: person phones
+  */
+  nsnTuple2Str(param: [number, string, number], separator: string): string {
+    return `${param[0]}${separator}${param[1]}${separator}${param[2]}`;
   }
 }

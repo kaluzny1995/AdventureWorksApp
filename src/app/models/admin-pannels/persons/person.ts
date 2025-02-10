@@ -1,3 +1,4 @@
+import { MSListItem } from "../../utils/types";
 import { EPersonType } from "./e-person-type";
 
 export class Person {
@@ -33,6 +34,10 @@ export class Person {
                     this.rowguid = rowguid;
                     this.modifiedDate = modifiedDate;
                 }
+    
+    public get personIdString(): string {
+        return String(this.personId);
+    }
 
     public static fromAPIStructure(data: any): Person {
         return new Person(data.business_entity_id, EPersonType[data.person_type.toUpperCase() as keyof typeof EPersonType],
@@ -40,6 +45,13 @@ export class Person {
                           data.first_name, data.middle_name, data.last_name, data.suffix, 
                           data.email_promotion, data.additional_contact_info, data.demographics,
                           data.rowguid, new Date(data.modified_date));
+    }
+
+    public toMSListItem(): MSListItem {
+        return {
+            id: this.personId,
+            itemName: `${this.lastName} ${this.firstName}${this.middleName !== null? ` ${this.middleName}` : ''}${this.suffix !== null? ` ${this.suffix}` : ''}${this.title !== null? ` (${this.title})` : ''} - [${this.personId}]`
+        };
     }
 
     public toFormStructure(): any {

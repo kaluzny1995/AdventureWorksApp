@@ -9,13 +9,12 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatSelectChange, MatSelectModule } from "@angular/material/select";
-import { PersonService } from "src/app/services/admin-pannels/person.service";
 import { ColumnDisplayingService } from "src/app/services/url/column-displaying.service";
-import { UtilsService } from "src/app/services/utils/utils.service";
+import { ColumnSettingsData } from "src/app/models/utils/column-settings-data";
 
 @Component({
-  selector: 'persons-column-settings-dialog',
-  templateUrl: './persons-column-settings-dialog.html',
+  selector: 'column-settings-dialog',
+  templateUrl: './column-settings-dialog.html',
   standalone: true,
   imports: [
     CommonModule,
@@ -32,21 +31,21 @@ import { UtilsService } from "src/app/services/utils/utils.service";
     CdkDrag
   ],
 })
-export class PersonsColumnSettingsDialog implements OnInit {
+export class ColumnSettingsDialog implements OnInit {
   form: FormGroup;
   availableColumnsControl: FormControl;
 
+  entityName: string;
   selectedNames: string[];
   availableColumns: string[];
   columnNameMapping: {[key: string]: string};
+  defaultIndices: number[];
 
   constructor(
-    private _person: PersonService,
     private _cols: ColumnDisplayingService,
     private _fb: FormBuilder,
-    private _utils: UtilsService,
-    private _dialogRef: MatDialogRef<PersonsColumnSettingsDialog>,
-    @Inject(MAT_DIALOG_DATA) public data: string[]
+    private _dialogRef: MatDialogRef<ColumnSettingsDialog>,
+    @Inject(MAT_DIALOG_DATA) public data: ColumnSettingsData
   ) { }
 
   ngOnInit(): void {
@@ -55,9 +54,11 @@ export class PersonsColumnSettingsDialog implements OnInit {
       availableColumnsControl: this.availableColumnsControl
     });
 
-    this.selectedNames = this.data;
-    this.availableColumns = this._person.defaults().availableColumns;
-    this.columnNameMapping = this._utils.dictFromArrays(this.availableColumns, this._person.defaults().availableColumnNames);
+    this.entityName = this.data.entityName;
+    this.selectedNames = this.data.selectedNames;
+    this.availableColumns = this.data.availableColumns;
+    this.columnNameMapping = this.data.columnNameMapping;
+    this.defaultIndices = this.data.defaultIndices;
   }
 
   insert(event: MatSelectChange): void {
@@ -80,7 +81,7 @@ export class PersonsColumnSettingsDialog implements OnInit {
   }
 
   restore(): void {
-    this.selectedNames = this._cols.displayedColumns(this._person.defaults().displayedIndices, this.availableColumns);
+    this.selectedNames = this._cols.displayedColumns(this.defaultIndices, this.availableColumns);
   }
 
   setUp(): void {

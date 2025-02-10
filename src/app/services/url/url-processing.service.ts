@@ -32,7 +32,7 @@ export class UrlProcessingService {
     const regexp: RegExp = /\[(.*)\]/;
     const occurrences: RegExpMatchArray | null  = urlString.match(regexp);
     if (occurrences !== null) {
-      const occurrence: string  = encodeURIComponent(this.bracket(occurrences[1]));
+      const occurrence: string  = this.encode(this.bracket(occurrences[1]));
       return urlString.replace(regexp, occurrence)
     }
     return urlString;
@@ -87,7 +87,7 @@ export class UrlProcessingService {
       let paramDict: {[key: string]: string} = {};
       for (const ps of paramString.split(';')) {
         const pv: string[] = ps.split('=');
-        paramDict[pv[0]] = pv[1];
+        paramDict[pv[0]] = this.decode(pv[1]);
       }
       return paramDict;
     }

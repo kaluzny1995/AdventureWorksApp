@@ -13,6 +13,7 @@ After setting up Node.js install [Angular](https://angular.io/guide/setup-local)
 |---------------------------------------------------------------------------|-----------------------------------|-------------------------------------|
 | [ng-scrollbar](https://www.npmjs.com/package/ngx-scrollbar)               | npm i ngx-scrollbar@11.0.0        | Customized floating scrollbar       |
 | [XML-formatter](https://www.npmjs.com/package/xml-formatter)              | npm i xml-formatter@3.6.2         | Pretty formatted XML documents      |
+| [Angular 2 Input Mask](https://www.npmjs.com/package/angular2-text-mask)  | npm i angular2-text-mask@14.3.3   | Text input masks (date, phone, etc.)|
 | [NgxMatSelectSearch](https://www.npmjs.com/package/ngx-mat-select-search) | npm i ngx-mat-select-search@7.0.5 | Select dropdown list with searching |
 | [ngx-countdown](https://www.npmjs.com/package/ngx-countdown)              | npm i ngx-countdown@15.0.0        | Countdown timer                     |
 

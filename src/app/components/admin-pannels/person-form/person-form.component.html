@@ -26,7 +26,7 @@
 <form class="form form-admin" [formGroup]="this.form" (ngSubmit)="this.submit()">
     <mat-card>
         <mat-card-header *ngIf="this.formMode === EFormMode.ADD">New person registration</mat-card-header>
-        <mat-card-header *ngIf="this.formMode === EFormMode.EDIT">Changing persons '{{ this.personsFullName }} ({{ this.viewId }})' data</mat-card-header>
+        <mat-card-header class="long-title" *ngIf="this.formMode === EFormMode.EDIT">Changing persons '{{ this.personsFullName }} ({{ this.viewId }})' data</mat-card-header>
         <mat-divider class="horizontal-line"></mat-divider>
 
         <mat-card-content>

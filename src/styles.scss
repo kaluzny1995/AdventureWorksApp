@@ -555,6 +555,10 @@ mat-list {
 .form-admin {
     padding-bottom: 30px;
 
+    .long-title {
+        font-size: medium;
+    }
+
     .hint-header {
         display: flex;
         justify-content: flex-end;
