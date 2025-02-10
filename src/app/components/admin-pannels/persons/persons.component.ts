@@ -386,8 +386,17 @@ export class PersonsComponent implements OnInit {
               this._setLocalStorage(true);
             },
             error: (error: HttpErrorResponse) => {
-              console.error('Error while deleting person.', error);
-              this.mainAlert = this._alert.statusAlertMesssage(error.status);
+              switch (error.status) {
+              case 400:
+                const errorMessage: string = error.error.detail.title = 'Cannot drop person. Existing person phone dependent on current person.';
+                console.log(errorMessage);
+                this.mainAlert = new AlertMessage(EAlertType.INFO, 'info', errorMessage);
+                break;
+              default:
+                console.error('Error while deleting person.', error);
+                this.mainAlert = this._alert.statusAlertMesssage(error.status);
+                break;
+              }
             }
           });
           break;

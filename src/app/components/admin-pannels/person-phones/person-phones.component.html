@@ -26,12 +26,12 @@
         <span class="label"><mat-icon>edit</mat-icon><mat-icon>contact_phone</mat-icon></span>
       </button>
     </div>
-    <!--<div [matTooltip]="this.isReadonly? 'Drop selected person (N/A for readonly access mode)' : !this.viewParams.selectedId? 'Drop selected person (Select person by clicking the table row first)' : 'Drop selected person'">
+    <div [matTooltip]="this.isReadonly? 'Drop selected person phone (N/A for readonly access mode)' : !this.viewParams.selectedId? 'Drop selected person phone (Select person phone by clicking the table row first)' : 'Drop selected person phone'">
       <button class="action" color="warn" mat-raised-button
-      [disabled]="this.isReadonly || !this.viewParams.selectedId" (click)="this.deletePerson()">
-        <span class="label"><mat-icon>delete</mat-icon><mat-icon>person</mat-icon></span>
+      [disabled]="this.isReadonly || !this.viewParams.selectedId" (click)="this.deletePersonPhone()">
+        <span class="label"><mat-icon>delete</mat-icon><mat-icon>contact_phone</mat-icon></span>
       </button>
-    </div>-->
+    </div>
   </div>
   <mat-divider class="horizontal-line"></mat-divider>
   

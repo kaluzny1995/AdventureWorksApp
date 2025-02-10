@@ -31,6 +31,9 @@ import { PersonPhoneFilterParams } from 'src/app/models/admin-pannels/person-pho
 import { PersonPhonesFilterFormDialog } from './person-phones-filter-form-dialog';
 import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 import { EAlertType } from 'src/app/models/utils/e-alert-type';
+import { DeletionConfirmationData } from 'src/app/models/utils/deletion-confirmation-data';
+import { DeletionConfirmationDialog } from '../../utils/deletion-confirmation-dialog';
+import { EDeletionConfirmation } from 'src/app/models/utils/e-deletion-confirmation';
 
 const LS_PREFIX = 'person-phone';
 
@@ -369,13 +372,13 @@ export class PersonPhonesComponent implements OnInit {
   }
 
   /**
-   * Deletes person & removes from view table
+   * Deletes person phone & removes from view table
   */
-  /*deletePerson(): void {
+  deletePersonPhone(): void {
     const deletionConfirmationData: DeletionConfirmationData = new DeletionConfirmationData(
-      'Person dropping',
-      `Are you sure, you wanna drop person with id '${this.viewParams.selectedId}'?`,
-      'Cannot drop person.'
+      'Person phone dropping',
+      `Are you sure, you wanna drop person phone with id '${this.viewParams.selectedId}'?`,
+      'Cannot drop person phone.'
     );
 
     const dialogRef = this._deletionDialog.open(DeletionConfirmationDialog, {
@@ -385,15 +388,16 @@ export class PersonPhonesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((result: EDeletionConfirmation) => {
       switch (result) {
-        case EDeletionConfirmation.OK:*/
-          /* Deleting person via API */
-          /*this._person.deletePerson(this.viewParams.selectedId || -1).subscribe({
+        case EDeletionConfirmation.OK:
+          /* Deleting person phone via API */
+          const [personId, phoneNumber, phoneNumberTypeId] = this._view.str2NSNTuple(this.viewParams.selectedId, this._appConfig.personPhoneDefaults.idSeparator);
+          this._personPhone.deletePersonPhone(personId, phoneNumber, phoneNumberTypeId).subscribe({
             next: (result: any) => {
-              console.log('Person dropped successfully.', result);
-              this.mainAlert = new AlertMessage(EAlertType.SUCCESS, '', `Person with id: '${this.viewParams.selectedId}' dropped successfully.`);*/
+              console.log('Person phone dropped successfully.', result);
+              this.mainAlert = new AlertMessage(EAlertType.SUCCESS, '', `Person phone with id: '${this.viewParams.selectedId}' dropped successfully.`);
 
-              /* Removing person from view table */
-              /*this.dataSource = this.dataSource.filter((person: Person) => person.personId !== this.viewParams.selectedId);
+              /* Removing person phone from view table */
+              this.dataSource = this.dataSource.filter((personPhone: [PersonPhone, Person, PhoneNumberType]) => !(personPhone[0].personId === personId && personPhone[0].phoneNumber === phoneNumber && personPhone[0].phoneNumberTypeId === phoneNumberTypeId));
               this.viewParams.selectedId = null;
               this._setLocalStorage(true);
             },
@@ -416,7 +420,7 @@ export class PersonPhonesComponent implements OnInit {
           break;
       }
     });
-  }*/
+  }
 }
 
 /* For view testing purposes only */
