@@ -24,6 +24,12 @@ import { UtilsService } from 'src/app/services/utils/utils.service';
 import { ColumnSettingsDialog } from '../../utils/column-settings-dialog';
 import { ColumnSettingsData } from 'src/app/models/utils/column-settings-data';
 import { AppConfigService } from 'src/app/services/utils/app-config.service';
+import { PageEvent } from '@angular/material/paginator';
+import { Sort } from '@angular/material/sort';
+import { EOrderType } from 'src/app/models/admin-pannels/common/e-order-type';
+import { PersonPhoneFilterParams } from 'src/app/models/admin-pannels/person-phones/person-phone-filter-params';
+import { PersonPhonesFilterFormDialog } from './person-phones-filter-form-dialog';
+import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
 
 const LS_PREFIX = 'person-phone';
 
@@ -55,6 +61,7 @@ export class PersonPhonesComponent implements OnInit {
     private _route: ActivatedRoute,
     private _appConfig: AppConfigService,
     private _urlProc: UrlProcessingService,
+    private _local: LocalStorageService,
     private _auth: AuthenticationService,
     private _view: ViewParamsService,
     private _cols: ColumnDisplayingService,
@@ -147,26 +154,28 @@ export class PersonPhonesComponent implements OnInit {
 
     /* Data loading */
     this.isLoaderUp = true;
-    /*this._person.getPersons(this.queryParams).subscribe({
+    this._personPhone.getPersonPhones(this.queryParams).subscribe({
       next: (results: any[]) => {
-        this.dataSource = results.map((result: any) => Person.fromAPIStructure(result));
+        this.dataSource = results.map((result: any) => [
+          PersonPhone.fromAPIStructure(result[0], this._appConfig.personPhoneDefaults.idSeparator), 
+          Person.fromAPIStructure(result[1]), 
+          PhoneNumberType.fromAPIStructure(result[2])
+        ]);
       },
       error: (error: HttpErrorResponse) => {
-        console.error('Error while getting persons.', error);
+        console.error('Error while getting person phones.', error);
         this.mainAlert = this._alert.statusAlertMesssage(error.status);
       }
     });
-    this._person.countPersons(this.queryParams.filters).subscribe({
+    this._personPhone.countPersonPhones(this.queryParams.filters).subscribe({
       next: (result: any) => {
         this.totalCount = +result.count;
       },
       error: (error: HttpErrorResponse) => {
-        console.error('Error while getting persons count.', error);
+        console.error('Error while getting person phones count.', error);
         this.mainAlert = this._alert.statusAlertMesssage(error.status);
       }
-    });*/
-    this.dataSource = TEST_DATA;
-    this.totalCount = TEST_DATA.length;
+    });
     this.isLoaderUp = false;
 
     /* Newly added person handling */
@@ -237,44 +246,45 @@ export class PersonPhonesComponent implements OnInit {
   /**
    * Toggles visibility of filters pannel
   */
-  /*toggleFiltersPannel(): void {
+  toggleFiltersPannel(): void {
     this.viewParams.isFilterSetOn=!this.viewParams.isFilterSetOn;
     this._setLocalStorage();
-  }*/
+  }
 
   /**
    * Removes all filters restricting the displayed data
   */
-  /*clearFilters(): void {
+  clearFilters(): void {
+    this._local.removeItem('personPhrase', 'person-phone');
     this.queryParams.filters = null;
     this._setURL();
-  }*/
+  }
 
   /**
    * Opens filters setting-up dialog
   */
-  /*openFilterFormDialog(): void {
-    const formData: PersonFilterParams = PersonFilterParams.fromDict(this.queryParams.filters);
+  openFilterFormDialog(): void {
+    const formData: PersonPhoneFilterParams = PersonPhoneFilterParams.fromDict(this.queryParams.filters);
 
-    const dialogRef = this._filterDialog.open(PersonsFilterFormDialog, {
+    const dialogRef = this._filterDialog.open(PersonPhonesFilterFormDialog, {
       data: formData,
-      width: '400px',
+      width: '600px',
       position: {top: '200px'}
     });
 
-    dialogRef.afterClosed().subscribe((results?: PersonFilterParams) => {
+    dialogRef.afterClosed().subscribe((results?: PersonPhoneFilterParams) => {
       if (results !== undefined) {
         this.queryParams.filters = this._filterParams.minimized(results.toDict());
         this.queryParams.page = 1; // page must be reset to first one
         this._setURL();
       }
     });
-  }*/
+  }
 
   /**
    * Orders data by the clicked table header and ordering type
   */
-  /*order(order: Sort): void {
+  order(order: Sort): void {
     if (order.direction === '') {
       this.queryParams.orderBy = null;
       this.queryParams.type = EOrderType.ASC;
@@ -283,16 +293,16 @@ export class PersonPhonesComponent implements OnInit {
       this.queryParams.type = EOrderType[order.direction.toUpperCase() as keyof typeof EOrderType];
     }
     this._setURL();
-  }*/
+  }
 
   /**
    * Switches table between pages and sets up the count of records displayed per page
   */
-  /*paginate(e: PageEvent): void {
+  paginate(e: PageEvent): void {
     this.queryParams.perPage = e.pageSize;
     this.queryParams.page = e.pageIndex + 1;
     this._setURL();
-  }*/
+  }
 
   /**
    * Sets up the local storage entries with proper view parameters
@@ -311,7 +321,7 @@ export class PersonPhonesComponent implements OnInit {
    * Sets up the page URL with proper optional parameters
   */
   private _setURL(isReloaded: boolean = true): void {
-    this._router.navigate(['pannels', 'persons', {
+    this._router.navigate(['pannels', 'person-phones', {
       ...this._queryParams.necessaryOptParams(this.queryParams)
     }]).then(() => {
       if (isReloaded) {

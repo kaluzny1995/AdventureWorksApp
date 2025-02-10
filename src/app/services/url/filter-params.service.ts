@@ -20,7 +20,7 @@ export class FilterParamsService {
    * @example 'person_type:GC,first_name_phrase:jak' => {person_type: 'GC', first_name_phrase: 'jak'}
   */
   fromFilterString(filterString: string): {[key: string]: string} | null {
-    return filterString === ''? null : Object.assign({}, ...filterString.split(',').map(k => k.split(':')).map(k => ({[k[0]]: k[1]})));
+    return filterString === ''? null : Object.assign({}, ...decodeURIComponent(filterString).split(',').map(k => k.split(':')).map(k => ({[k[0]]: k[1]})));
   }
 
   /**
@@ -65,16 +65,16 @@ export class FilterParamsService {
 
   /**
    * Returns minimized filter parameters dictionary ie. such without null, empty or undefined values
-   * @example {person_type: 'GC', last_name_phrase: null, first_name_phrase: ''} => {person_type: 'GC'}
+   * @example {person_type: 'GC', last_name_phrase: null, first_name_phrase: '', personIds: '[]'} => {person_type: 'GC'}
   */
   minimized(filterParams: {[key: string]: string} | null): {[key: string]: string} | null {
     if (filterParams === null) {
       return null;
-    } else if (Object.values(filterParams).every(v => v === null || v === undefined || v === '')) {
+    } else if (Object.values(filterParams).every(v => v === null || v === undefined || v === '' || v === '[]')) {
       return null;
     } else {
       return Object.assign({}, ...Object.entries(filterParams)
-                                        .filter(([_, v]) => (!['', null, undefined].includes(v)))
+                                        .filter(([_, v]) => (!['', '[]', null, undefined].includes(v)))
                                         .map(([k, v]) => ({[k]: v})));
     }
   }

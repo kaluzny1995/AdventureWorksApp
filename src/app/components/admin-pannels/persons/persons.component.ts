@@ -8,7 +8,7 @@ import { EPersonType } from 'src/app/models/admin-pannels/persons/e-person-type'
 import { Person } from 'src/app/models/admin-pannels/persons/person';
 import { PersonDefaults } from 'src/app/models/admin-pannels/persons/person-defaults';
 import { AlertMessage } from 'src/app/models/utils/alert-message';
-import { PersonFilterParams } from 'src/app/models/admin-pannels/common/person-filter-params';
+import { PersonFilterParams } from 'src/app/models/admin-pannels/persons/person-filter-params';
 import { QueryParams } from 'src/app/models/admin-pannels/common/query-params';
 import { PersonService } from 'src/app/services/admin-pannels/person.service';
 import { ColumnDisplayingService } from 'src/app/services/url/column-displaying.service';

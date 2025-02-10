@@ -1,0 +1,35 @@
+<form [formGroup]="this.form" (submit)="this.filter()">
+    <div class="mat-h1" mat-dialog-title>Person phone filters</div>
+    <div mat-dialog-content class="filter-dialog">
+      <div class="mat-body-strong">Filter by selected persons and phone number types</div>
+      <div class="form-field-group-above">
+  
+        <!--Person phone ids-->
+        <mat-form-field appearance="fill" class="form-field form-field-whole">
+          <mat-label>Persons</mat-label>
+          <mat-select matInput formControlName="personIds" [multiple]="true">
+            <mat-option>
+              <ngx-mat-select-search formControlName="personPhrase" 
+              placeholderLabel="Search by name... (min. 3 chars)" [clearSearchInput]="false" noEntriesFoundLabel="No persons found."></ngx-mat-select-search>
+            </mat-option>
+            <mat-option *ngFor="let p of this.persons" [value]="p.id">{{ p.itemName }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <!--Phone number type ids-->
+        <mat-form-field appearance="fill" class="form-field form-field-whole">
+          <mat-label>Phone number types</mat-label>
+          <mat-select matInput formControlName="phoneNumberTypeIds" [multiple]="true">
+            <mat-option *ngFor="let p of this.phoneNumberTypes" [value]="p.id">{{ p.itemName }}</mat-option>
+          </mat-select>
+        </mat-form-field>
+  
+        <div mat-dialog-actions>
+          <a mat-raised-button (click)="this.cancel()">Cancel</a>
+          <div class="fill-remaining-space"></div>
+          <a mat-raised-button color="warn" (click)="this.clear()">Clear</a>
+          <button mat-raised-button type="submit" color="accent" [disabled]="!this.form.valid">Filter</button>
+        </div>
+      </div>
+    </div>
+  </form>

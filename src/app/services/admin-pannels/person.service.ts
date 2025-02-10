@@ -45,4 +45,12 @@ export class PersonService {
   deletePerson(personId: number): Observable<any> {
     return this._http.delete<any>(this._appConfig.apiUrl + `delete_person/${personId}`);
   }
+
+  getFirst10Persons(): Observable<any> {
+    return this._http.get<any>(this._appConfig.apiUrl + `get_persons?limit=10`);
+  }
+
+  searchByPhrases(firstNamePhrase: string | null, lastNamePhrase: string | null, isOrdered: boolean | null): Observable<any> {
+    return this._http.get<any>(this._appConfig.apiUrl + `search_by_phrases?first_name_phrase=${firstNamePhrase}&last_name_phrase=${lastNamePhrase}&is_ordered=${isOrdered}&is_alternative=true&is_raised_error_if_empty=false`);
+  }
 }

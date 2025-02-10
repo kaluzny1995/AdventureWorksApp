@@ -1,3 +1,5 @@
+import { MSListItem } from "../../utils/types";
+
 export class PhoneNumberType {
     public readonly phoneNumberTypeId: number;
     public readonly name: string;
@@ -15,6 +17,13 @@ export class PhoneNumberType {
 
     public static fromAPIStructure(data: any): PhoneNumberType {
         return new PhoneNumberType(data.phone_number_type_id, data.name, new Date(data.modified_date));
+    }
+
+    public toMSListItem(): MSListItem {
+        return {
+            id: this.phoneNumberTypeId,
+            itemName: this.name
+        };
     }
 
     public toFormStructure(): any {

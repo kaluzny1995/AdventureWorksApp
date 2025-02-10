@@ -45,4 +45,8 @@ export class PhoneNumberTypeService {
   deletePhoneNumberType(phoneNumberTypeId: number): Observable<any> {
     return this._http.delete<any>(this._appConfig.apiUrl + `delete_phone_number_type/${phoneNumberTypeId}`);
   }
+
+  allPhoneNumberTypes(): Observable<any> {
+    return this._http.get<any>(this._appConfig.apiUrl + `get_phone_number_types?limit=100`);
+  }
 }
