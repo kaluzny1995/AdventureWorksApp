@@ -70,11 +70,17 @@
         ]},
         {"name": "Specials", "value": "special", "btnIcon": "stars", "images": [
             {"title": "Page loader widget", "src": "special_loader", "label": "Page loader", "isHalf": false},
-            {"title": "Xml documents editor", "src": "special_xml", "label": "Xml editor", "isHalf": false}
+            {"title": "Xml documents editor", "src": "special_xml", "label": "Xml editor", "isHalf": false},
+            {"title": "Searchable list", "src": "special_searchlist_overview", "label": "Searchlist", "isHalf": true},
+            {"title": "One-choice searchable list", "src": "special_searchlist_one", "label": "Searchlist one", "isHalf": true},
+            {"title": "Multi-choice searchable list", "src": "special_searchlist_multi", "label": "Searchlist multi", "isHalf": true}
         ], "steps": [
             {"name": "Specials", "title": "Specific widgets and elements", "description": "Admin pannels also contain some specific widgets and elements to improve visual side of application. These could be for example animated loaders or progress bars and also specific modal dialog dedicated for certain actions."},
             {"name": "Loader", "title": "Page loader widget", "description": "Every time the view parameter values are changing the data should be reloaded. During the data reloading the animated page loader is shown up and hidden immediately the data have been loaded into table in admin pannel. The same action takes place while registering, changing data or dropping object."},
-            {"name": "Xml editor", "title": "Modal pannel for xml editing", "description": "Some fields must contain valid xml strings. To make the things easier users could edit xml documents in modal pannels, which have possibility to display aside pretty xml document. That could prevent from mistakes during xml edition."}
+            {"name": "Xml editor", "title": "Modal pannel for xml editing", "description": "Some fields must contain valid xml strings. To make the things easier users could edit xml documents in modal pannels, which have possibility to display aside pretty xml document. That could prevent from mistakes during xml edition."},
+            {"name": "Searchable list", "title": "List with items searching", "description": "Some forms contain lists which potentially could have many thousands items (like all persons). To prevent from loading several thousands of items into one list, there was applied a functionality of item searching by its names. Therefore the searchable list displays only these items which names satisty the phrase provided in a search field."},
+            {"name": "One-choice searchable list", "title": "Item-searching list with one option choice", "description": "Searchable lists are just like other lists - one-choice lists. Such lists were applied in form for creation or modification of entries with references to foreign entities. These foreign entities are displayed in items of such lists."},
+            {"name": "Multi-choice searchable list", "title": "Item-searching list with many options choice", "description": "Searchable lists beside one-choice however may let select multiple items. These lists were applied in the entries filtering forms, where there is possible to select, for example multiple persons or phone number types and filter person phones according to mentioned two foreign entities."}
         ]}
     ]
 }
