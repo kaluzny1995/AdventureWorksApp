@@ -1,0 +1,82 @@
+<!-- Title and actions -->
+<div class="header-actions">
+    <div class="mat-h1">
+        <span *ngIf="this.formMode === EFormMode.ADD">New person phone</span>
+        <span *ngIf="this.formMode === EFormMode.EDIT">Change person phones data</span>
+    </div>
+    <div class="fill-remaining-space"></div>
+    <button class="action" mat-stroked-button color="primary" (click)="this.return()">
+        <span class="label"><mat-icon>keyboard_return</mat-icon> Back</span>
+    </button>
+</div>
+
+<!-- Alert -->
+<div class="alert" *ngIf="this.mainAlert" [ngClass]="this.mainAlert.type ? 'alert-' + this.mainAlert.type : ''">
+    <span>{{ this.mainAlert.message }}</span>
+    <span class="fill-remaining-space"></span>
+    <button mat-raised-button (click)="this.mainAlert = null">&times;</button>
+</div>
+
+<!-- Loading spinner -->
+<div class="spinner-container" *ngIf="this.isLoaderUp">
+    <mat-spinner></mat-spinner>
+</div>
+
+<!-- Person phones form -->
+<form class="form form-admin" [formGroup]="this.form" (ngSubmit)="this.submit()">
+    <mat-card>
+        <mat-card-header *ngIf="this.formMode === EFormMode.ADD">New person phone registration</mat-card-header>
+        <mat-card-header class="long-title" *ngIf="this.formMode === EFormMode.EDIT">Changing person phones '({{ this.viewId }})' data</mat-card-header>
+        <mat-divider class="horizontal-line"></mat-divider>
+
+        <mat-card-content>
+            <div class="mat-h6 hint-header">&lowast;&nbsp;&minus;&nbsp;required&nbsp;fields</div>
+            <div class="mat-h6 hint-header">[hint]&nbsp;&minus;&nbsp;field&nbsp;hint&nbsp;tooltips</div>
+            <div class="mat-h2">Person</div>
+            <div class="form-field-group form-field-group-inline">
+                <!--Person ID-->
+                <mat-form-field appearance="fill" class="form-field form-field-whole">
+                    <mat-label>Person</mat-label>
+                    <mat-select matInput formControlName="personId">
+                      <mat-option>
+                        <ngx-mat-select-search formControlName="personPhrase" placeholderLabel="Search by name... (min. 3 chars)" 
+                        [clearSearchInput]="false" noEntriesFoundLabel="No persons found."></ngx-mat-select-search>
+                      </mat-option>
+                      <mat-option *ngFor="let p of this.persons" [value]="p.id">{{ p.itemName }}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </div>
+
+            <div class="mat-h2">Phone number</div>
+            <div class="form-field-group form-field-group-inline">
+                <!-- Phone number -->
+                <mat-form-field appearance="fill" class="form-field form-field-medium">
+                    <mat-label>Phone number</mat-label>
+                    <input matInput formControlName="phoneNumber" type="tel" mask="+00 000 000 000" nullDefault>
+                    <mat-hint class="hint-tooltip" matTooltip="Pattern: +00 000 000 000">[hint]</mat-hint>
+                    <mat-error *ngIf="this.phoneNumber?.errors?.required">Phone number is required.</mat-error>
+                    <mat-error *ngIf="this.phoneNumber?.errors?.mask">Phone number must have format '+00 000 000 000'.</mat-error>
+                </mat-form-field>
+
+                <div class="fill-remaining-space"></div>
+
+                <!--Phone number type ID-->
+                <mat-form-field appearance="fill" class="form-field form-field-long">
+                    <mat-label>Phone number type</mat-label>
+                    <mat-select matInput formControlName="phoneNumberTypeId">
+                        <mat-option *ngFor="let p of this.phoneNumberTypes" [value]="p.id">{{ p.itemName }}</mat-option>
+                    </mat-select>
+                    <mat-error *ngIf="this.phoneNumberTypeId?.errors?.required">Phone number type is required.</mat-error>
+                </mat-form-field>
+            </div>
+
+        </mat-card-content>
+
+        <mat-divider></mat-divider>
+        <mat-card-actions>
+            <button mat-raised-button color="warn" type="reset">Clear</button>
+            <div class="fill-remaining-space"></div>
+            <button mat-raised-button [disabled]="!this.form.valid" type="submit" class="form-field" color="primary"><mat-icon>check</mat-icon> Confirm</button>
+        </mat-card-actions>
+    </mat-card>
+</form>

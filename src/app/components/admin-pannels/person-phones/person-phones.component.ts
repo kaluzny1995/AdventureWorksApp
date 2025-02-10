@@ -30,6 +30,7 @@ import { EOrderType } from 'src/app/models/admin-pannels/common/e-order-type';
 import { PersonPhoneFilterParams } from 'src/app/models/admin-pannels/person-phones/person-phone-filter-params';
 import { PersonPhonesFilterFormDialog } from './person-phones-filter-form-dialog';
 import { LocalStorageService } from 'src/app/services/local-storage/local-storage.service';
+import { EAlertType } from 'src/app/models/utils/e-alert-type';
 
 const LS_PREFIX = 'person-phone';
 
@@ -178,29 +179,34 @@ export class PersonPhonesComponent implements OnInit {
     });
     this.isLoaderUp = false;
 
-    /* Newly added person handling */
-    /*if (this.viewParams.newId !== null) {
-      this.mainAlert = new AlertMessage(EAlertType.SUCCESS, '', `New person with id: '${this.viewParams.newId}' registered successfully.`);
+    /* Newly added person phone handling */
+    if (this.viewParams.newId !== null) {
+      this.mainAlert = new AlertMessage(EAlertType.SUCCESS, '', `New person phone with id: '${this.viewParams.newId}' registered successfully.`);
 
-      this._person.getPerson(this.viewParams.newId).subscribe({
+      const [personId, phoneNumber, phoneNumberTypeId] = this._view.str2NSNTuple(this.viewParams.newId, this._appConfig.personPhoneDefaults.idSeparator);
+      this._personPhone.getPersonPhone(personId, phoneNumber, phoneNumberTypeId).subscribe({
         next: (result: any) => {
-          const newPerson: Person = Person.fromAPIStructure(result);
-          const existingPersons = this.dataSource.filter((person: Person) => person.personId === this.viewParams.newId);
-          if (existingPersons.length === 0) {
-            this.dataSource = this._utils.prepend(newPerson, this.dataSource);
+          const newPersonPhone: [PersonPhone,Person, PhoneNumberType] = [
+            PersonPhone.fromAPIStructure(result[0], this._appConfig.personPhoneDefaults.idSeparator), 
+            Person.fromAPIStructure(result[1]), 
+            PhoneNumberType.fromAPIStructure(result[2])
+          ];
+          const existingPersonPhones = this.dataSource.filter((personPhone: [PersonPhone, Person, PhoneNumberType]) => personPhone[0].personId === personId && personPhone[0].phoneNumber === phoneNumber && personPhone[0].phoneNumberTypeId === phoneNumberTypeId);
+          if (existingPersonPhones.length === 0) {
+            this.dataSource = this._utils.prepend(newPersonPhone, this.dataSource);
           }
         },
         error: (error: HttpErrorResponse) => {
-          console.error('Error while getting newly added person.', error);
+          console.error('Error while getting newly added person phone.', error);
           this.mainAlert = this._alert.statusAlertMesssage(error.status);
         }
-      });/*
+      });
     }
 
-    /* Recently changed person handling */
-    /*if (this.viewParams.changedId !== null) {
-      this.mainAlert = new AlertMessage(EAlertType.SUCCESS, '', `Persons data with id: '${this.viewParams.changedId}' changed successfully.`);
-    }*/
+    /* Recently changed person phone handling */
+    if (this.viewParams.changedId !== null) {
+      this.mainAlert = new AlertMessage(EAlertType.SUCCESS, '', `Person phones data with id: '${this.viewParams.changedId}' changed successfully.`);
+    }
   }
 
   /**
@@ -264,7 +270,7 @@ export class PersonPhonesComponent implements OnInit {
    * Opens filters setting-up dialog
   */
   openFilterFormDialog(): void {
-    const formData: PersonPhoneFilterParams = PersonPhoneFilterParams.fromDict(this.queryParams.filters);
+    const formData: PersonPhoneFilterParams = PersonPhoneFilterParams.fromDict(this.queryParams.filters, this._appConfig.personPhoneDefaults.idSeparator);
 
     const dialogRef = this._filterDialog.open(PersonPhonesFilterFormDialog, {
       data: formData,
@@ -274,7 +280,7 @@ export class PersonPhonesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe((results?: PersonPhoneFilterParams) => {
       if (results !== undefined) {
-        this.queryParams.filters = this._filterParams.minimized(results.toDict());
+        this.queryParams.filters = this._filterParams.minimized(results.toDict(this._appConfig.personPhoneDefaults.idSeparator));
         this.queryParams.page = 1; // page must be reset to first one
         this._setURL();
       }
@@ -348,18 +354,19 @@ export class PersonPhonesComponent implements OnInit {
   }
 
   /**
-   * Redirects to person form view as ADD mode.
+   * Redirects to person phone form view as ADD mode.
   */
-  /*addPerson(): void {
-    this._router.navigate(['pannels', 'persons', 'new', {returnUrl: this._urlProc.bracket(this._router.url)}]);
-  }*/
+  addPersonPhone(): void {
+    this._router.navigate(['pannels', 'person-phones', 'new', 'new', 'new', {returnUrl: this._urlProc.bracket(this._router.url)}]);
+  }
 
   /**
-   * Redirects to person form view as EDIT mode.
+   * Redirects to person phone form view as EDIT mode.
   */
-  /*editPerson(): void {
-    this._router.navigate(['pannels', 'persons', this.viewParams.selectedId, {returnUrl: this._urlProc.bracket(this._router.url)}]);
-  }*/
+  editPersonPhone(): void {
+    const [personId, phoneNumber, phoneNumberTypeId] = this._view.str2NSNTuple(this.viewParams.selectedId, this._appConfig.personPhoneDefaults.idSeparator);
+    this._router.navigate(['pannels', 'person-phones', personId, phoneNumber, phoneNumberTypeId, {returnUrl: this._urlProc.bracket(this._router.url)}]);
+  }
 
   /**
    * Deletes person & removes from view table

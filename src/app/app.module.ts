@@ -33,6 +33,7 @@ import { CountdownTimerComponent } from './components/countdown-timer/countdown-
 import { PhoneNumberTypesComponent } from './components/admin-pannels/phone-number-types/phone-number-types.component';
 import { OnevalueAdminPannelsComponent } from './components/instructions/onevalue-admin-pannels/onevalue-admin-pannels.component';
 import { PersonPhonesComponent } from './components/admin-pannels/person-phones/person-phones.component';
+import { PersonPhoneFormComponent } from './components/admin-pannels/person-phone-form/person-phone-form.component';
 
 @NgModule({
   declarations: [
@@ -57,7 +58,8 @@ import { PersonPhonesComponent } from './components/admin-pannels/person-phones/
     CountdownTimerComponent,
     PhoneNumberTypesComponent,
     OnevalueAdminPannelsComponent,
-    PersonPhonesComponent
+    PersonPhonesComponent,
+    PersonPhoneFormComponent
   ],
   imports: [
     BrowserModule,

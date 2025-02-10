@@ -32,4 +32,20 @@ export class UtilsService {
     copy.unshift(item);
     return copy;
   }
+
+  /**
+   * Extracts id from primary key constrain violation message
+  */
+  getIdFromPKViolationMessage(message: string): string | null {
+    const occurrences: RegExpExecArray | null = /\(([^)]*)\)/.exec(message);
+    return occurrences !== null? occurrences[1] : null;
+  }
+
+  /**
+   * Extracts id and entity name from foreign key constraint violation message
+  */
+  getIdFromFKViolationString(message: string): string | null {
+    const occurrences: RegExpExecArray | null = /\(([^)]*)\)/.exec(message);
+    return occurrences !== null? occurrences[2] : null;
+  }
 }

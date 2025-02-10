@@ -14,18 +14,18 @@
       <span *ngIf="!this.viewParams.isFilterSetOn"><mat-icon>expand_more</mat-icon><mat-icon>filter_list</mat-icon></span>
       <span *ngIf="this.viewParams.isFilterSetOn"><mat-icon>expand_less</mat-icon><mat-icon>filter_list</mat-icon></span>
     </button>
-    <!--<div [matTooltip]="this.isReadonly? 'Create new person (N/A for readonly access mode)' : 'Create new person'">
+    <div [matTooltip]="this.isReadonly? 'Create new person phone (N/A for readonly access mode)' : 'Create new person phone'">
       <button class="action" color="basic" mat-raised-button
-      [disabled]="this.isReadonly" (click)="this.addPerson()">
-        <span class="label"><mat-icon>add</mat-icon><mat-icon>person</mat-icon></span>
+      [disabled]="this.isReadonly" (click)="this.addPersonPhone()">
+        <span class="label"><mat-icon>add</mat-icon><mat-icon>contact_phone</mat-icon></span>
       </button>
-    </div>-->
-    <!--<div [matTooltip]="this.isReadonly? 'Change selected persons data (N/A for readonly access mode)' : !this.viewParams.selectedId? 'Change selected persons data (Select person by clicking the table row first)' : 'Change selected persons data'">
+    </div>
+    <div [matTooltip]="this.isReadonly? 'Change selected person phones data (N/A for readonly access mode)' : !this.viewParams.selectedId? 'Change selected person phones data (Select person phone by clicking the table row first)' : 'Change selected person phones data'">
       <button class="action" color="accent" mat-raised-button
-      [disabled]="this.isReadonly || !this.viewParams.selectedId" (click)="this.editPerson()">
-        <span class="label"><mat-icon>edit</mat-icon><mat-icon>person</mat-icon></span>
+      [disabled]="this.isReadonly || !this.viewParams.selectedId" (click)="this.editPersonPhone()">
+        <span class="label"><mat-icon>edit</mat-icon><mat-icon>contact_phone</mat-icon></span>
       </button>
-    </div>-->
+    </div>
     <!--<div [matTooltip]="this.isReadonly? 'Drop selected person (N/A for readonly access mode)' : !this.viewParams.selectedId? 'Drop selected person (Select person by clicking the table row first)' : 'Drop selected person'">
       <button class="action" color="warn" mat-raised-button
       [disabled]="this.isReadonly || !this.viewParams.selectedId" (click)="this.deletePerson()">

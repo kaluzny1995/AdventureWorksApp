@@ -22,6 +22,7 @@ import { Error500Component } from './components/errors/error500/error500.compone
 import { PhoneNumberTypesComponent } from './components/admin-pannels/phone-number-types/phone-number-types.component';
 import { OnevalueAdminPannelsComponent } from './components/instructions/onevalue-admin-pannels/onevalue-admin-pannels.component';
 import { PersonPhonesComponent } from './components/admin-pannels/person-phones/person-phones.component';
+import { PersonPhoneFormComponent } from './components/admin-pannels/person-phone-form/person-phone-form.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -43,6 +44,7 @@ const routes: Routes = [
   {path: 'pannels/persons/:id', component: PersonFormComponent, canActivate: [AuthenticationGuard, NonReadonlyGuard]},
   {path: 'pannels/phone-number-types', component: PhoneNumberTypesComponent, canActivate: [AuthenticationGuard]},
   {path: 'pannels/person-phones', component: PersonPhonesComponent, canActivate: [AuthenticationGuard]},
+  {path: 'pannels/person-phones/:personId/:phoneNumber/:phoneNumberTypeId', component: PersonPhoneFormComponent, canActivate: [AuthenticationGuard, NonReadonlyGuard]},
   {path: '403', component: Error403Component},
   {path: '500', component: Error500Component},
   {path: '**', component: Error404Component}

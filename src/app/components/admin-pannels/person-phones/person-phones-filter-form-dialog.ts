@@ -93,7 +93,7 @@ export class PersonPhonesFilterFormDialog implements OnInit {
       phoneNumberTypeIds: this.data.phoneNumberTypeIds
     });
 
-    /* Search persons of searchfield change (persons searching only for min 3-chars-long phrases) */
+    /* Search persons if search field changes (persons searching only for min 3-chars-long phrases) */
     this.personPhrase.valueChanges.subscribe(() => {
       if (this.personPhrase.value !== null && this.personPhrase.value.trim().length > 2) {
         this._loadSearchedPersons(this.personPhrase.value);
