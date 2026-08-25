@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 import { EntitiesComponent } from './entities.component';
 
@@ -8,7 +10,9 @@ describe('EntitiesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ EntitiesComponent ]
+      imports: [ HttpClientTestingModule ],
+      declarations: [ EntitiesComponent ],
+      schemas: [ NO_ERRORS_SCHEMA ]
     })
     .compileComponents();
 

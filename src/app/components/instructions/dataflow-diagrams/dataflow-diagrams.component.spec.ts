@@ -1,4 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { MatDialogModule } from '@angular/material/dialog';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { DataflowDiagramsComponent } from './dataflow-diagrams.component';
 
@@ -8,7 +11,9 @@ describe('DataflowDiagramsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ DataflowDiagramsComponent ]
+      imports: [ HttpClientTestingModule, MatDialogModule ],
+      declarations: [ DataflowDiagramsComponent ],
+      schemas: [ CUSTOM_ELEMENTS_SCHEMA ]
     })
     .compileComponents();
 
