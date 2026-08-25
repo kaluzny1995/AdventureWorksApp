@@ -1,21 +1,23 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { ActivatedRoute } from '@angular/router';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 import { AuthenticationComponent } from './authentication.component';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { ActivatedRoute } from '@angular/router';
-import { CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 
 describe('AuthenticationComponent', () => {
   let component: AuthenticationComponent;
   let fixture: ComponentFixture<AuthenticationComponent>;
 
   let fakeActivatedRoute = {
-    snapshot: { data: {} }
-  } as ActivatedRoute;
+    snapshot: { data: {}, paramMap: { get: () => null, has: () => false } }
+  } as unknown as ActivatedRoute;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HttpClientTestingModule],
+      imports: [HttpClientTestingModule, RouterTestingModule, ReactiveFormsModule],
       declarations: [AuthenticationComponent],
       providers: [{provide: ActivatedRoute, useValue: fakeActivatedRoute}],
       schemas: [CUSTOM_ELEMENTS_SCHEMA]
